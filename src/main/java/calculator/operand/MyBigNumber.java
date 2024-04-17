@@ -1,23 +1,27 @@
 package calculator.operand;
 
-import calculator.Expression;
 import calculator.Value;
-import calculator.operation.Operation;
 
 import java.util.Objects;
 
+import java.math.RoundingMode;
 import java.math.BigDecimal;
 
 public class MyBigNumber extends Value<BigDecimal> {
 
-    public MyBigNumber(BigDecimal v) {
-        super(v);
+    private static final int precision = 10;
+
+    public MyBigNumber(BigDecimal value) {
+        super(value);
     }
 
+    public MyBigNumber(int value) {
+        super(BigDecimal.valueOf(value));
+    }
 
     @Override
     public String toString() {
-        return null;
+        return val.toString();
     }
 
     @Override
@@ -39,26 +43,26 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public Value<BigDecimal> plus(Value<BigDecimal> other) {
-        return null;
+        return new MyBigNumber(this.val.add(other.getVal()));
     }
 
     @Override
     public Value<BigDecimal> minus(Value<BigDecimal> other) {
-        return null;
+        return new MyBigNumber(this.val.subtract(other.getVal()));
     }
 
     @Override
     public Value<BigDecimal> times(Value<BigDecimal> other) {
-        return null;
+        return new MyBigNumber(this.val.multiply(other.getVal()));
     }
 
     @Override
     public Value<BigDecimal> div(Value<BigDecimal> other) {
-        return null;
+        return new MyBigNumber(this.val.divide(other.getVal(), precision, RoundingMode.HALF_UP));
     }
 
     @Override
     public Value<BigDecimal> opposite() {
-        return null;
+        return new MyBigNumber(this.val.negate());
     }
 }
