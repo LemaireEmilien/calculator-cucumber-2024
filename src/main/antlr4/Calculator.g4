@@ -83,7 +83,12 @@ atom
     : scientific
     | variable
     | constant
+    | rational
     | LPAREN expression RPAREN
+    ;
+
+rational
+    : scientific FRAC scientific
     ;
 
 scientific
@@ -199,7 +204,9 @@ EULER
 I
     : 'i'
     ;
-
+FRAC
+    : '⁄'
+    ;
 VARIABLE
     : VALID_ID_START VALID_ID_CHAR*
     ;

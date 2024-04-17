@@ -59,6 +59,12 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAtom(CalculatorParser.AtomContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#rational}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRational(CalculatorParser.RationalContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CalculatorParser#scientific}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

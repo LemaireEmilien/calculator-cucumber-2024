@@ -78,10 +78,10 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             return createOperation(op, insideExpression);
         } else {
             List<Expression<T>> insideExpression = new ArrayList<>();
-            for (var expr: ctx.expression()) {
+            for (var expr : ctx.expression()) {
                 insideExpression.add(visit(expr));
             }
-            return createOperation("*",insideExpression);
+            return createOperation("*", insideExpression);
         }
     }
 
@@ -168,6 +168,15 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
     public Expression<T> visitScientific(CalculatorParser.ScientificContext ctx) {
         String text = ctx.getText();
         log.trace("Visit signed atom scientific : {}", text);
+        Expression<T> expr = baseParser.fromString(text);
+        log.trace("base {}", expr);
+        return expr;
+    }
+
+    @Override
+    public Expression<T> visitRational(CalculatorParser.RationalContext ctx) {
+        String text = ctx.getText();
+        log.trace("Visit Rational : {}", text);
         Expression<T> expr = baseParser.fromString(text);
         log.trace("base {}", expr);
         return expr;
