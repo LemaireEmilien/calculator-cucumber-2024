@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <root level="Trace">
-        <appender-ref ref="STDOUT" />
+    <root level="Debug">
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

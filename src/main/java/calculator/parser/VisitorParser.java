@@ -78,10 +78,10 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             return createOperation(op, insideExpression);
         } else {
             List<Expression<T>> insideExpression = new ArrayList<>();
-            for (var expr: ctx.expression()) {
+            for (var expr : ctx.expression()) {
                 insideExpression.add(visit(expr));
             }
-            return createOperation("*",insideExpression);
+            return createOperation("*", insideExpression);
         }
     }
 

@@ -9,21 +9,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @Slf4j
 public class Controller {
+    private enum CalculatorType {
+        INTEGER, RATIONAL, REAL
+    }
 
     @FXML
     private Button expressionHistory;
+    @FXML
+    private ChoiceBox<CalculatorType> typeBox;
     @FXML
     private Label currentExpression;
     @FXML
@@ -50,26 +56,14 @@ public class Controller {
     @FXML
     private GridPane mainPane;
 
-    private Parent historyPage;
-
     private Stage stage;
 
     private HistoryController historyController;
-    @FXML
-    private void handleKeyboard(KeyEvent event) {
-        String typedCharacter = event.getText();
-        if (event.getCode() == KeyCode.BACK_SPACE && !currentExpression.getText().isEmpty()) {
-            removeCharacter();
-        } else if (event.getCode() == KeyCode.ENTER) {
-            evaluate();
-        } else {
-            addCharacter(typedCharacter);
-        }
-    }
 
     @FXML
-   private void initialize() throws IOException {
-
+    private void initialize() throws IOException {
+        typeBox.getItems().setAll(CalculatorType.values());
+        typeBox.setValue(CalculatorType.INTEGER);
         for (int i = 0; i < 9; i++) {
             final String s = String.valueOf(i + 1);
             Button b = new Button(s);
@@ -91,7 +85,7 @@ public class Controller {
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
-        historyPage = loader.load();
+        Parent historyPage = loader.load();
         historyController = loader.getController();
         stage = new Stage();
         Scene scene = new Scene(historyPage, 600, 400);
@@ -99,11 +93,25 @@ public class Controller {
         stage.setScene(scene);
     }
 
+    @FXML
+    private void handleKeyboard(KeyEvent event) {
+        log.trace("Key pressed: {}", event.getCode());
+        if (event.getCode() == KeyCode.BACK_SPACE && !currentExpression.getText().isEmpty()) {
+            removeCharacter();
+        } else if (event.getCode() == KeyCode.ENTER) {
+            evaluate();
+        } else {
+            addCharacter(event.getText());
+        }
+    }
+
     private void addCharacter(String character) {
+        currentExpression.setTextFill(Color.WHITE);
         currentExpression.setText(currentExpression.getText() + character);
     }
 
     private void removeCharacter() {
+        currentExpression.setTextFill(Color.WHITE);
         if (!currentExpression.getText().isEmpty()) {
             String temp = currentExpression.getText().substring(0, currentExpression.getText().length() - 1);
             currentExpression.setText(temp);
@@ -111,30 +119,37 @@ public class Controller {
     }
 
     private void evaluate() {
-        Parser<Integer> p = new Parser<>();
-        Expression<Integer> e;
+        switch (typeBox.getValue()) {
+            case INTEGER -> evaluateT(Parser::stringToInteger);
+            case RATIONAL -> {
+            } //todo
+            case REAL -> {
+            } //todo
+        }
+    }
+
+    private <T> void evaluateT(Parser.From<T> parser) {
+        Parser<T> p = new Parser<>();
+        Expression<T> e;
         try {
-            e = p.parse(currentExpression.getText(), Parser::stringToInteger);
+            e = p.parse(currentExpression.getText(), parser);
         } catch (IllegalExpression i) {
-            log.warn("Supplied expression is not correct : {}",currentExpression.getText());
-            // todo: signal to user
+            log.warn("Supplied expression is not correct : {}", currentExpression.getText());
+            currentExpression.setTextFill(Color.RED);
             return;
         }
-        Calculator<Integer> c = new Calculator<>();
-        int s = c.eval(e).getVal();
+        Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
-            history.setText(history.getText() + "\n" + s);
-
+            String r =c.eval(e).getVal().toString();
             historyController.getListHistory().getItems().add(currentExpression.getText());
-            System.out.println(historyController.getListHistory().getItems().toString());
-            currentExpression.setText("");
-
+            log.debug("{}", historyController.getListHistory().getItems().toString());
+            history.setText(history.getText() + "\n" + r);
+            currentExpression.setText(r);
         }
-
     }
 
     private void moveToHistory() {
         stage.show();
     }
 
-    }
+}

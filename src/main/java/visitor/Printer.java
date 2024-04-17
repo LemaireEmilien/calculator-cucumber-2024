@@ -2,8 +2,8 @@ package visitor;
 
 import calculator.Expression;
 import calculator.Notation;
-import calculator.operation.Operation;
 import calculator.Value;
+import calculator.operation.Operation;
 import calculator.operation.Opposite;
 
 /**

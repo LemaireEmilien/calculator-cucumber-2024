@@ -19,7 +19,7 @@ public class Parser<T> {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CalculatorParser parser = new CalculatorParser(tokens);
         ParseTree tree = parser.init();
-        if (parser.getNumberOfSyntaxErrors() > 0){
+        if (parser.getNumberOfSyntaxErrors() > 0) {
             log.error("Illegal expression : {}", s);
             throw new IllegalExpression();
         }
