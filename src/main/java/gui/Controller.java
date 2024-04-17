@@ -5,16 +5,25 @@ import calculator.Expression;
 import calculator.IllegalExpression;
 import calculator.parser.Parser;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.util.Objects;
 
 @Slf4j
 public class Controller {
 
+    @FXML
+    private Button expressionHistory;
     @FXML
     private Label currentExpression;
     @FXML
@@ -41,6 +50,11 @@ public class Controller {
     @FXML
     private GridPane mainPane;
 
+    private Parent historyPage;
+
+    private Stage stage;
+
+    private HistoryController historyController;
     @FXML
     private void handleKeyboard(KeyEvent event) {
         String typedCharacter = event.getText();
@@ -54,7 +68,7 @@ public class Controller {
     }
 
     @FXML
-    private void initialize() {
+   private void initialize() throws IOException {
 
         for (int i = 0; i < 9; i++) {
             final String s = String.valueOf(i + 1);
@@ -73,6 +87,16 @@ public class Controller {
         optionUndo.setOnAction(event -> removeCharacter());
         operatorEquals.setOnAction(event -> evaluate());
         optionAnswer.setOnAction(event -> addCharacter("ans"));
+        expressionHistory.setOnAction(event -> moveToHistory());
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
+        historyPage = loader.load();
+        historyController = loader.getController();
+        stage = new Stage();
+        Scene scene = new Scene(historyPage, 600, 400);
+        stage.setTitle("History");
+        stage.setScene(scene);
     }
 
     private void addCharacter(String character) {
@@ -100,7 +124,17 @@ public class Controller {
         int s = c.eval(e).getVal();
         if (!currentExpression.getText().isEmpty()) {
             history.setText(history.getText() + "\n" + s);
+
+            historyController.getListHistory().getItems().add(currentExpression.getText());
+            System.out.println(historyController.getListHistory().getItems().toString());
             currentExpression.setText("");
+
         }
+
     }
-}
+
+    private void moveToHistory() {
+        stage.show();
+    }
+
+    }
