@@ -24,7 +24,7 @@ class TestMyNaN {
         // Two distinct MyNaN, constructed separately (using a different constructor) but containing the same value should be equal
         assertEquals(new MyNaN<>(), nan);
         assertEquals(nan, nan); // Identity check (for coverage, as this should always be true)
-        assertNotEquals(8,nan); // number is of type MyNaN, while value is of type int, so not equal
+        assertNotEquals(8, nan); // number is of type MyNaN, while value is of type int, so not equal
         try {
             assertNotEquals(new Times<>(new ArrayList<>()), nan);
         } catch (IllegalConstruction e) {

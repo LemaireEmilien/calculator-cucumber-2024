@@ -2,8 +2,6 @@ package visitor;
 
 import calculator.Expression;
 import calculator.Value;
-import calculator.operand.Operand;
-import calculator.operation.Minus;
 import calculator.operation.Operation;
 import calculator.operation.Opposite;
 
@@ -54,7 +52,7 @@ public class Evaluator<T> extends Visitor<T> {
         Value<T> temp = evaluatedArgs.getFirst();
         int max = evaluatedArgs.size();
         if (o instanceof Opposite<T>) {
-            temp = o.op(temp,null);
+            temp = o.op(temp, null);
         }
         for (int counter = 1; counter < max; counter++) {
             temp = o.op(temp, evaluatedArgs.get(counter));

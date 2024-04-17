@@ -56,7 +56,7 @@ class TestParser {
     }
 
     @Test
-    void testPostfix(){
+    void testPostfix() {
         try {
             Expression<Integer> expression = parser.parse("((5 4)* , (3,3)*)+", Parser::stringToInteger);
             assertEquals(new MyNumber(29), calculator.eval(expression));
@@ -73,7 +73,7 @@ class TestParser {
 
 
     @Test
-    void testPrefix(){
+    void testPrefix() {
         try {
             Expression<Integer> expression = parser.parse("+(*(5 4) , *(3,3))", Parser::stringToInteger);
             assertEquals(new MyNumber(29), calculator.eval(expression));
@@ -87,8 +87,6 @@ class TestParser {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 }

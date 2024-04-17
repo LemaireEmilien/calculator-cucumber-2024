@@ -1,6 +1,9 @@
 package calculator.operation;
 
-import calculator.*;
+import calculator.Expression;
+import calculator.IllegalConstruction;
+import calculator.Notation;
+import calculator.Value;
 import calculator.operand.MyNumber;
 import lombok.Getter;
 import visitor.Printer;
@@ -30,6 +33,7 @@ public abstract class Operation<T> implements Expression<T> {
      */
     @Getter
     protected String symbol;
+
     /**
      * To construct an operation with a list of expressions as arguments,
      * as well as the Notation used to represent the operation.

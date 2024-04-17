@@ -1,8 +1,8 @@
 package visitor;
 
 import calculator.Expression;
-import calculator.operation.Operation;
 import calculator.Value;
+import calculator.operation.Operation;
 import lombok.Getter;
 
 import java.util.ArrayList;

@@ -1,5 +1,12 @@
 @import "base-theme.css";
 
+.choice-box * {
+    -fx-background-color: -surface-0;
+    -fx-mark-color: white;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+}
+
 .pane {
     -fx-background-color: -surface-0;
 }
