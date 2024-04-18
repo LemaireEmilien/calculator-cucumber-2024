@@ -11,6 +11,16 @@
     -fx-background-color: -surface-0;
 }
 
+.list-view{
+    -fx-background-color: -surface-1;
+    -fx-text-fill: -accent-color;
+}
+
+.button-history{
+    -fx-background-color: -surface-operator;
+    -fx-text-fill: -accent-color;
+}
+
 .button-number {
     -fx-background-color: -surface-1;
     -fx-text-fill: -foreground-primary;
@@ -44,6 +54,7 @@
 
 .label-secondary {
     -fx-text-fill: -foreground-secondary;
+    -fx-border-color: white;
 }
 
 .button:hover {

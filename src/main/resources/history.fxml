@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<Pane fx:id="pane" fx:controller="gui.HistoryController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox layoutX="31.0" layoutY="32.0" prefHeight="349.0" prefWidth="541.0">
+            <children>
+                <HBox prefHeight="90.0" prefWidth="542.0">
+                    <children>
+                        <Button fx:id="wholeHistory" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="26.0" prefWidth="155.0" styleClass="button-history" stylesheets="@styling.css" text="History">
+                            <HBox.margin>
+                                <Insets top="20.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="expressionUsable" maxWidth="126.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="126.0" styleClass="button-history" text="Favorite expressions">
+                            <HBox.margin>
+                                <Insets top="20.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+                <ListView fx:id="listHistory" styleClass="list-view" prefHeight="291.0" prefWidth="542.0"/>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Button mnemonicParsing="false" styleClass="button-history" text="Save">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="button-history" text="Load">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="button-history" text="Clear">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="button-history" text="Add">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</Pane>
