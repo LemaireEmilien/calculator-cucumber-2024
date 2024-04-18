@@ -18,7 +18,6 @@ public class ExpressionFileHandler {
         File file = fileChooser.showSaveDialog(stage);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String expression : expressions) {
-                System.out.println("Expression: " + expression);
                 writer.write(expression);
                 writer.newLine();
             }
@@ -26,6 +25,20 @@ public class ExpressionFileHandler {
             e.printStackTrace();
         }
     }
+
+    public static void saveExpressionsAuto(List<String> expressions,String nameFile) throws URISyntaxException {
+        File file = new File(Paths.get(Objects.requireNonNull(ExpressionFileHandler.class.getResource(nameFile)).toURI()).toString());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (String expression : expressions) {
+                writer.write(expression);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public static List<String> loadExpressionsAuto(String nameFile) throws URISyntaxException {
         File file = new File(Paths.get(Objects.requireNonNull(ExpressionFileHandler.class.getResource(nameFile)).toURI()).toString());

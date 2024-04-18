@@ -1,6 +1,7 @@
 package gui;
 
 import calculator.memory.ExpressionFileHandler;
+import calculator.memory.ListSaver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,15 +40,21 @@ public class HistoryController {
     private Button saveFile;
 
     private List<String> listFavoriteExpressions;
+    @Getter
+    private List<String> listRecentHistory;
 
     private Stage stage;
 
     @FXML
     private void initialize() throws URISyntaxException {
         listFavoriteExpressions = new ArrayList<>();
+        listRecentHistory = new ArrayList<>();
 
         listFavoriteExpressions = ExpressionFileHandler.loadExpressionsAuto("/favoriteExpressions.txt");
-        ObservableList<String> observableList = FXCollections.observableArrayList(Objects.requireNonNull(listFavoriteExpressions));
+        listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("/recentHistory.txt");
+
+        ListSaver.saveListToFile(listRecentHistory);
+        ObservableList<String> observableList = FXCollections.observableArrayList(Objects.requireNonNull(listRecentHistory));
         listHistory.setItems(observableList);
 
         wholeHistory.setDisable(true);
@@ -55,11 +62,14 @@ public class HistoryController {
         wholeHistory.setOnAction(event -> {
             wholeHistory.setDisable(true);
             expressionUsable.setDisable(false);
+            listHistory.setItems(FXCollections.observableArrayList(listRecentHistory));
+            listHistory.scrollTo(listHistory.getItems().size() - 1);
         });
 
         expressionUsable.setOnAction(event -> {
             wholeHistory.setDisable(false);
             expressionUsable.setDisable(true);
+            listHistory.setItems(FXCollections.observableArrayList(listFavoriteExpressions));
         });
 
 
@@ -82,4 +92,11 @@ public class HistoryController {
         return stage;
     }
 
+    public void update() {
+        if(wholeHistory.isDisable()) {
+            listHistory.setItems(FXCollections.observableArrayList(listRecentHistory));
+            listHistory.scrollTo(listHistory.getItems().size()-1);
+        }
+        ListSaver.saveListToFile(listRecentHistory);
+    }
 }
