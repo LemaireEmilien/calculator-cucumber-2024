@@ -21,7 +21,14 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public String toString() {
-        return val.toString();
+        //If the number is too big or too small to be displayed, it will be displayed in scientific notation
+        if (val.abs().compareTo(new BigDecimal("1e10")) > 0 || val.abs().compareTo(new BigDecimal("1e-10")) < 0) {
+            return val.toString();
+        }
+        else {
+            return val.setScale(precision, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        }
+
     }
 
     @Override
@@ -58,7 +65,7 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public Value<BigDecimal> div(Value<BigDecimal> other) {
-        return new MyBigNumber(this.val.divide(other.getVal(), precision, RoundingMode.HALF_UP));
+        return new MyBigNumber(this.val.divide(other.getVal(), RoundingMode.HALF_UP));
     }
 
     @Override
