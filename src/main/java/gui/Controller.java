@@ -52,6 +52,8 @@ public class Controller {
     private Button optionUndo;
     @FXML
     private Button optionAnswer;
+    @FXML
+    private Button optionDegRad;
 
     @FXML
     private GridPane mainPane;
@@ -81,6 +83,7 @@ public class Controller {
         optionUndo.setOnAction(event -> removeCharacter());
         operatorEquals.setOnAction(event -> evaluate());
         optionAnswer.setOnAction(event -> addCharacter("ans"));
+        optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
 
 
@@ -91,6 +94,10 @@ public class Controller {
         Scene scene = new Scene(historyPage, 600, 400);
         stage.setTitle("History");
         stage.setScene(scene);
+    }
+
+    private void convertDegToRad() {
+        //todo
     }
 
     @FXML

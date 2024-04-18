@@ -99,7 +99,15 @@ class TestMyBigNumber {
         }catch (IllegalExpression e){
             fail();
         }
+    }
 
+    @Test
+    void testDegToRad(){
+        MyBigNumber myBigNumber1 = new MyBigNumber(BigDecimal.valueOf(180));
+        MyBigNumber myBigNumber2 = new MyBigNumber(BigDecimal.valueOf(Math.PI));
+
+        assertEquals(myBigNumber2.toString(), myBigNumber1.degToRad().toString());
+        assertEquals(myBigNumber1.toString(), myBigNumber2.radToDeg().toString());
     }
 
 }

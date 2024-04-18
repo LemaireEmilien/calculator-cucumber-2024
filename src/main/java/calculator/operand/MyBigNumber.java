@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class MyBigNumber extends Value<BigDecimal> {
 
-    private static final int precision = 10;
+    private static int precision = 10;
 
     public MyBigNumber(BigDecimal value) {
         super(value);
@@ -65,11 +65,28 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public Value<BigDecimal> div(Value<BigDecimal> other) {
-        return new MyBigNumber(this.val.divide(other.getVal(), RoundingMode.HALF_UP));
+        return new MyBigNumber(this.val.divide(other.getVal(), precision, RoundingMode.HALF_UP));
     }
 
     @Override
     public Value<BigDecimal> opposite() {
         return new MyBigNumber(this.val.negate());
     }
+
+    public Value<BigDecimal> degToRad() {
+        return new MyBigNumber(this.val.multiply(BigDecimal.valueOf(Math.PI)).divide(new BigDecimal(180), RoundingMode.HALF_UP));
+    }
+
+    public Value<BigDecimal> radToDeg() {
+        return new MyBigNumber(this.val.multiply(new BigDecimal(180)).divide(BigDecimal.valueOf(Math.PI), RoundingMode.HALF_UP));
+    }
+
+    public static void setPrecision(int precision) {
+        MyBigNumber.precision = precision;
+    }
+
+    public static int getPrecision() {
+        return MyBigNumber.precision;
+    }
+
 }
