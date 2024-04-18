@@ -130,8 +130,10 @@ public class Controller {
         }
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
+            history.getItems().add(currentExpression.getText());
             history.getItems().add(c.eval(e).getVal().toString());
             historyController.getListHistory().getItems().add(currentExpression.getText());
+            historyController.getListHistory().getItems().add(c.eval(e).getVal().toString());
             currentExpression.setText("");
             history.scrollTo(history.getItems().size()-1);
         }

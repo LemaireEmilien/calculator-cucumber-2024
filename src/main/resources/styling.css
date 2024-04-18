@@ -62,18 +62,19 @@
 
 .label-like-list-view .list-cell {
     -fx-padding: 5px;
-    -fx-text-fill: -foreground-secondary;
     -fx-alignment: center-right;
     -fx-font-family: Arial;
     -fx-font-size: 24px;
 }
 
-.label-like-list-view .list-cell:odd {
-    -fx-background-color: transparent;
-}
-
 .label-like-list-view .list-cell:even {
     -fx-background-color: transparent;
+    -fx-text-fill: -foreground-secondary;
+}
+
+.label-like-list-view .list-cell:odd {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
 }
 
 .label-like-list-view .list-cell:selected {

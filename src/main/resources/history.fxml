@@ -29,12 +29,12 @@
                 <ListView fx:id="listHistory" styleClass="label-like-list-view" prefHeight="291.0" prefWidth="542.0"/>
                 <HBox prefHeight="100.0" prefWidth="200.0">
 
-                        <Button mnemonicParsing="false" styleClass="button-history" text="Save">
+                        <Button fx:id="saveFile" mnemonicParsing="false" styleClass="button-history" text="Save">
                             <HBox.margin>
                                 <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" styleClass="button-history" text="Load">
+                        <Button fx:id="loadFile" mnemonicParsing="false" styleClass="button-history" text="Load">
                             <HBox.margin>
                                 <Insets right="10.0" top="10.0" />
                             </HBox.margin>
