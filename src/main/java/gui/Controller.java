@@ -53,7 +53,6 @@ public class Controller {
     @FXML
     private GridPane mainPane;
 
-    private Parent historyPage;
     private Stage stage;
     private HistoryController historyController;
 
@@ -81,7 +80,7 @@ public class Controller {
         expressionHistory.setOnAction(event -> moveToHistory());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
-        historyPage = loader.load();
+        Parent historyPage = loader.load();
         historyController = loader.getController();
         stage = new Stage();
         Scene scene = new Scene(historyPage, 600, 400);

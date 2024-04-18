@@ -9,11 +9,11 @@
 
 
 <Pane fx:id="pane" fx:controller="gui.HistoryController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
+
         <VBox layoutX="31.0" layoutY="32.0" prefHeight="349.0" prefWidth="541.0">
-            <children>
+
                 <HBox prefHeight="90.0" prefWidth="542.0">
-                    <children>
+
                         <Button fx:id="wholeHistory" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="26.0" prefWidth="155.0" styleClass="button-history" stylesheets="@styling.css" text="History">
                             <HBox.margin>
                                 <Insets top="20.0" />
@@ -24,11 +24,11 @@
                                 <Insets top="20.0" />
                             </HBox.margin>
                         </Button>
-                    </children>
+
                 </HBox>
                 <ListView fx:id="listHistory" styleClass="list-view" prefHeight="291.0" prefWidth="542.0"/>
                 <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
+
                         <Button mnemonicParsing="false" styleClass="button-history" text="Save">
                             <HBox.margin>
                                 <Insets right="10.0" top="10.0" />
@@ -49,9 +49,9 @@
                                 <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                    </children>
+
                 </HBox>
-            </children>
+
         </VBox>
-    </children>
+
 </Pane>

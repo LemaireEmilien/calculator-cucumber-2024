@@ -21,11 +21,11 @@
         <padding>
             <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
         </padding>
-        <children>
+
         <HBox prefHeight="100.0" prefWidth="336.0">
-            <children>
+
                 <Button fx:id="expressionHistory" mnemonicParsing="false" styleClass="button-operator" text="History" />
-            </children>
+
         </HBox>
         <Label fx:id="history" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" layoutX="284.0" layoutY="58.0" prefHeight="272.0" prefWidth="336.0" styleClass="label-secondary" stylesheets="@styling.css" text="6+54" textAlignment="RIGHT">
             <font>
@@ -97,7 +97,7 @@
                 </font>
             </Button>
         </GridPane>
-        </children>
+
     </VBox>
    <ChoiceBox fx:id="typeBox" stylesheets="@styling.css">
       <cursor>

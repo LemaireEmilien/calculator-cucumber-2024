@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 @Getter
@@ -31,21 +29,14 @@ public class HistoryController {
     private void initialize() {
         wholeHistory.setDisable(true);
 
-        wholeHistory.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                wholeHistory.setDisable(true);
-                expressionUsable.setDisable(false);
-            }
+        wholeHistory.setOnAction(event -> {
+            wholeHistory.setDisable(true);
+            expressionUsable.setDisable(false);
         });
 
-        expressionUsable.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                wholeHistory.setDisable(false);
-                expressionUsable.setDisable(true);
-            }
+        expressionUsable.setOnAction(event -> {
+            wholeHistory.setDisable(false);
+            expressionUsable.setDisable(true);
         });
     }
 
