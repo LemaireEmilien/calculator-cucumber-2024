@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -32,6 +33,8 @@ public class Controller {
     private Button expressionHistory;
     @FXML
     private ChoiceBox<CalculatorType> typeBox;
+    @FXML
+    private Slider precisionSlider;
     @FXML
     private Label currentExpression;
     @FXML
@@ -68,6 +71,7 @@ public class Controller {
     private void initialize() throws IOException {
         typeBox.getItems().setAll(CalculatorType.values());
         typeBox.setValue(CalculatorType.INTEGER);
+        precisionSlider.setValue(MyBigNumber.getPrecision());
         for (int i = 0; i < 9; i++) {
             final String s = String.valueOf(i + 1);
             Button b = new Button(s);
@@ -87,6 +91,8 @@ public class Controller {
         optionAnswer.setOnAction(event -> addCharacter("ans"));
         optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
+        //precisionSlider.setOnDragDone(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
+        precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));

@@ -26,7 +26,7 @@ public class MyBigNumber extends Value<BigDecimal> {
             return val.toString();
         }
         else {
-            return val.setScale(precision, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+            return val.setScale(getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
         }
 
     }
@@ -65,7 +65,7 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public Value<BigDecimal> div(Value<BigDecimal> other) {
-        return new MyBigNumber(this.val.divide(other.getVal(), precision, RoundingMode.HALF_UP).stripTrailingZeros());
+        return new MyBigNumber(this.val.divide(other.getVal(), getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros());
     }
 
     @Override

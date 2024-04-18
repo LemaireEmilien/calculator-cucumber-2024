@@ -13,6 +13,11 @@
                <children>
                   <ChoiceBox fx:id="typeBox" prefWidth="150.0" />
                   <Button fx:id="expressionHistory" mnemonicParsing="false" styleClass="button-operator" text="History" />
+                  <Slider fx:id="precisionSlider" blockIncrement="1.0" majorTickUnit="2.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="10.0">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Slider>
                </children>
             </HBox>
             <Label fx:id="history" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" layoutX="284.0" layoutY="58.0" prefHeight="272.0" prefWidth="336.0" styleClass="label-secondary" stylesheets="@styling.css">
