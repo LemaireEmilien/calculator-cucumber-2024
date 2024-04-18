@@ -26,7 +26,7 @@
                         </Button>
 
                 </HBox>
-                <ListView fx:id="listHistory" styleClass="list-view" prefHeight="291.0" prefWidth="542.0"/>
+                <ListView fx:id="listHistory" styleClass="label-like-list-view" prefHeight="291.0" prefWidth="542.0"/>
                 <HBox prefHeight="100.0" prefWidth="200.0">
 
                         <Button mnemonicParsing="false" styleClass="button-history" text="Save">

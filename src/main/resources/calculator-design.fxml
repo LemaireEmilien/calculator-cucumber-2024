@@ -7,13 +7,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.HBox?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyboard" prefHeight="800.0" prefWidth="400.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<?import javafx.scene.control.ListView?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyboard" prefHeight="800.0" prefWidth="400.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
     <VBox alignment="TOP_RIGHT" layoutY="1.0" maxHeight="800.0" prefHeight="800.0" prefWidth="400.0" spacing="20.0">
         <opaqueInsets>
             <Insets />
@@ -23,16 +24,27 @@
         </padding>
 
         <HBox prefHeight="100.0" prefWidth="336.0">
+         <ChoiceBox fx:id="typeBox" stylesheets="@styling.css">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor>
+         </ChoiceBox>
 
-                <Button fx:id="expressionHistory" mnemonicParsing="false" styleClass="button-operator" text="History" />
+                <Button fx:id="expressionHistory" mnemonicParsing="false" styleClass="button-operator" text="History">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin></Button>
 
         </HBox>
-        <Label fx:id="history" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" layoutX="284.0" layoutY="58.0" prefHeight="272.0" prefWidth="336.0" styleClass="label-secondary" stylesheets="@styling.css" text="6+54" textAlignment="RIGHT">
-            <font>
-                <Font name="Arial" size="24.0" />
-            </font>
-        </Label>
-        <Label fx:id="currentExpression" layoutX="284.0" layoutY="74.0" styleClass="label-primary" stylesheets="@styling.css" text="10">
+
+        <ListView fx:id="history" layoutX="284.0" layoutY="58.0" prefHeight="272.0" maxHeight="Infinity" prefWidth="334.0" styleClass="label-like-list-view" stylesheets="@styling.css">
+<!--            <font>-->
+<!--                <Font name="Arial" size="24.0" />-->
+<!--            </font>-->
+        </ListView>
+
+
+        <Label fx:id="currentExpression" layoutX="284.0" layoutY="74.0" styleClass="label-primary" stylesheets="@styling.css" wrapText="true">
             <font>
                 <Font name="Arial" size="32.0" />
             </font>
@@ -99,9 +111,4 @@
         </GridPane>
 
     </VBox>
-   <ChoiceBox fx:id="typeBox" stylesheets="@styling.css">
-      <cursor>
-         <Cursor fx:constant="DEFAULT" />
-      </cursor>
-   </ChoiceBox>
 </Pane>

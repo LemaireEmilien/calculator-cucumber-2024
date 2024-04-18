@@ -8,9 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -33,7 +31,7 @@ public class Controller {
     @FXML
     private Label currentExpression;
     @FXML
-    private Label history;
+    private ListView<String> history;
     @FXML
     private Button operatorEquals;
     @FXML
@@ -78,6 +76,7 @@ public class Controller {
         operatorEquals.setOnAction(event -> evaluate());
         optionAnswer.setOnAction(event -> addCharacter("ans"));
         expressionHistory.setOnAction(event -> moveToHistory());
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
         Parent historyPage = loader.load();
@@ -131,11 +130,11 @@ public class Controller {
         }
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
-            history.setText(history.getText() + "\n" + c.eval(e).getVal().toString());
+            history.getItems().add(c.eval(e).getVal().toString());
             historyController.getListHistory().getItems().add(currentExpression.getText());
             currentExpression.setText("");
+            history.scrollTo(history.getItems().size()-1);
         }
-
     }
 
     private void moveToHistory() {
