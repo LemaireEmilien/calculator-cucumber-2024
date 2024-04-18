@@ -1,7 +1,5 @@
 package calculator.memory;
 
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListSaver {

@@ -132,8 +132,9 @@ public class Controller {
         if (!currentExpression.getText().isEmpty()) {
             history.getItems().add(currentExpression.getText());
             history.getItems().add(c.eval(e).getVal().toString());
-            historyController.getListHistory().getItems().add(currentExpression.getText());
-            historyController.getListHistory().getItems().add(c.eval(e).getVal().toString());
+            historyController.getListRecentHistory().add(currentExpression.getText());
+            historyController.getListRecentHistory().add(c.eval(e).getVal().toString());
+            historyController.update();
             currentExpression.setText("");
             history.scrollTo(history.getItems().size()-1);
         }
