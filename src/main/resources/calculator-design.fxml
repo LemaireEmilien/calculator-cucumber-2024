@@ -85,7 +85,7 @@
                         <Font name="Arial" size="32.0" />
                      </font>
                   </Button>
-                  <Button fx:id="optionDegRad" mnemonicParsing="false" styleClass="button-option" text="Deg/Rad">
+                  <Button fx:id="optionDegRad" mnemonicParsing="false" styleClass="button-option" text="Rad">
                      <font>
                         <Font name="Arial" size="11.0" />
                      </font>

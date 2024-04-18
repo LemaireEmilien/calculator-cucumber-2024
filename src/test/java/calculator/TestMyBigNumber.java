@@ -53,6 +53,12 @@ class TestMyBigNumber {
         //assertEquals("1E+15", new MyBigNumber(value3).toString()); // This test fails because the function toString of BigDecimal is wrong
         assertEquals("1E-13", new MyBigNumber(value4).toString());
 
+//        MyBigNumber.setPrecision(5);
+//        assertEquals("3.14159", myBigNumber.toString());
+//
+//        MyBigNumber.setPrecision(2);
+//        assertEquals("3.14", myBigNumber.toString());
+
     }
 
     @Test

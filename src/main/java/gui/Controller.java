@@ -3,6 +3,7 @@ package gui;
 import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
+import calculator.operand.MyBigNumber;
 import calculator.parser.Parser;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @Slf4j
 public class Controller {
@@ -97,7 +99,19 @@ public class Controller {
     }
 
     private void convertDegToRad() {
-        //todo
+        if (optionDegRad.getText().equals("Deg")) {
+            optionDegRad.setText("Rad");
+            MyBigNumber rad = new MyBigNumber(new BigDecimal(currentExpression.getText()));
+            MyBigNumber deg = new MyBigNumber(new BigDecimal(rad.radToDeg().toString()));
+            currentExpression.setText(deg.toString());
+        }
+        else {
+            optionDegRad.setText("Deg");
+            MyBigNumber deg = new MyBigNumber(new BigDecimal(currentExpression.getText()));
+            MyBigNumber rad = new MyBigNumber(new BigDecimal(deg.degToRad().toString()));
+            currentExpression.setText(rad.toString());
+        }
+
     }
 
     @FXML
