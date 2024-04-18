@@ -123,8 +123,7 @@ public class Controller {
             case INTEGER -> evaluateT(Parser::stringToInteger);
             case RATIONAL -> {
             } //todo
-            case REAL -> {
-            } //todo
+            case REAL -> evaluateT(Parser::stringToBigDecimal);
         }
     }
 
