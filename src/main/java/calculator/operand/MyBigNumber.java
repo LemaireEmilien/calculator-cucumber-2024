@@ -1,5 +1,6 @@
 package calculator.operand;
 
+import calculator.MyNaN;
 import calculator.Value;
 
 import java.util.Objects;
@@ -65,6 +66,10 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public Value<BigDecimal> div(Value<BigDecimal> other) {
+        //If the denominator is zero, return NaN
+        if (other.getVal().compareTo(BigDecimal.ZERO) == 0) {
+            return new MyNaN<>();
+        }
         return new MyBigNumber(this.val.divide(other.getVal(), getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros());
     }
 

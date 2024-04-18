@@ -20,6 +20,7 @@ class TestMyBigNumber {
 
     @BeforeEach
     void setUp() {
+        MyBigNumber.setPrecision(10);
         myBigNumber = new MyBigNumber(value);
     }
 
@@ -101,7 +102,8 @@ class TestMyBigNumber {
             expression = parser.parse("0.0000000000001 + 1e-13", Parser::stringToBigDecimal);
             assertEquals(new MyBigNumber(new BigDecimal("2e-13")), calculator.eval(expression));
 
-
+            expression = parser.parse("42 / 0", Parser::stringToBigDecimal);
+            assertEquals(new MyNaN<>(), calculator.eval(expression));
 
         }catch (IllegalExpression e){
             fail();
