@@ -28,7 +28,7 @@ public class GuiApplication extends Application {
         stage.show();
         stage.setOnCloseRequest(windowEvent -> {
             try {
-                ExpressionFileHandler.saveExpressionsAuto(ListSaver.listToSave,"/recentHistory.txt");
+                ExpressionFileHandler.saveExpressionsAuto(ListSaver.listToSave, "recentHistory.txt");
             } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }

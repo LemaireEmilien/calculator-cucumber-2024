@@ -50,8 +50,8 @@ public class HistoryController {
         listFavoriteExpressions = new ArrayList<>();
         listRecentHistory = new ArrayList<>();
 
-        listFavoriteExpressions = ExpressionFileHandler.loadExpressionsAuto("/favoriteExpressions.txt");
-        listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("/recentHistory.txt");
+        listFavoriteExpressions = ExpressionFileHandler.loadExpressionsAuto("favoriteExpressions.txt");
+        listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
 
         ListSaver.saveListToFile(listRecentHistory);
         ObservableList<String> observableList = FXCollections.observableArrayList(Objects.requireNonNull(listRecentHistory));

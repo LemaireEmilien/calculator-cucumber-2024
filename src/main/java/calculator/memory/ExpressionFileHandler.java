@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ExpressionFileHandler {
+
     public static void saveExpressions(List<String> expressions, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Expressions File");
@@ -27,7 +28,8 @@ public class ExpressionFileHandler {
     }
 
     public static void saveExpressionsAuto(List<String> expressions,String nameFile) throws URISyntaxException {
-        File file = new File(Paths.get(Objects.requireNonNull(ExpressionFileHandler.class.getResource(nameFile)).toURI()).toString());
+
+        File file = new File(Objects.requireNonNull(getSourcePath(nameFile)));
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String expression : expressions) {
                 writer.write(expression);
@@ -38,11 +40,17 @@ public class ExpressionFileHandler {
         }
     }
 
-
-
     public static List<String> loadExpressionsAuto(String nameFile) throws URISyntaxException {
-        File file = new File(Paths.get(Objects.requireNonNull(ExpressionFileHandler.class.getResource(nameFile)).toURI()).toString());
+        File file = new File(Objects.requireNonNull(getSourcePath(nameFile)));
         return getStrings(file);
+    }
+
+    public static List<String> loadExpressions(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        return getStrings(selectedFile);
     }
 
     private static List<String> getStrings(File file) {
@@ -53,9 +61,7 @@ public class ExpressionFileHandler {
             while ((line = reader.readLine()) != null) {
                 expressions.add(line);
             }
-
             reader.close();
-
             return expressions;
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,12 +69,15 @@ public class ExpressionFileHandler {
         }
     }
 
-    public static List<String> loadExpressions(Stage stage) {
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open File");
-        File selectedFile = fileChooser.showOpenDialog(stage);
-
-        return getStrings(selectedFile);
+    public static String getSourcePath(String namefile) {
+        String projectRoot;
+        try {
+            projectRoot = new File(".").getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return Paths.get(projectRoot, "src/main/java/calculator/memory/files/",namefile).toString();
     }
+
 }
