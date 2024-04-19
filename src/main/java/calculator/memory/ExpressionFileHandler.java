@@ -40,7 +40,7 @@ public class ExpressionFileHandler {
         }
     }
 
-    public static List<String> loadExpressionsAuto(String nameFile) throws URISyntaxException {
+    public static List<String> loadExpressionsAuto(String nameFile){
         File file = new File(Objects.requireNonNull(getSourcePath(nameFile)));
         return getStrings(file);
     }
