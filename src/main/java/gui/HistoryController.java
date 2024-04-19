@@ -46,7 +46,7 @@ public class HistoryController {
     private Stage stage;
 
     @FXML
-    private void initialize() throws URISyntaxException {
+    private void initialize() {
         listFavoriteExpressions = new ArrayList<>();
         listRecentHistory = new ArrayList<>();
 
