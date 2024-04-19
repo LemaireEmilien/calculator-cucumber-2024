@@ -46,7 +46,7 @@ public class MyBigNumber extends Value<BigDecimal> {
 
     @Override
     public int hashCode() {
-        return 0;
+        return this.val.hashCode();
     }
 
     @Override

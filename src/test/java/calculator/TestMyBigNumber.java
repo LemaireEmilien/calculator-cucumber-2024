@@ -41,6 +41,11 @@ class TestMyBigNumber {
     }
 
     @Test
+    void testHashCode() {
+        assertEquals(value.hashCode(), myBigNumber.hashCode());
+    }
+
+    @Test
     void testToString() {
         BigDecimal value1 = new BigDecimal("1e3");
         BigDecimal value2 = new BigDecimal("1e12");
@@ -83,6 +88,9 @@ class TestMyBigNumber {
 
             expression = parser.parse("(3  5  4 6 )*", Parser::stringToBigDecimal);
             assertEquals(new MyBigNumber(360), calculator.eval(expression));
+
+            expression = parser.parse("(18 7 3 2)-", Parser::stringToBigDecimal);
+            assertEquals(new MyBigNumber(6), calculator.eval(expression));
 
             expression = parser.parse("10000000000000", Parser::stringToBigDecimal);
             //assertEquals(new MyBigNumber(new BigDecimal("1E13")), calculator.eval(expression));  // This test fails because the function toString of BigDecimal is wrong
