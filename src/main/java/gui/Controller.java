@@ -65,7 +65,6 @@ public class Controller {
 
     private Stage stage;
 
-    private HistoryController historyController;
 
     @FXML
     private void initialize() throws IOException {
@@ -93,15 +92,6 @@ public class Controller {
         expressionHistory.setOnAction(event -> moveToHistory());
         //precisionSlider.setOnDragDone(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
         precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
-
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
-        Parent historyPage = loader.load();
-        historyController = loader.getController();
-        stage = new Stage();
-        Scene scene = new Scene(historyPage, 600, 400);
-        stage.setTitle("History");
-        stage.setScene(scene);
     }
 
     private void convertDegToRad() {
@@ -167,8 +157,6 @@ public class Controller {
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
             String r =c.eval(e).getVal().toString();
-            historyController.getListHistory().getItems().add(currentExpression.getText());
-            log.debug("{}", historyController.getListHistory().getItems().toString());
             history.setText(history.getText() + "\n" + r);
             currentExpression.setText(r);
         }
