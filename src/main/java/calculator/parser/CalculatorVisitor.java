@@ -1,4 +1,4 @@
-package calculator.parser;// Generated from C:/Users/sacry_000/Documents/Git/calculator-cucumber-2024/src/main/antlr4/Calculator.g4 by ANTLR 4.13.1
+package calculator.parser;// Generated from Calculator.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
+@SuppressWarnings("all")
 public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	/**
 	 * Visit a parse tree produced by {@link CalculatorParser#init}.
@@ -99,6 +100,12 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAtom(CalculatorParser.AtomContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#rational}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRational(CalculatorParser.RationalContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CalculatorParser#scientific}.
 	 * @param ctx the parse tree

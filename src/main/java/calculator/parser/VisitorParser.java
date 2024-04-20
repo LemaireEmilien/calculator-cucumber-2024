@@ -80,8 +80,7 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             return createOperation(op, insideExpression);
         } else {
             List<Expression<T>> insideExpression = new ArrayList<>();
-            for (
-                    var expr : ctx.expression()) {
+            for (var expr : ctx.expression()) {
                 insideExpression.add(visit(expr));
             }
             return createOperation("*", insideExpression);
@@ -91,6 +90,7 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
     @Override
     public Expression<T> visitPowExpression(CalculatorParser.PowExpressionContext ctx) {
         log.trace("Visit pow expression : {}", ctx.getText());
+
         if (ctx.children.size() == 1) {
             // signedAtom
             return visit(ctx.signedAtom());
@@ -107,6 +107,7 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
     @Override
     public Expression<T> visitPostfix_expression(CalculatorParser.Postfix_expressionContext ctx) {
         log.trace("Visit postfix expression : {}", ctx.getText());
+
         if (ctx.children.size() == 1) {
             // postfix_multiplyingExpression
             return visit(ctx.signedAtom());
@@ -116,6 +117,7 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             for (var expr : ctx.postfix_expression()) {
                 insideExpression.add(visit(expr));
             }
+
             String op = ctx.children.getLast().getText();
             return createOperation(op, insideExpression);
         }
@@ -134,6 +136,7 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             for (var expr : ctx.prefix_expression()) {
                 insideExpression.add(visit(expr));
             }
+
             String op = ctx.children.getFirst().getText();
             return createOperation(op, insideExpression);
         }
@@ -232,4 +235,13 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
         return expr;
     }
 
+    @Override
+    public Expression<T> visitRational(CalculatorParser.RationalContext ctx) {
+        String text = ctx.getText();
+        log.trace("Visit Rational : {}", text);
+        Expression<T> expr = baseParser.fromString(text);
+        log.trace("base {}", expr);
+        return expr;
+    }
 }
+

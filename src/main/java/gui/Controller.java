@@ -8,9 +8,6 @@ import calculator.operand.MyBigNumber;
 import calculator.parser.Parser;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
@@ -20,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -205,8 +201,7 @@ public class Controller {
     private void evaluate() {
         switch (typeBox.getValue()) {
             case INTEGER -> evaluateT(Parser::stringToInteger);
-            case RATIONAL -> {
-            } //todo
+            case RATIONAL -> evaluateT(Parser::stringToRational);
             case REAL -> evaluateT(Parser::stringToBigDecimal);
         }
     }
