@@ -20,7 +20,17 @@ public class GuiApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/calculator-design.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/calculator-design.fxml"));
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/history.fxml"));
+        Parent root = loader.load();
+        Parent historyPage = loader2.load();
+        Controller controller = loader.getController();
+        HistoryController historyController = loader2.getController();
+
+        controller.setHistoryController(historyController);
+        historyController.setController(controller);
+
+
 
         Scene scene = new Scene(root, 400, 800);
         stage.setTitle("Calculator App");
@@ -33,5 +43,11 @@ public class GuiApplication extends Application {
                 throw new RuntimeException(e);
             }
         });
+
+        Stage stageHistory = new Stage();
+        stageHistory.setTitle("History");
+        stageHistory.setScene(new Scene(historyPage,600,400));
+
+        controller.setStage(stageHistory);
     }
 }

@@ -3,23 +3,27 @@ package gui;
 import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
+import calculator.memory.ExpressionFileHandler;
 import calculator.parser.Parser;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 public class Controller {
+
+
 
     private enum CalculatorType{
         INTEGER, RATIONAL, REAL
@@ -28,6 +32,8 @@ public class Controller {
     private ChoiceBox<CalculatorType> typeBox;
     @FXML
     private Button expressionHistory;
+    @Getter
+    @Setter
     @FXML
     private Label currentExpression;
     @FXML
@@ -50,8 +56,9 @@ public class Controller {
     private Button optionAnswer;
     @FXML
     private GridPane mainPane;
-
+    @Setter
     private Stage stage;
+    @Setter
     private HistoryController historyController;
 
     @FXML
@@ -77,14 +84,9 @@ public class Controller {
         optionAnswer.setOnAction(event -> addCharacter("ans"));
         expressionHistory.setOnAction(event -> moveToHistory());
 
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
-        Parent historyPage = loader.load();
-        historyController = loader.getController();
-        stage = new Stage();
-        Scene scene = new Scene(historyPage, 600, 400);
-        stage.setTitle("History");
-        stage.setScene(scene);
+        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        history.setItems(FXCollections.observableArrayList(listRecentHistory));
+        history.scrollTo(history.getItems().size()-1);
     }
 
     @FXML
@@ -142,5 +144,9 @@ public class Controller {
 
     private void moveToHistory() {
         stage.show();
+    }
+
+    public void setLabelCurrent(String expression){
+        currentExpression.setText(currentExpression.getText() + expression);
     }
 }

@@ -39,17 +39,29 @@
                                 <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" styleClass="button-history" text="Clear">
-                            <HBox.margin>
-                                <Insets right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" styleClass="button-history" text="Add">
+                        <Button fx:id="clearButton" mnemonicParsing="false" styleClass="button-history" text="Clear">
                             <HBox.margin>
                                 <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
 
+                        <Button fx:id="removeButton" mnemonicParsing="false" styleClass="button-history" text="Remove">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+
+                        <Button fx:id="addButton" mnemonicParsing="false" styleClass="button-history" text="Add To Favorite">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+
+                        <Button fx:id="useButton" mnemonicParsing="false" styleClass="button-history" text="Use in calculator">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
                 </HBox>
 
         </VBox>
