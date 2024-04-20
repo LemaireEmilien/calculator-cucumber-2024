@@ -4,10 +4,15 @@ import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
 import calculator.memory.ExpressionFileHandler;
+import calculator.operand.MyBigNumber;
 import calculator.parser.Parser;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -15,25 +20,29 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+
 @Slf4j
 public class Controller {
-
-
-
-    private enum CalculatorType{
+    private enum CalculatorType {
         INTEGER, RATIONAL, REAL
     }
-    @FXML
-    private ChoiceBox<CalculatorType> typeBox;
+
     @FXML
     private Button expressionHistory;
+    @FXML
+    private ChoiceBox<CalculatorType> typeBox;
     @Getter
     @Setter
+    @FXML
+    private Slider precisionSlider;
     @FXML
     private Label currentExpression;
     @FXML
@@ -50,6 +59,7 @@ public class Controller {
     private Button operatorDivide;
     @FXML
     private Button digitZero;
+
     @FXML
     private Button optionUndo;
     @FXML
@@ -59,6 +69,9 @@ public class Controller {
     @FXML
     private Button redo;
     @FXML
+    private Button optionDegRad;
+
+    @FXML
     private GridPane mainPane;
     @Setter
     private Stage stage;
@@ -66,9 +79,10 @@ public class Controller {
     private HistoryController historyController;
 
     @FXML
-    private void initialize(){
+    private void initialize()throws IOException {
         typeBox.getItems().setAll(CalculatorType.values());
         typeBox.setValue(CalculatorType.INTEGER);
+        precisionSlider.setValue(MyBigNumber.getPrecision());
         for (int i = 0; i < 9; i++) {
             final String s = String.valueOf(i + 1);
             Button b = new Button(s);
@@ -86,6 +100,8 @@ public class Controller {
         optionUndo.setOnAction(event -> removeCharacter());
         operatorEquals.setOnAction(event -> evaluate());
         optionAnswer.setOnAction(event -> addCharacter("ans"));
+        expressionHistory.setOnAction(event -> moveToHistory());
+        optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
 
         List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
@@ -148,6 +164,19 @@ public class Controller {
 
     }
 
+    private void convertDegToRad() {
+        if (optionDegRad.getText().equals("Deg")) {
+            optionDegRad.setText("Rad");
+            MyBigNumber rad = new MyBigNumber(new BigDecimal(currentExpression.getText()));
+            MyBigNumber deg = new MyBigNumber(new BigDecimal(rad.radToDeg().toString()));
+            currentExpression.setText(deg.toString());
+        } else {
+            optionDegRad.setText("Deg");
+            MyBigNumber deg = new MyBigNumber(new BigDecimal(currentExpression.getText()));
+            MyBigNumber rad = new MyBigNumber(new BigDecimal(deg.degToRad().toString()));
+            currentExpression.setText(rad.toString());
+        }
+    }
     @FXML
     private void handleKeyboard(KeyEvent event) {
         log.trace("Key pressed: {}", event.getCode());
@@ -159,6 +188,7 @@ public class Controller {
             addCharacter(event.getText());
         }
     }
+
     private void addCharacter(String character) {
         currentExpression.setTextFill(Color.WHITE);
         currentExpression.setText(currentExpression.getText() + character);
@@ -172,14 +202,16 @@ public class Controller {
         }
     }
 
-    private void evaluate(){
-        switch (typeBox.getValue()){
+    private void evaluate() {
+        switch (typeBox.getValue()) {
             case INTEGER -> evaluateT(Parser::stringToInteger);
-            case RATIONAL -> {} //todo
-            case REAL -> {} //todo
+            case RATIONAL -> {
+            } //todo
+            case REAL -> evaluateT(Parser::stringToBigDecimal);
         }
     }
-    private<T> void evaluateT(Parser.From<T> parser) {
+
+    private <T> void evaluateT(Parser.From<T> parser) {
         Parser<T> p = new Parser<>();
         Expression<T> e;
         try {
@@ -191,12 +223,13 @@ public class Controller {
         }
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
+            String r =c.eval(e).getVal().toString();
             history.getItems().add(currentExpression.getText());
             history.getItems().add(c.eval(e).getVal().toString());
             historyController.getListRecentHistory().add(currentExpression.getText());
-            historyController.getListRecentHistory().add(c.eval(e).getVal().toString());
+            historyController.getListRecentHistory().add(r);
             historyController.update();
-            currentExpression.setText("");
+            currentExpression.setText(r);
             history.scrollTo(history.getItems().size()-1);
         }
     }
