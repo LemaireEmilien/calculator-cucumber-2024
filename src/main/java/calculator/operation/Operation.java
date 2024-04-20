@@ -19,19 +19,18 @@ import java.util.List;
  * @see Expression
  * @see MyNumber
  */
+@Getter
 public abstract class Operation<T> implements Expression<T> {
     /**
      * The list of expressions passed as an argument to the arithmetic operation
      * -- GETTER --
      * getter method to return the number of arguments of an arithmetic operation.
      */
-    @Getter
     public List<Expression<T>> args;
 
     /**
      * The character used to represent the arithmetic operation (e.g. "+", "*")
      */
-    @Getter
     protected String symbol;
 
     /**

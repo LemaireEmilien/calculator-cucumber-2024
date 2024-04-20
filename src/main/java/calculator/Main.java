@@ -1,5 +1,6 @@
 package calculator;
 
+import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
 import calculator.operation.Divides;
 import calculator.operation.Minus;
@@ -8,6 +9,7 @@ import calculator.operation.Times;
 import calculator.parser.Parser;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +63,24 @@ public class Main {
 //            Collections.addAll(params4, new Plus<>(params), new Minus<>(params2), new MyNumber(5));
 //            e = new Divides<>(params4);
 //            c.print(e, Notation.POSTFIX);
+//
+//            BigDecimal value1 = new BigDecimal("3.556454");
+//            BigDecimal value2 = new BigDecimal("4.556454");
+//            BigDecimal value3 = new BigDecimal("10e10");
+//            Expression<BigDecimal> e2;
+//            List<Expression<BigDecimal>> params5 = new ArrayList<>();
+//            Collections.addAll(params5, new MyBigNumber(value1), new MyBigNumber(value3));
+//            e2 = new Plus<>(params5);
+//            Calculator<BigDecimal> c2 = new Calculator<>();
+//            c2.print(e2);
+//
+//            List<Expression<BigDecimal>> params6 = new ArrayList<>();
+//            Collections.addAll(params6, new MyBigNumber(value1), new MyBigNumber(8));
+//            e2 = new Minus<>(params6);
+//            c2.print(e2);
+
+
+
         } catch ( IllegalExpression exception) {
             log.error("cannot create operations without parameters {}", exception);
         }

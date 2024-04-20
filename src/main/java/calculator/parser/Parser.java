@@ -4,6 +4,7 @@ import calculator.Expression;
 import calculator.IllegalExpression;
 import calculator.Rational;
 import calculator.Value;
+import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
 import calculator.operand.MyRational;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Slf4j
@@ -56,5 +59,8 @@ public class Parser<T> {
         }
         int n = Integer.parseInt(spliced[0]);
         return new MyRational(new Rational(n, d));
+    }
+    public static Value<BigDecimal> stringToBigDecimal(String s) {
+        return new MyBigNumber(new BigDecimal(s));
     }
 }

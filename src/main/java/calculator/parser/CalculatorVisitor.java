@@ -47,6 +47,48 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrefix_expression(CalculatorParser.Prefix_expressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#boolean_expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolean_expression(CalculatorParser.Boolean_expressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#implication}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImplication(CalculatorParser.ImplicationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#orExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrExpression(CalculatorParser.OrExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#xorExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXorExpression(CalculatorParser.XorExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#andExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndExpression(CalculatorParser.AndExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#notExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotExpression(CalculatorParser.NotExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#batom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBatom(CalculatorParser.BatomContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CalculatorParser#signedAtom}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

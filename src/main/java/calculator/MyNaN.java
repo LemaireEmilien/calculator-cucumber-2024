@@ -51,4 +51,29 @@ public class MyNaN<T> extends Value<T> {
     public Value<T> opposite() {
         return null;
     }
+
+    @Override
+    public Value<T> and(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> or(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> xor(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> implies(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> not() {
+        return null;
+    }
 }

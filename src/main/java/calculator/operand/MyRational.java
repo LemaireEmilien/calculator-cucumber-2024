@@ -1,5 +1,6 @@
 package calculator.operand;
 
+import calculator.MyNaN;
 import calculator.Rational;
 import calculator.Value;
 
@@ -64,6 +65,31 @@ public class MyRational extends Value<Rational> {
     @Override
     public Value<Rational> opposite() {
         return new MyRational(new Rational(-this.val.numerator(), this.val.denominator()));
+    }
+
+    @Override
+    public Value<Rational> and(Value<Rational> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> or(Value<Rational> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> xor(Value<Rational> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> implies(Value<Rational> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> not() {
+        return new MyNaN<>();
     }
 
     @Override
