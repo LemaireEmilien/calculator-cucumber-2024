@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -54,6 +55,10 @@ public class Controller {
     @FXML
     private Button optionAnswer;
     @FXML
+    private Button undo;
+    @FXML
+    private Button redo;
+    @FXML
     private GridPane mainPane;
     @Setter
     private Stage stage;
@@ -84,8 +89,63 @@ public class Controller {
         expressionHistory.setOnAction(event -> moveToHistory());
 
         List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        List<String> redoElements = new ArrayList<>();
         history.setItems(FXCollections.observableArrayList(listRecentHistory));
         history.scrollTo(history.getItems().size()-1);
+
+        undo.setOnAction(event -> {
+            if(!history.getItems().isEmpty()){
+                if(redo.isDisable()){
+                    redo.setDisable(false);
+                }
+                String expression = history.getItems().get(history.getItems().size()-2);
+                String result = history.getItems().getLast();
+                redoElements.add(expression);
+                redoElements.add(result);
+                historyController.getListRecentHistory().removeLast();
+                historyController.getListRecentHistory().removeLast();
+                historyController.update();
+                currentExpression.setText(expression);
+                listRecentHistory.remove(result);
+                listRecentHistory.remove(expression);
+                history.setItems(FXCollections.observableArrayList(listRecentHistory));
+            }
+            else if(!currentExpression.getText().isEmpty()){
+                currentExpression.setText("");
+                undo.setDisable(true);
+            }
+
+        });
+
+        redo.setOnAction(event -> {
+            if(listRecentHistory.isEmpty() && currentExpression.getText().isEmpty()){
+                currentExpression.setText(redoElements.get(redoElements.size()-2));
+            }
+            else {
+                if(undo.isDisable()){
+                    undo.setDisable(false);
+                }
+                String expression = redoElements.get(redoElements.size()-2);
+                String result = redoElements.getLast();
+                listRecentHistory.add(expression);
+                listRecentHistory.add(result);
+                historyController.getListRecentHistory().add(expression);
+                historyController.getListRecentHistory().add(result);
+                historyController.update();
+                redoElements.remove(expression);
+                redoElements.remove(result);
+                history.setItems(FXCollections.observableArrayList(listRecentHistory));
+                history.scrollTo(history.getItems().size() - 1);
+                if(!redoElements.isEmpty()) {
+                    currentExpression.setText(redoElements.get(redoElements.size() - 2));
+                }
+                else {
+                    redo.setDisable(true);
+                }
+            }
+
+        });
+
     }
 
     @FXML
