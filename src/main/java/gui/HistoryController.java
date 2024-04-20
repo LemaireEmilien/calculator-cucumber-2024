@@ -107,7 +107,7 @@ public class HistoryController {
         useButton.setOnAction(event -> controller.setLabelCurrent(listHistory.getSelectionModel().getSelectedItem()));
 
         addButton.setOnAction(event -> {
-            addButton.setVisible(false);
+
             int index = listHistory.getSelectionModel().getSelectedIndex();
             if(index % 2 == 0){
                 listFavoriteExpressions.add(listHistory.getSelectionModel().getSelectedItem());
@@ -118,19 +118,46 @@ public class HistoryController {
                 listFavoriteExpressions.add(listHistory.getSelectionModel().getSelectedItem());
 
             }
-            listHistory.setItems(FXCollections.observableArrayList(listFavoriteExpressions));
             wholeHistory.setDisable(false);
             expressionUsable.setDisable(true);
-            listHistory.scrollTo(listHistory.getItems().size() - 1);
+            updateFavoriteExpressions(listFavoriteExpressions);
+        });
 
-            ListSaver.saveListFavoriteToFile(listFavoriteExpressions);
-            try {
-                ExpressionFileHandler.saveExpressionsAuto(listFavoriteExpressions,"favoriteExpressions.txt");
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
+        removeButton.setOnAction(event -> {
+            int index = listHistory.getSelectionModel().getSelectedIndex();
+            if(wholeHistory.isDisable()){
+                removeExpression(listRecentHistory,index);
+                updateFavoriteExpressions(listRecentHistory);
+            }
+            else {
+                removeExpression(listFavoriteExpressions,index);
+                updateFavoriteExpressions(listFavoriteExpressions);
             }
         });
 
+    }
+
+    private void removeExpression(List<String> expressions,int index) {
+        expressions.remove(listHistory.getSelectionModel().getSelectedItem());
+        if(index % 2 == 0){
+            expressions.remove(listHistory.getItems().get(index+1));
+        }
+        else{
+            expressions.remove(listHistory.getItems().get(index-1));
+        }
+    }
+
+    private void updateFavoriteExpressions(List<String> list) {
+        listHistory.setItems(FXCollections.observableArrayList(list));
+        
+        listHistory.scrollTo(listHistory.getItems().size() - 1);
+
+        ListSaver.saveListFavoriteToFile(list);
+        try {
+            ExpressionFileHandler.saveExpressionsAuto(list,"favoriteExpressions.txt");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Stage getStage() {
