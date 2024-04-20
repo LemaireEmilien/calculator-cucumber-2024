@@ -12,4 +12,22 @@ public interface Operand<T> {
     Value<T> div(Value<T> other);
 
     Value<T> opposite();
+
+    Value<T> logarithm();
+
+    Value<T> naturalLog();
+
+    Value<T> squareRoot();
+
+    Value<T> sin();
+
+    Value<T> cos();
+
+    Value<T> tan();
+
+    Value<T> asin();
+
+    Value<T> acos();
+
+    Value<T> atan();
 }

@@ -1,6 +1,7 @@
 package calculator.operand;
 
 import calculator.Expression;
+import calculator.MyNaN;
 import calculator.Value;
 import calculator.operation.Operation;
 
@@ -90,5 +91,50 @@ public class MyNumber extends Value<Integer> {
     @Override
     public Value<Integer> opposite() {
         return new MyNumber(-this.getVal());
+    }
+
+    @Override
+    public Value<Integer> logarithm() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> naturalLog() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> squareRoot() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> sin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> cos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> tan() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> asin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> acos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> atan() {
+        return new MyNaN<>();
     }
 }

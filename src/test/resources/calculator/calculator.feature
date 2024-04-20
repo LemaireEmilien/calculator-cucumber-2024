@@ -14,27 +14,58 @@ Feature: Integer Arithmetic Expressions
 
   Scenario: Adding two integer numbers
     Given an integer operation '+'
-    When I provide a first number 4
-    And I provide a second number 5
-    Then the operation evaluates to 9
+    When I provide a first integer number 4
+    And I provide a second integer number 5
+    Then the operation evaluates to the integer 9
 
   Scenario: Subtracting two integer numbers
     Given an integer operation '-'
-    When I provide a first number 7
-    And I provide a second number 5
-    Then the operation evaluates to 2
+    When I provide a first integer number 7
+    And I provide a second integer number 5
+    Then the operation evaluates to the integer 2
 
   Scenario: Multiplying two integer numbers
     Given an integer operation '*'
-    When I provide a first number 7
-    And I provide a second number 5
-    Then the operation evaluates to 35
+    When I provide a first integer number 7
+    And I provide a second integer number 5
+    Then the operation evaluates to the integer 35
 
   Scenario: Dividing two integer numbers
     Given an integer operation '/'
-    When I provide a first number 7
-    And I provide a second number 5
-    Then the operation evaluates to 1
+    When I provide a first integer number 7
+    And I provide a second integer number 5
+    Then the operation evaluates to the integer 1
+
+  Scenario: Logarithm on one real numbers
+    Given a real operation 'log'
+    When I provide a first decimal number 100.0
+    Then the operation evaluates to the decimal 2
+
+  Scenario: Logarithm on one real numbers
+    Given a real operation 'ln'
+    When I provide a first decimal number 2.71828182845
+    Then the operation evaluates to the decimal 1
+
+  Scenario: Logarithm on one real numbers
+    Given a real operation 'sqrt'
+    When I provide a first decimal number 9.
+    Then the operation evaluates to the decimal 3
+
+  Scenario: Logarithm on one real numbers
+    Given a real operation 'cos'
+    When I provide a first decimal number 1.57079632679
+    Then the operation evaluates to the decimal 0
+
+  Scenario: Logarithm on one real numbers
+    Given a real operation 'sin'
+    When I provide a first decimal number 1.57079632679
+    Then the operation evaluates to the decimal 1
+
+  Scenario: Logarithm on one real numbers
+    Given a real operation 'tan'
+    When I provide a first decimal number 0.78539816339744
+    Then the operation evaluates to the decimal 1
+
     
   # This is an example of a scenario in which we provide a list of numbers as input.
   # (In fact, this is not entirely true, since what is given as input is a table of
@@ -52,9 +83,9 @@ Feature: Integer Arithmetic Expressions
   # The scenario will be executed with each of the provided inputs.
   Scenario Outline: Adding two integer numbers
     Given an integer operation '+'
-    When I provide a first number <n1>
-    And I provide a second number <n2>
-    Then the operation evaluates to <result>
+    When I provide a first integer number <n1>
+    And I provide a second integer number <n2>
+    Then the operation evaluates to the integer <result>
 
     Examples:
       | n1 | n2 | result |
@@ -63,9 +94,9 @@ Feature: Integer Arithmetic Expressions
 
   Scenario Outline: Dividing two integer numbers
     Given an integer operation '/'
-    When I provide a first number <n1>
-    And I provide a second number <n2>
-    Then the operation evaluates to <result>
+    When I provide a first integer number <n1>
+    And I provide a second integer number <n2>
+    Then the operation evaluates to the integer <result>
 
     Examples:
       | n1 | n2 | result |
@@ -75,9 +106,9 @@ Feature: Integer Arithmetic Expressions
 
   Scenario Outline: Evaluating arithmetic operations with two integer parameters
     Given an integer operation <op>
-    When I provide a first number <n1>
-    And I provide a second number <n2>
-    Then the operation evaluates to <result>
+    When I provide a first integer number <n1>
+    And I provide a second integer number <n2>
+    Then the operation evaluates to the integer <result>
 
     Examples:
       | op  | n1 | n2 | result |

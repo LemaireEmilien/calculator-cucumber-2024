@@ -49,6 +49,51 @@ public class MyNaN<T> extends Value<T> {
 
     @Override
     public Value<T> opposite() {
-        return null;
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> logarithm() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> naturalLog() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> squareRoot() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> sin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> cos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> tan() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> asin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> acos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> atan() {
+        return new MyNaN<>();
     }
 }

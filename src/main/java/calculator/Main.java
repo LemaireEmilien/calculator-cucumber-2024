@@ -2,10 +2,7 @@ package calculator;
 
 import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
-import calculator.operation.Divides;
-import calculator.operation.Minus;
-import calculator.operation.Plus;
-import calculator.operation.Times;
+import calculator.operation.*;
 import calculator.parser.Parser;
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,7 +76,18 @@ public class Main {
             e2 = new Minus<>(params6);
             c2.print(e2);
 
+            Expression<BigDecimal> e3;
+            List<Expression<BigDecimal>> params7 = new ArrayList<>();
+            Collections.addAll(params7, new MyBigNumber(100));
+            e3 = new Logarithm<>(params7);
+            c2.print(e3);
 
+            MyBigNumber.setPrecision(3);
+            MyBigNumber five = new MyBigNumber(5);
+            MyBigNumber five2 = new MyBigNumber(5.00001);
+            System.out.println(five.val);
+            System.out.println(five2.val);
+            System.out.println(five.equals(five2));
 
         } catch (IllegalConstruction | IllegalExpression exception) {
             log.error("cannot create operations without parameters {}", exception);

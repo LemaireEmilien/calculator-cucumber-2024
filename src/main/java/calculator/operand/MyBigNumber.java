@@ -2,12 +2,16 @@ package calculator.operand;
 
 import calculator.MyNaN;
 import calculator.Value;
+import ch.obermuhlner.math.big.BigDecimalMath;
+import lombok.extern.slf4j.Slf4j;
 
+import java.math.MathContext;
 import java.util.Objects;
 
 import java.math.RoundingMode;
 import java.math.BigDecimal;
 
+@Slf4j
 public class MyBigNumber extends Value<BigDecimal> {
 
     private static int precision = 10;
@@ -17,6 +21,10 @@ public class MyBigNumber extends Value<BigDecimal> {
     }
 
     public MyBigNumber(int value) {
+        super(BigDecimal.valueOf(value));
+    }
+
+    public MyBigNumber(double value) {
         super(BigDecimal.valueOf(value));
     }
 
@@ -41,7 +49,8 @@ public class MyBigNumber extends Value<BigDecimal> {
         if (!(o instanceof MyBigNumber)) {
             return false;
         }
-        return Objects.equals(this.val, ((MyBigNumber) o).val);
+
+        return Math.abs(this.val.doubleValue() - ((MyBigNumber) o).val.doubleValue()) < (Math.pow(10,-precision));
     }
 
     @Override
@@ -76,6 +85,60 @@ public class MyBigNumber extends Value<BigDecimal> {
     @Override
     public Value<BigDecimal> opposite() {
         return new MyBigNumber(this.val.negate());
+    }
+
+    @Override
+    public Value<BigDecimal> logarithm() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.log10(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> naturalLog() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.log(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> squareRoot() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.sqrt(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> sin() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.sin(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> cos() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.cos(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> tan() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.tan(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> asin() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.asin(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> acos() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.acos(this.val,mc));
+    }
+
+    @Override
+    public Value<BigDecimal> atan() {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.atan(this.val,mc));
     }
 
     public Value<BigDecimal> degToRad() {

@@ -51,7 +51,7 @@ public class Evaluator<T> extends Visitor<T> {
         //second loop to accumulate all the evaluated subresults
         Value<T> temp = evaluatedArgs.getFirst();
         int max = evaluatedArgs.size();
-        if (o instanceof Opposite<T>) {
+        if (max == 1) {
             temp = o.op(temp, null);
         }
         for (int counter = 1; counter < max; counter++) {

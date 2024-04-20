@@ -1,5 +1,6 @@
 package calculator;
 
+import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
 import calculator.operation.*;
 import io.cucumber.java.Before;
@@ -7,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +23,22 @@ public class CalculatorSteps {
     private Operation<Integer> op;
     private Calculator<Integer> c;
 
+    private ArrayList<Expression<BigDecimal>> params_dec;
+    private Operation<BigDecimal> op_dec;
+    private Calculator<BigDecimal> c_dec;
+
     @Before
     public void resetMemoryBeforeEachScenario() {
         params = null;
         op = null;
+        op_dec = null;
+        c_dec = null;
     }
 
     @Given("I initialise a calculator")
     public void givenIInitialiseACalculator() {
         c = new Calculator<>();
+        c_dec = new Calculator<>();
     }
 
     @Given("an integer operation {string}")
@@ -42,6 +51,32 @@ public class CalculatorSteps {
                 case "-" -> op = new Minus<>(params);
                 case "*" -> op = new Times<>(params);
                 case "/" -> op = new Divides<>(params);
+                default -> fail();
+            }
+        } catch (IllegalConstruction e) {
+            fail();
+        }
+    }
+
+    @Given("a real operation {string}")
+    public void givenARealOperation(String s) {
+        // Write code here that turns the phrase above into concrete actions
+        params_dec = new ArrayList<>(); // create an empty set of parameters to be filled in
+        try {
+            switch (s) {
+                case "+" -> op_dec = new Plus<>(params_dec);
+                case "-" -> op_dec = new Minus<>(params_dec);
+                case "*" -> op_dec = new Times<>(params_dec);
+                case "/" -> op_dec = new Divides<>(params_dec);
+                case "log" -> op_dec = new Logarithm<>(params_dec);
+                case "ln" -> op_dec = new NaturalLog<>(params_dec);
+                case "sqrt" -> op_dec = new SquareRoot<>(params_dec);
+                case "cos" -> op_dec = new Cos<>(params_dec);
+                case "sin" -> op_dec = new Sin<>(params_dec);
+                case "tan" -> op_dec = new Tan<>(params_dec);
+                case "acos" -> op_dec = new Acos<>(params_dec);
+                case "asin" -> op_dec = new Asin<>(params_dec);
+                case "atan" -> op_dec = new Atan<>(params_dec);
                 default -> fail();
             }
         } catch (IllegalConstruction e) {
@@ -122,12 +157,20 @@ public class CalculatorSteps {
         } else fail(notation + " is not a correct notation! ");
     }
 
-    @When("^I provide a (.*) number (\\d+)$")
+    @When("^I provide a (.*) integer number (\\d+)$")
     public void whenIProvideANumber(String s, int val) {
         //add extra parameter to the operation
         params = new ArrayList<>();
         params.add(new MyNumber(val));
         op.addMoreParams(params);
+    }
+
+    @When("^I provide a (.*) decimal number (\\d+.\\d*)$")
+    public void whenIProvideANumber(String s, float val) {
+        //add extra parameter to the operation
+        params_dec = new ArrayList<>();
+        params_dec.add(new MyBigNumber(BigDecimal.valueOf(val)));
+        op_dec.addMoreParams(params_dec);
     }
 
     @Then("^the (.*) is (\\d+)$")
@@ -146,9 +189,15 @@ public class CalculatorSteps {
         }
     }
 
-    @Then("the operation evaluates to {int}")
+    @Then("the operation evaluates to the integer {int}")
     public void thenTheOperationEvaluatesTo(int val) {
         assertEquals(new MyNumber(val), c.eval(op));
+    }
+
+    @Then("the operation evaluates to the decimal {double}")
+    public void thenTheOperationEvaluatesTo(double val) {
+        MyBigNumber.setPrecision(5);
+        assertEquals(new MyBigNumber(BigDecimal.valueOf(val)), c_dec.eval(op_dec));
     }
 
     @Then("the operation evaluates to NaN")
