@@ -19,6 +19,7 @@ public class Asin<T> extends Operation<T>  {
         super(elist);
         if (elist.size() > 1) throw new IllegalConstruction();
         symbol = "asin";
+        unary = true;
     }
 
     @Override

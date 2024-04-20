@@ -135,6 +135,7 @@ funcname
     | LOG
     | LN
     | SQRT
+    | MOD
     ;
 
 COS
@@ -171,6 +172,10 @@ LOG
 
 SQRT
     : 'sqrt'
+    ;
+
+MOD
+    : 'mod'
     ;
 
 LPAREN

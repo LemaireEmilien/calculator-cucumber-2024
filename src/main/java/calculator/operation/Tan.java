@@ -19,6 +19,7 @@ public class Tan<T> extends Operation<T>  {
         super(elist);
         if (elist.size() > 1) throw new IllegalConstruction();
         symbol = "tan";
+        unary = true;
     }
 
     @Override

@@ -19,6 +19,7 @@ public class Cos<T> extends Operation<T>  {
         super(elist);
         if (elist.size() > 1) throw new IllegalConstruction();
         symbol = "cos";
+        unary = true;
     }
 
     @Override

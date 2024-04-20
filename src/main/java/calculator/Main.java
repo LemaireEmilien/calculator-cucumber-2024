@@ -32,8 +32,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             Parser<Integer> a = new Parser<>();
-            //Expression<Integer> b = a.parse("!true", Parser::stringToInteger);
-            Expression<Integer> b = new Not<Integer>(List.of(new MyNumber(1)));
+            Expression<Integer> b = a.parse("mod(5,4)", Parser::stringToInteger);
             System.out.println(b);
 
             Expression<Integer> e;
@@ -90,7 +89,7 @@ public class Main {
             System.out.println(five2.val);
             System.out.println(five.equals(five2));*/
 
-        } catch (IllegalConstruction exception) {
+        } catch (IllegalExpression exception) {
             log.error("cannot create operations without parameters {}", exception);
         }
     }

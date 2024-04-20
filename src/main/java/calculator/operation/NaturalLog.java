@@ -19,6 +19,7 @@ public class NaturalLog<T> extends Operation<T>  {
         super(elist);
         if (elist.size() > 1) throw new IllegalConstruction();
         symbol = "ln";
+        unary = true;
     }
 
     @Override

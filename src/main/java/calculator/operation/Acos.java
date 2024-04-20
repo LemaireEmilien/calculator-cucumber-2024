@@ -19,6 +19,7 @@ public class Acos<T> extends Operation<T>  {
         super(elist);
         if (elist.size() > 1) throw new IllegalConstruction();
         symbol = "acos";
+        unary = true;
     }
 
     @Override

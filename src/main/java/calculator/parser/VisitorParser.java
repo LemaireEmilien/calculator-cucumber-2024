@@ -27,6 +27,16 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
                 case "/" -> new Divides<>(insideExpression);
                 case "+" -> new Plus<>(insideExpression);
                 case "-" -> new Minus<>(insideExpression);
+                case "cos" -> new Cos<>(insideExpression);
+                case "sin" -> new Sin<>(insideExpression);
+                case "tan" -> new Tan<>(insideExpression);
+                case "acos" -> new Acos<>(insideExpression);
+                case "asin" -> new Asin<>(insideExpression);
+                case "atan" -> new Atan<>(insideExpression);
+                case "log" -> new Logarithm<>(insideExpression);
+                case "ln" -> new NaturalLog<>(insideExpression);
+                case "sqrt" -> new SquareRoot<>(insideExpression);
+                case "mod" -> new Modulo<>(insideExpression);
                 default -> {
                     log.warn("Could not create Operation");
                     yield null;
@@ -160,10 +170,9 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
                 }
             }
             return expr;
+        } else {
+            return visit(ctx.func_());
         }
-        // todo : add functions
-        log.error("function not yet implemented");
-        return null;
     }
 
     @Override
@@ -242,6 +251,19 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
         Expression<T> expr = baseParser.fromString(text);
         log.trace("base {}", expr);
         return expr;
+    }
+
+    @Override
+    public Expression<T> visitFunc_(CalculatorParser.Func_Context ctx) {
+        log.trace("Visit func : {}", ctx.getText());
+        String funcname = ctx.funcname().getText();
+
+        List<Expression<T>> insideExpression = new ArrayList<>();
+        for (var expr : ctx.expression()) {
+            insideExpression.add(visit(expr));
+        }
+
+        return createOperation(funcname, insideExpression);
     }
 }
 

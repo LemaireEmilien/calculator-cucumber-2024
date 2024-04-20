@@ -19,6 +19,7 @@ public class SquareRoot<T> extends Operation<T> {
         super(elist);
         if (elist.size() > 1) throw new IllegalConstruction();
         symbol = "sqrt";
+        unary = true;
     }
 
     @Override

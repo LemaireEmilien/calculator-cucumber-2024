@@ -50,7 +50,7 @@ public class Printer<T> extends Visitor<T> {
      * @param o The operation being visited
      */
     public void visit(Operation<T> o) {
-        if (n.equals(Notation.PREFIX) || o instanceof Opposite<T>) {
+        if (n.equals(Notation.PREFIX) || o.isUnary()) {
             result.append(o.getSymbol());
         }
         result.append("(");

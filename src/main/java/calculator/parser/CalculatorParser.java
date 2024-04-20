@@ -21,9 +21,9 @@ public class CalculatorParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		AND=1, OR=2, XOR=3, NOT=4, IMPLIES=5, BOOLEAN=6, COS=7, SIN=8, TAN=9, 
-		ACOS=10, ASIN=11, ATAN=12, LN=13, LOG=14, SQRT=15, LPAREN=16, RPAREN=17, 
-		PLUS=18, MINUS=19, TIMES=20, DIV=21, COMMA=22, POINT=23, POW=24, PI=25, 
-		EULER=26, I=27, FRAC=28, VARIABLE=29, SCIENTIFIC_NUMBER=30, WS=31;
+		ACOS=10, ASIN=11, ATAN=12, LN=13, LOG=14, SQRT=15, MOD=16, LPAREN=17, 
+		RPAREN=18, PLUS=19, MINUS=20, TIMES=21, DIV=22, COMMA=23, POINT=24, POW=25, 
+		PI=26, EULER=27, I=28, FRAC=29, VARIABLE=30, SCIENTIFIC_NUMBER=31, WS=32;
 	public static final int
 		RULE_init = 0, RULE_expression = 1, RULE_multiplyingExpression = 2, RULE_powExpression = 3, 
 		RULE_postfix_expression = 4, RULE_prefix_expression = 5, RULE_boolean_expression = 6, 
@@ -44,18 +44,18 @@ public class CalculatorParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'&'", "'|'", "'^'", "'!'", "'=>'", null, "'cos'", "'sin'", "'tan'", 
-			"'acos'", "'asin'", "'atan'", "'ln'", "'log'", "'sqrt'", "'('", "')'", 
-			"'+'", "'-'", "'*'", "'/'", "','", "'.'", "'**'", "'pi'", null, "'i'", 
-			"'\\u2044'"
+			"'acos'", "'asin'", "'atan'", "'ln'", "'log'", "'sqrt'", "'mod'", "'('", 
+			"')'", "'+'", "'-'", "'*'", "'/'", "','", "'.'", "'**'", "'pi'", null, 
+			"'i'", "'\\u2044'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "AND", "OR", "XOR", "NOT", "IMPLIES", "BOOLEAN", "COS", "SIN", 
-			"TAN", "ACOS", "ASIN", "ATAN", "LN", "LOG", "SQRT", "LPAREN", "RPAREN", 
-			"PLUS", "MINUS", "TIMES", "DIV", "COMMA", "POINT", "POW", "PI", "EULER", 
-			"I", "FRAC", "VARIABLE", "SCIENTIFIC_NUMBER", "WS"
+			"TAN", "ACOS", "ASIN", "ATAN", "LN", "LOG", "SQRT", "MOD", "LPAREN", 
+			"RPAREN", "PLUS", "MINUS", "TIMES", "DIV", "COMMA", "POINT", "POW", "PI", 
+			"EULER", "I", "FRAC", "VARIABLE", "SCIENTIFIC_NUMBER", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -544,12 +544,12 @@ public class CalculatorParser extends Parser {
 					setState(102); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 1846411136L) != 0) );
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 3692822400L) != 0) );
 				setState(104);
 				match(RPAREN);
 				setState(105);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3932160L) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 7864320L) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -624,7 +624,7 @@ public class CalculatorParser extends Parser {
 				{
 				setState(110);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3932160L) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 7864320L) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -657,7 +657,7 @@ public class CalculatorParser extends Parser {
 					setState(118); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 1849556864L) != 0) );
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 3699113856L) != 0) );
 				setState(120);
 				match(RPAREN);
 				}
@@ -1126,6 +1126,7 @@ public class CalculatorParser extends Parser {
 			case LN:
 			case LOG:
 			case SQRT:
+			case MOD:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(175);
@@ -1353,7 +1354,7 @@ public class CalculatorParser extends Parser {
 			{
 			setState(195);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 234881024L) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 469762048L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1492,6 +1493,7 @@ public class CalculatorParser extends Parser {
 		public TerminalNode LOG() { return getToken(CalculatorParser.LOG, 0); }
 		public TerminalNode LN() { return getToken(CalculatorParser.LN, 0); }
 		public TerminalNode SQRT() { return getToken(CalculatorParser.SQRT, 0); }
+		public TerminalNode MOD() { return getToken(CalculatorParser.MOD, 0); }
 		public FuncnameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1512,7 +1514,7 @@ public class CalculatorParser extends Parser {
 			{
 			setState(211);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 65408L) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 130944L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1558,20 +1560,20 @@ public class CalculatorParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u001f\u00d6\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
-		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
-		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
-		"\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b"+
-		"\u0002\f\u0007\f\u0002\r\u0007\r\u0002\u000e\u0007\u000e\u0002\u000f\u0007"+
-		"\u000f\u0002\u0010\u0007\u0010\u0002\u0011\u0007\u0011\u0002\u0012\u0007"+
-		"\u0012\u0002\u0013\u0007\u0013\u0002\u0014\u0007\u0014\u0001\u0000\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0003\u00007\b"+
-		"\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0005\u0001?\b\u0001\n\u0001\f\u0001B\t\u0001\u0001\u0002\u0001"+
-		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
-		"\u0002\u0001\u0002\u0004\u0002M\b\u0002\u000b\u0002\f\u0002N\u0003\u0002"+
-		"Q\b\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0005\u0002V\b\u0002\n\u0002"+
+		"\u0004\u0001 \u00d6\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
+		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
+		"\f\u0007\f\u0002\r\u0007\r\u0002\u000e\u0007\u000e\u0002\u000f\u0007\u000f"+
+		"\u0002\u0010\u0007\u0010\u0002\u0011\u0007\u0011\u0002\u0012\u0007\u0012"+
+		"\u0002\u0013\u0007\u0013\u0002\u0014\u0007\u0014\u0001\u0000\u0001\u0000"+
+		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
+		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0003\u00007\b\u0000"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0005\u0001?\b\u0001\n\u0001\f\u0001B\t\u0001\u0001\u0002\u0001\u0002"+
+		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002"+
+		"\u0001\u0002\u0004\u0002M\b\u0002\u000b\u0002\f\u0002N\u0003\u0002Q\b"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0005\u0002V\b\u0002\n\u0002"+
 		"\f\u0002Y\t\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0003\u0003^\b\u0003"+
 		"\u0001\u0004\u0001\u0004\u0001\u0004\u0003\u0004c\b\u0004\u0004\u0004"+
 		"e\b\u0004\u000b\u0004\f\u0004f\u0001\u0004\u0001\u0004\u0001\u0004\u0001"+
@@ -1592,8 +1594,8 @@ public class CalculatorParser extends Parser {
 		"\b\u0013\n\u0013\f\u0013\u00d0\t\u0013\u0001\u0013\u0001\u0013\u0001\u0014"+
 		"\u0001\u0014\u0001\u0014\u0000\u0002\u0002\u0004\u0015\u0000\u0002\u0004"+
 		"\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \""+
-		"$&(\u0000\u0005\u0001\u0000\u0012\u0013\u0001\u0000\u0014\u0015\u0001"+
-		"\u0000\u0012\u0015\u0001\u0000\u0019\u001b\u0001\u0000\u0007\u000f\u00dc"+
+		"$&(\u0000\u0005\u0001\u0000\u0013\u0014\u0001\u0000\u0015\u0016\u0001"+
+		"\u0000\u0013\u0016\u0001\u0000\u001a\u001c\u0001\u0000\u0007\u0010\u00dc"+
 		"\u00006\u0001\u0000\u0000\u0000\u00028\u0001\u0000\u0000\u0000\u0004P"+
 		"\u0001\u0000\u0000\u0000\u0006Z\u0001\u0000\u0000\u0000\bl\u0001\u0000"+
 		"\u0000\u0000\n{\u0001\u0000\u0000\u0000\f}\u0001\u0000\u0000\u0000\u000e"+
@@ -1615,8 +1617,8 @@ public class CalculatorParser extends Parser {
 		"\u0000\u0000?B\u0001\u0000\u0000\u0000@>\u0001\u0000\u0000\u0000@A\u0001"+
 		"\u0000\u0000\u0000A\u0003\u0001\u0000\u0000\u0000B@\u0001\u0000\u0000"+
 		"\u0000CD\u0006\u0002\uffff\uffff\u0000DQ\u0003\u0006\u0003\u0000EF\u0005"+
-		"\u0010\u0000\u0000FG\u0003\u0002\u0001\u0000GL\u0005\u0011\u0000\u0000"+
-		"HI\u0005\u0010\u0000\u0000IJ\u0003\u0002\u0001\u0000JK\u0005\u0011\u0000"+
+		"\u0011\u0000\u0000FG\u0003\u0002\u0001\u0000GL\u0005\u0012\u0000\u0000"+
+		"HI\u0005\u0011\u0000\u0000IJ\u0003\u0002\u0001\u0000JK\u0005\u0012\u0000"+
 		"\u0000KM\u0001\u0000\u0000\u0000LH\u0001\u0000\u0000\u0000MN\u0001\u0000"+
 		"\u0000\u0000NL\u0001\u0000\u0000\u0000NO\u0001\u0000\u0000\u0000OQ\u0001"+
 		"\u0000\u0000\u0000PC\u0001\u0000\u0000\u0000PE\u0001\u0000\u0000\u0000"+
@@ -1624,19 +1626,19 @@ public class CalculatorParser extends Parser {
 		"TV\u0003\u0006\u0003\u0000UR\u0001\u0000\u0000\u0000VY\u0001\u0000\u0000"+
 		"\u0000WU\u0001\u0000\u0000\u0000WX\u0001\u0000\u0000\u0000X\u0005\u0001"+
 		"\u0000\u0000\u0000YW\u0001\u0000\u0000\u0000Z]\u0003\u001a\r\u0000[\\"+
-		"\u0005\u0018\u0000\u0000\\^\u0003\u0006\u0003\u0000][\u0001\u0000\u0000"+
+		"\u0005\u0019\u0000\u0000\\^\u0003\u0006\u0003\u0000][\u0001\u0000\u0000"+
 		"\u0000]^\u0001\u0000\u0000\u0000^\u0007\u0001\u0000\u0000\u0000_d\u0005"+
-		"\u0010\u0000\u0000`b\u0003\b\u0004\u0000ac\u0005\u0016\u0000\u0000ba\u0001"+
+		"\u0011\u0000\u0000`b\u0003\b\u0004\u0000ac\u0005\u0017\u0000\u0000ba\u0001"+
 		"\u0000\u0000\u0000bc\u0001\u0000\u0000\u0000ce\u0001\u0000\u0000\u0000"+
 		"d`\u0001\u0000\u0000\u0000ef\u0001\u0000\u0000\u0000fd\u0001\u0000\u0000"+
-		"\u0000fg\u0001\u0000\u0000\u0000gh\u0001\u0000\u0000\u0000hi\u0005\u0011"+
+		"\u0000fg\u0001\u0000\u0000\u0000gh\u0001\u0000\u0000\u0000hi\u0005\u0012"+
 		"\u0000\u0000ij\u0007\u0002\u0000\u0000jm\u0001\u0000\u0000\u0000km\u0003"+
 		"\u001a\r\u0000l_\u0001\u0000\u0000\u0000lk\u0001\u0000\u0000\u0000m\t"+
-		"\u0001\u0000\u0000\u0000no\u0007\u0002\u0000\u0000ot\u0005\u0010\u0000"+
-		"\u0000pr\u0003\n\u0005\u0000qs\u0005\u0016\u0000\u0000rq\u0001\u0000\u0000"+
+		"\u0001\u0000\u0000\u0000no\u0007\u0002\u0000\u0000ot\u0005\u0011\u0000"+
+		"\u0000pr\u0003\n\u0005\u0000qs\u0005\u0017\u0000\u0000rq\u0001\u0000\u0000"+
 		"\u0000rs\u0001\u0000\u0000\u0000su\u0001\u0000\u0000\u0000tp\u0001\u0000"+
 		"\u0000\u0000uv\u0001\u0000\u0000\u0000vt\u0001\u0000\u0000\u0000vw\u0001"+
-		"\u0000\u0000\u0000wx\u0001\u0000\u0000\u0000xy\u0005\u0011\u0000\u0000"+
+		"\u0000\u0000\u0000wx\u0001\u0000\u0000\u0000xy\u0005\u0012\u0000\u0000"+
 		"y|\u0001\u0000\u0000\u0000z|\u0003\u001a\r\u0000{n\u0001\u0000\u0000\u0000"+
 		"{z\u0001\u0000\u0000\u0000|\u000b\u0001\u0000\u0000\u0000}~\u0003\u000e"+
 		"\u0007\u0000~\r\u0001\u0000\u0000\u0000\u007f\u0084\u0003\u0010\b\u0000"+
@@ -1660,33 +1662,33 @@ public class CalculatorParser extends Parser {
 		"\u0000\u009f\u00a1\u0005\u0004\u0000\u0000\u00a0\u009f\u0001\u0000\u0000"+
 		"\u0000\u00a0\u00a1\u0001\u0000\u0000\u0000\u00a1\u00a2\u0001\u0000\u0000"+
 		"\u0000\u00a2\u00a3\u0003\u0018\f\u0000\u00a3\u0017\u0001\u0000\u0000\u0000"+
-		"\u00a4\u00a5\u0005\u0010\u0000\u0000\u00a5\u00a6\u0003\f\u0006\u0000\u00a6"+
-		"\u00a7\u0005\u0011\u0000\u0000\u00a7\u00aa\u0001\u0000\u0000\u0000\u00a8"+
+		"\u00a4\u00a5\u0005\u0011\u0000\u0000\u00a5\u00a6\u0003\f\u0006\u0000\u00a6"+
+		"\u00a7\u0005\u0012\u0000\u0000\u00a7\u00aa\u0001\u0000\u0000\u0000\u00a8"+
 		"\u00aa\u0005\u0006\u0000\u0000\u00a9\u00a4\u0001\u0000\u0000\u0000\u00a9"+
 		"\u00a8\u0001\u0000\u0000\u0000\u00aa\u0019\u0001\u0000\u0000\u0000\u00ab"+
-		"\u00ac\u0005\u0012\u0000\u0000\u00ac\u00b2\u0003\u001c\u000e\u0000\u00ad"+
-		"\u00ae\u0005\u0013\u0000\u0000\u00ae\u00b2\u0003\u001c\u000e\u0000\u00af"+
+		"\u00ac\u0005\u0013\u0000\u0000\u00ac\u00b2\u0003\u001c\u000e\u0000\u00ad"+
+		"\u00ae\u0005\u0014\u0000\u0000\u00ae\u00b2\u0003\u001c\u000e\u0000\u00af"+
 		"\u00b2\u0003&\u0013\u0000\u00b0\u00b2\u0003\u001c\u000e\u0000\u00b1\u00ab"+
 		"\u0001\u0000\u0000\u0000\u00b1\u00ad\u0001\u0000\u0000\u0000\u00b1\u00af"+
 		"\u0001\u0000\u0000\u0000\u00b1\u00b0\u0001\u0000\u0000\u0000\u00b2\u001b"+
 		"\u0001\u0000\u0000\u0000\u00b3\u00bc\u0003 \u0010\u0000\u00b4\u00bc\u0003"+
 		"$\u0012\u0000\u00b5\u00bc\u0003\"\u0011\u0000\u00b6\u00bc\u0003\u001e"+
-		"\u000f\u0000\u00b7\u00b8\u0005\u0010\u0000\u0000\u00b8\u00b9\u0003\u0002"+
-		"\u0001\u0000\u00b9\u00ba\u0005\u0011\u0000\u0000\u00ba\u00bc\u0001\u0000"+
+		"\u000f\u0000\u00b7\u00b8\u0005\u0011\u0000\u0000\u00b8\u00b9\u0003\u0002"+
+		"\u0001\u0000\u00b9\u00ba\u0005\u0012\u0000\u0000\u00ba\u00bc\u0001\u0000"+
 		"\u0000\u0000\u00bb\u00b3\u0001\u0000\u0000\u0000\u00bb\u00b4\u0001\u0000"+
 		"\u0000\u0000\u00bb\u00b5\u0001\u0000\u0000\u0000\u00bb\u00b6\u0001\u0000"+
 		"\u0000\u0000\u00bb\u00b7\u0001\u0000\u0000\u0000\u00bc\u001d\u0001\u0000"+
-		"\u0000\u0000\u00bd\u00be\u0003 \u0010\u0000\u00be\u00bf\u0005\u001c\u0000"+
+		"\u0000\u0000\u00bd\u00be\u0003 \u0010\u0000\u00be\u00bf\u0005\u001d\u0000"+
 		"\u0000\u00bf\u00c0\u0003 \u0010\u0000\u00c0\u001f\u0001\u0000\u0000\u0000"+
-		"\u00c1\u00c2\u0005\u001e\u0000\u0000\u00c2!\u0001\u0000\u0000\u0000\u00c3"+
+		"\u00c1\u00c2\u0005\u001f\u0000\u0000\u00c2!\u0001\u0000\u0000\u0000\u00c3"+
 		"\u00c4\u0007\u0003\u0000\u0000\u00c4#\u0001\u0000\u0000\u0000\u00c5\u00c6"+
-		"\u0005\u001d\u0000\u0000\u00c6%\u0001\u0000\u0000\u0000\u00c7\u00c8\u0003"+
-		"(\u0014\u0000\u00c8\u00c9\u0005\u0010\u0000\u0000\u00c9\u00ce\u0003\u0002"+
-		"\u0001\u0000\u00ca\u00cb\u0005\u0016\u0000\u0000\u00cb\u00cd\u0003\u0002"+
+		"\u0005\u001e\u0000\u0000\u00c6%\u0001\u0000\u0000\u0000\u00c7\u00c8\u0003"+
+		"(\u0014\u0000\u00c8\u00c9\u0005\u0011\u0000\u0000\u00c9\u00ce\u0003\u0002"+
+		"\u0001\u0000\u00ca\u00cb\u0005\u0017\u0000\u0000\u00cb\u00cd\u0003\u0002"+
 		"\u0001\u0000\u00cc\u00ca\u0001\u0000\u0000\u0000\u00cd\u00d0\u0001\u0000"+
 		"\u0000\u0000\u00ce\u00cc\u0001\u0000\u0000\u0000\u00ce\u00cf\u0001\u0000"+
 		"\u0000\u0000\u00cf\u00d1\u0001\u0000\u0000\u0000\u00d0\u00ce\u0001\u0000"+
-		"\u0000\u0000\u00d1\u00d2\u0005\u0011\u0000\u0000\u00d2\'\u0001\u0000\u0000"+
+		"\u0000\u0000\u00d1\u00d2\u0005\u0012\u0000\u0000\u00d2\'\u0001\u0000\u0000"+
 		"\u0000\u00d3\u00d4\u0007\u0004\u0000\u0000\u00d4)\u0001\u0000\u0000\u0000"+
 		"\u00156@NPW]bflrv{\u0084\u008c\u0094\u009c\u00a0\u00a9\u00b1\u00bb\u00ce";
 	public static final ATN _ATN =
