@@ -88,5 +88,32 @@ class TestParser {
         }
     }
 
+    @Test
+    public void testParser() {
+        Calculator<Integer> c = new Calculator<>();
+
+        try {
+            Expression<Integer> e = c.read("true & false & true");
+            assertEquals(new MyNumber(0), c.eval(e));
+
+            e = c.read("true | false | true");
+            assertEquals(new MyNumber(1), c.eval(e));
+
+            e = c.read("true & false | true");
+            assertEquals(new MyNumber(1), c.eval(e));
+
+            e = c.read("true | false & true");
+            assertEquals(new MyNumber(1), c.eval(e));
+
+            e = c.read("true | false => false");
+            assertEquals(new MyNumber(0), c.eval(e));
+
+            e = c.read("true ^ true ^ true");
+            assertEquals(new MyNumber(1), c.eval(e));
+        } catch (IllegalExpression e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

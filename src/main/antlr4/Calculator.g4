@@ -39,6 +39,7 @@ init
     : expression EOF
     | postfix_expression EOF
     | prefix_expression EOF
+    | boolean_expression EOF
     ;
 
 // infix expression
@@ -70,6 +71,21 @@ prefix_expression
     | signedAtom
     ;
 
+// boolean expression
+boolean_expression: implication;
+implication: orExpression (IMPLIES orExpression)*;
+orExpression: xorExpression (OR xorExpression)*;
+xorExpression: andExpression (XOR andExpression)*;
+andExpression: notExpression (AND notExpression)*;
+notExpression: (NOT)? batom;
+batom: LPAREN boolean_expression RPAREN | BOOLEAN;
+
+AND: '&';
+OR: '|';
+XOR: '^';
+NOT: '!';
+IMPLIES: '=>';
+BOOLEAN: 'true' | 'false';
 
 // Atom
 signedAtom
@@ -185,7 +201,7 @@ POINT
     ;
 
 POW
-    : '^'
+    : '**'
     ;
 
 PI

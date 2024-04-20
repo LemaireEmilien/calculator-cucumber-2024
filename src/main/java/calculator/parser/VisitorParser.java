@@ -2,8 +2,10 @@ package calculator.parser;
 
 import calculator.Expression;
 import calculator.IllegalConstruction;
+import calculator.operand.MyNumber;
 import calculator.operation.*;
 import lombok.extern.slf4j.Slf4j;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,8 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             return createOperation(op, insideExpression);
         } else {
             List<Expression<T>> insideExpression = new ArrayList<>();
-            for (var expr : ctx.expression()) {
+            for (
+                    var expr : ctx.expression()) {
                 insideExpression.add(visit(expr));
             }
             return createOperation("*", insideExpression);
@@ -88,7 +91,6 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
     @Override
     public Expression<T> visitPowExpression(CalculatorParser.PowExpressionContext ctx) {
         log.trace("Visit pow expression : {}", ctx.getText());
-
         if (ctx.children.size() == 1) {
             // signedAtom
             return visit(ctx.signedAtom());
@@ -105,7 +107,6 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
     @Override
     public Expression<T> visitPostfix_expression(CalculatorParser.Postfix_expressionContext ctx) {
         log.trace("Visit postfix expression : {}", ctx.getText());
-
         if (ctx.children.size() == 1) {
             // postfix_multiplyingExpression
             return visit(ctx.signedAtom());
@@ -115,7 +116,6 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             for (var expr : ctx.postfix_expression()) {
                 insideExpression.add(visit(expr));
             }
-
             String op = ctx.children.getLast().getText();
             return createOperation(op, insideExpression);
         }
@@ -134,7 +134,6 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             for (var expr : ctx.prefix_expression()) {
                 insideExpression.add(visit(expr));
             }
-
             String op = ctx.children.getFirst().getText();
             return createOperation(op, insideExpression);
         }
@@ -165,6 +164,66 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
     }
 
     @Override
+    public Expression<T> visitBatom(CalculatorParser.BatomContext ctx) {
+        if (ctx.boolean_expression() != null) {
+            return visit(ctx.boolean_expression());
+        }
+        return (Expression<T>) new MyNumber(ctx.BOOLEAN().getText().equals("true") ? 1 : 0);
+    }
+
+    @Override
+    public Expression<T> visitNotExpression(CalculatorParser.NotExpressionContext ctx) {
+        if (ctx.children.size() == 1) {return visit(ctx.batom());}
+        try {
+            return new Not<>(List.of(visit(ctx.batom())));
+        } catch (IllegalConstruction e) {
+            log.error("Could not create Not operation");
+            return null;
+        }
+    }
+
+    @Override
+    public Expression<T> visitAndExpression(CalculatorParser.AndExpressionContext ctx) {
+        if (ctx.children.size() == 1) {return super.visitAndExpression(ctx);}
+        return visitOperation(And.class, ctx.notExpression());
+    }
+
+    @Override
+    public Expression<T> visitXorExpression(CalculatorParser.XorExpressionContext ctx) {
+        if (ctx.children.size() == 1) return super.visitXorExpression(ctx);
+        return visitOperation(Xor.class, ctx.andExpression());
+    }
+
+    @Override
+    public Expression<T> visitOrExpression(CalculatorParser.OrExpressionContext ctx) {
+        if (ctx.children.size() == 1) return super.visitOrExpression(ctx);
+        return visitOperation(Or.class, ctx.xorExpression());
+    }
+
+    @Override
+    public Expression<T> visitImplication(CalculatorParser.ImplicationContext ctx) {
+        if (ctx.children.size() == 1) return super.visitImplication(ctx);
+        return visitOperation(Implication.class, ctx.orExpression());
+    }
+
+    @Override
+    public Expression<T> visitBoolean_expression(CalculatorParser.Boolean_expressionContext ctx) {
+        return super.visitBoolean_expression(ctx);
+    }
+
+    private <O extends Operation<T>> Expression<T> visitOperation(Class<O> Operand, List<? extends ParserRuleContext> ctx) {
+        try {
+            List<Expression<T>> params = new ArrayList<>();
+            for (var exp : ctx) {
+                params.add(visit(exp));
+            }
+            return Operand.getDeclaredConstructor(List.class).newInstance(params);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create operation");
+        }
+    }
+
+    @Override
     public Expression<T> visitScientific(CalculatorParser.ScientificContext ctx) {
         String text = ctx.getText();
         log.trace("Visit signed atom scientific : {}", text);
@@ -172,4 +231,5 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
         log.trace("base {}", expr);
         return expr;
     }
+
 }

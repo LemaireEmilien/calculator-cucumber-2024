@@ -35,7 +35,25 @@ Feature: Integer Arithmetic Expressions
     When I provide a first number 7
     And I provide a second number 5
     Then the operation evaluates to 1
-    
+
+  Scenario: Boolean And two integer numbers
+    Given an integer operation '&'
+    When I provide a first number 1
+    And I provide a second number 0
+    Then the operation evaluates to 0
+
+  Scenario: Boolean Or two integer numbers
+    Given an integer operation '|'
+    When I provide a first number 1
+    And I provide a second number 0
+    Then the operation evaluates to 1
+
+  Scenario: Boolean Xor two integer numbers
+    Given an integer operation '^'
+    When I provide a first number 1
+    And I provide a second number 1
+    Then the operation evaluates to 0
+
   # This is an example of a scenario in which we provide a list of numbers as input.
   # (In fact, this is not entirely true, since what is given as input is a table of
   # strings. In this case, the table is of dimension 1 * 3 (1 line and three columns).
@@ -80,11 +98,14 @@ Feature: Integer Arithmetic Expressions
     Then the operation evaluates to <result>
 
     Examples:
-      | op  | n1 | n2 | result |
-      | "+" | 4  | 5  | 9      |
-      | "-" | 8  | 5  | 3      |
-      | "*" | 7  | 2  | 14     |
-      | "/" | 6  | 2  | 3      |
+      | op   | n1 | n2 | result |
+      | "+"  | 4  | 5  | 9      |
+      | "-"  | 8  | 5  | 3      |
+      | "*"  | 7  | 2  | 14     |
+      | "/"  | 6  | 2  | 3      |
+      | "&"  | 1  | 0  | 0      |
+      | "\|" | 0  | 1  | 1      |
+      | "^"  | 0  | 0  | 0      |
 
 
   Scenario: Printing the sum of two integer numbers
@@ -110,3 +131,29 @@ Feature: Integer Arithmetic Expressions
     Then its INFIX notation is (8 / 6)
     And its PREFIX notation is /(8, 6)
     And its POSTFIX notation is (8, 6)/
+
+  Scenario: Printing the NOT of an integer number
+    Given the negation of a number 0
+    Then the operation evaluates to 1
+
+  Scenario Outline: Evaluating boolean expressions
+    Given I initialise a calculator
+    When I provide an expression <expr>
+    Then the expression evaluates to <result>
+
+    Examples:
+      | expr                            | result |
+      | !true                           | 0      |
+      | !false                          | 1      |
+      | true & false                    | 0      |
+      | true \| false                   | 1      |
+      | true ^ false                    | 1      |
+      | true & true                     | 1      |
+      | false \| false                  | 0      |
+      | false ^ false                   | 0      |
+      | true ^ false ^ false            | 1      |
+      | true ^ true ^ false             | 0      |
+      | true ^ true ^ true              | 1      |
+      | !(true & false) ^ true => false | 1      |
+      | (true & false) \| true => true  | 1      |
+      | true & false \| true ^ true     | 0      |
