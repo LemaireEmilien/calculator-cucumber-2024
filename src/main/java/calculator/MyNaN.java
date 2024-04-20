@@ -119,6 +119,11 @@ public class MyNaN<T> extends Value<T> {
 
     @Override
     public Value<T> not() {
-        return null;
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> modulo(Value<T> other) {
+        return new MyNaN<>();
     }
 }

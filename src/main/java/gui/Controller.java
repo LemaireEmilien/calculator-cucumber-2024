@@ -156,6 +156,15 @@ public class Controller {
                 }
             }
 
+            for (int i = 0; i < 9; i++) {
+                final String s = String.valueOf(i + 1);
+                Button b = new Button(s);
+                b.setStyle("-fx-font: 32 system;");
+                b.getStyleClass().add("button-operator");
+                b.setOnAction(actionEvent -> addCharacter(s+));
+                mainPane.add(b, i % 3, i / 3 + 1);
+            }
+
         });
 
     }

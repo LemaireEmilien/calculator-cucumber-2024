@@ -166,6 +166,11 @@ public class MyBigNumber extends Value<BigDecimal> {
         return new MyNaN<>();
     }
 
+    @Override
+    public Value<BigDecimal> modulo(Value<BigDecimal> other) {
+        return new MyNaN<>();
+    }
+
     public Value<BigDecimal> degToRad() {
         return new MyBigNumber(this.val.multiply(BigDecimal.valueOf(Math.PI)).divide(new BigDecimal(180), RoundingMode.HALF_UP));
     }

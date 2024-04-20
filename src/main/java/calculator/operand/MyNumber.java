@@ -165,4 +165,9 @@ public class MyNumber extends Value<Integer> {
         log.info("Not {} : {}", this.getVal(),this.getVal()==0);
         return new MyNumber(this.getVal() == 0 ? 1 : 0);
     }
+
+    @Override
+    public Value<Integer> modulo(Value<Integer> other) {
+        return new MyNumber(this.getVal() % other.getVal());
+    }
 }

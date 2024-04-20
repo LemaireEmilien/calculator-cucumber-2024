@@ -138,6 +138,11 @@ public class MyRational extends Value<Rational> {
     }
 
     @Override
+    public Value<Rational> modulo(Value<Rational> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
     public String toString() {
         return this.val.toString();
     }

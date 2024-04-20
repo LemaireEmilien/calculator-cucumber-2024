@@ -55,6 +55,7 @@ public class CalculatorSteps {
 				case "&"	->	op = new And<>(params);
 				case "|"	->	op = new Or<>(params);
 				case "^"	->	op = new Xor<>(params);
+                case "mod"  ->  op = new Modulo<>(params);
 				default		->	fail();
 			}
 		} catch (IllegalConstruction e) {

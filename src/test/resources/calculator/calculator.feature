@@ -84,6 +84,12 @@ Feature: Integer Arithmetic Expressions
     When I provide a first decimal number 0.78539816339744
     Then the operation evaluates to the decimal 1
 
+  Scenario: Adding two integer numbers
+    Given an integer operation 'mod'
+    When I provide a first integer number 17
+    And I provide a second integer number 5
+    Then the operation evaluates to the integer 2
+
     
   # This is an example of a scenario in which we provide a list of numbers as input.
   # (In fact, this is not entirely true, since what is given as input is a table of

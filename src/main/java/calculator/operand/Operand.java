@@ -40,4 +40,6 @@ public interface Operand<T> {
     Value<T> implies(Value<T> other);
 
     Value<T> not();
+
+    Value<T> modulo(Value<T> other);
 }
