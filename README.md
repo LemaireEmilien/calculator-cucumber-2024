@@ -1,5 +1,6 @@
 Code quality: ![Maven Build](https://github.com/tommens/calculator-cucumber/actions/workflows/maven.yml/badge.svg)
 ![CodeQL](https://github.com/tommens/calculator-cucumber/actions/workflows/codeql.yml/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6afe01e995a94eebb5b3d097f46e54a1)](https://app.codacy.com/gh/LemaireEmilien/calculator-cucumber-2024?utm_source=github.com&utm_medium=referral&utm_content=LemaireEmilien/calculator-cucumber-2024&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6856a0f94d25446ca346cbc15a701d43)](https://www.codacy.com/gh/tommens/calculator-cucumber/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tommens/calculator-cucumber&amp;utm_campaign=Badge_Grade)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tommens_calculator-cucumber&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=tommens_calculator-cucumber)
 
