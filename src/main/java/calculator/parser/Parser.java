@@ -2,9 +2,11 @@ package calculator.parser;
 
 import calculator.Expression;
 import calculator.IllegalExpression;
+import calculator.Rational;
 import calculator.Value;
 import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
+import calculator.operand.MyRational;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.CharStreams;
@@ -49,8 +51,16 @@ public class Parser<T> {
         return new MyNumber(Integer.parseInt(s));
     }
 
+    public static Value<Rational> stringToRational(String s) {
+        String[] spliced = s.split("⁄");
+        int d = 1;
+        if (spliced.length !=1){
+            d = Integer.parseInt(spliced[1]);
+        }
+        int n = Integer.parseInt(spliced[0]);
+        return new MyRational(new Rational(n, d));
+    }
     public static Value<BigDecimal> stringToBigDecimal(String s) {
         return new MyBigNumber(new BigDecimal(s));
     }
-
 }

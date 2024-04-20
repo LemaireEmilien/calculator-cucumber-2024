@@ -22,6 +22,7 @@ public class CalculatorSteps {
     private ArrayList<Expression<Integer>> params;
     private Operation<Integer> op;
     private Calculator<Integer> c;
+    private Expression<Integer> e;
 
     private ArrayList<Expression<BigDecimal>> params_dec;
     private Operation<BigDecimal> op_dec;
@@ -41,22 +42,25 @@ public class CalculatorSteps {
         c_dec = new Calculator<>();
     }
 
-    @Given("an integer operation {string}")
-    public void givenAnIntegerOperation(String s) {
-        // Write code here that turns the phrase above into concrete actions
-        params = new ArrayList<>(); // create an empty set of parameters to be filled in
-        try {
-            switch (s) {
-                case "+" -> op = new Plus<>(params);
-                case "-" -> op = new Minus<>(params);
-                case "*" -> op = new Times<>(params);
-                case "/" -> op = new Divides<>(params);
-                default -> fail();
-            }
-        } catch (IllegalConstruction e) {
-            fail();
-        }
-    }
+	@Given("an integer operation {string}")
+	public void givenAnIntegerOperation(String s) {
+		// Write code here that turns the phrase above into concrete actions
+		params = new ArrayList<>(); // create an empty set of parameters to be filled in
+		try {
+			switch (s) {
+				case "+"	->	op = new Plus<>(params);
+				case "-"	->	op = new Minus<>(params);
+				case "*"	->	op = new Times<>(params);
+				case "/"	->	op = new Divides<>(params);
+				case "&"	->	op = new And<>(params);
+				case "|"	->	op = new Or<>(params);
+				case "^"	->	op = new Xor<>(params);
+				default		->	fail();
+			}
+		} catch (IllegalConstruction e) {
+			fail();
+		}
+	}
 
     @Given("a real operation {string}")
     public void givenARealOperation(String s) {
@@ -150,6 +154,17 @@ public class CalculatorSteps {
         }
     }
 
+    @Given("^the negation of a number (\\d+)$")
+    public void givenTheNegation(int n) {
+        try {
+            params = new ArrayList<>();
+            params.add(new MyNumber(n));
+            op = new Not<>(params);
+        } catch (IllegalConstruction e) {
+            fail();
+        }
+    }
+
     @Then("^its (.*) notation is (.*)$")
     public void thenItsNotationIs(String notation, String s) {
         if (notation.equals("PREFIX") || notation.equals("POSTFIX") || notation.equals("INFIX")) {
@@ -205,4 +220,48 @@ public class CalculatorSteps {
         assertEquals(new MyNaN<>(), c.eval(op));
     }
 
+
+	@Then("the expression evaluates to {}")
+	public void theExpressionEvaluatesTo(String result) {
+		assertEquals(new MyNumber(Integer.parseInt(result)), c.eval(e));
+	}
+
+	@When("I provide an expression {}")
+	public void iProvideAnExpression(String s) {
+        try {
+            e = c.read(s);
+        } catch (IllegalExpression e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Given("^the and of two numbers (\\d+) and (\\d+)$")
+    public void givenTheAnd(int n1, int n2) {
+        try {
+            params = new ArrayList<>();
+            params.add(new MyNumber(n1));
+            params.add(new MyNumber(n2));
+            op = new And<>(params);}
+        catch(IllegalConstruction e) { fail(); }
+    }
+
+    @Given("^the or of two numbers (\\d+) and (\\d+)$")
+    public void givenTheOr(int n1, int n2) {
+        try {
+            params = new ArrayList<>();
+            params.add(new MyNumber(n1));
+            params.add(new MyNumber(n2));
+            op = new Or<>(params);}
+        catch(IllegalConstruction e) { fail(); }
+    }
+
+    @Given("^the xor of two numbers (\\d+) and (\\d+)$")
+    public void givenTheXor(int n1, int n2) {
+        try {
+            params = new ArrayList<>();
+            params.add(new MyNumber(n1));
+            params.add(new MyNumber(n2));
+            op = new Xor<>(params);}
+        catch(IllegalConstruction e) { fail(); }
+    }
 }

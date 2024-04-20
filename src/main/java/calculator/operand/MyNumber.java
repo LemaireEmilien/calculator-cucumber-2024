@@ -137,4 +137,29 @@ public class MyNumber extends Value<Integer> {
     public Value<Integer> atan() {
         return new MyNaN<>();
     }
+
+    @Override
+    public Value<Integer> and(Value<Integer> other) {
+        return this.getVal() != 0 && other.getVal() != 0 ? new MyNumber(1) : new MyNumber(0);
+    }
+
+    @Override
+    public Value<Integer> or(Value<Integer> other) {
+        return this.getVal() != 0 || other.getVal() != 0 ? new MyNumber(1) : new MyNumber(0);
+    }
+
+    @Override
+    public Value<Integer> xor(Value<Integer> other) {
+        return this.getVal() != 0 ^ other.getVal() != 0 ? new MyNumber(1) : new MyNumber(0);
+    }
+
+    @Override
+    public Value<Integer> implies(Value<Integer> other) {
+        return this.getVal() != 0 && other.getVal() == 0 ? new MyNumber(0) : new MyNumber(1);
+    }
+
+    @Override
+    public Value<Integer> not() {
+        return new MyNumber(this.getVal() == 0 ? 1 : 0);
+    }
 }

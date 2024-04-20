@@ -30,4 +30,14 @@ public interface Operand<T> {
     Value<T> acos();
 
     Value<T> atan();
+
+    Value<T> and(Value<T> other);
+
+    Value<T> or(Value<T> other);
+
+    Value<T> xor(Value<T> other);
+
+    Value<T> implies(Value<T> other);
+
+    Value<T> not();
 }

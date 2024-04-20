@@ -141,6 +141,31 @@ public class MyBigNumber extends Value<BigDecimal> {
         return new MyBigNumber(BigDecimalMath.atan(this.val,mc));
     }
 
+    @Override
+    public Value<BigDecimal> and(Value<BigDecimal> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<BigDecimal> or(Value<BigDecimal> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<BigDecimal> xor(Value<BigDecimal> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<BigDecimal> implies(Value<BigDecimal> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<BigDecimal> not() {
+        return new MyNaN<>();
+    }
+
     public Value<BigDecimal> degToRad() {
         return new MyBigNumber(this.val.multiply(BigDecimal.valueOf(Math.PI)).divide(new BigDecimal(180), RoundingMode.HALF_UP));
     }

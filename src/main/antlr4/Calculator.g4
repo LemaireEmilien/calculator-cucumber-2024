@@ -39,6 +39,7 @@ init
     : expression EOF
     | postfix_expression EOF
     | prefix_expression EOF
+    | boolean_expression EOF
     ;
 
 // infix expression
@@ -70,6 +71,21 @@ prefix_expression
     | signedAtom
     ;
 
+// boolean expression
+boolean_expression: implication;
+implication: orExpression (IMPLIES orExpression)*;
+orExpression: xorExpression (OR xorExpression)*;
+xorExpression: andExpression (XOR andExpression)*;
+andExpression: notExpression (AND notExpression)*;
+notExpression: (NOT)? batom;
+batom: LPAREN boolean_expression RPAREN | BOOLEAN;
+
+AND: '&';
+OR: '|';
+XOR: '^';
+NOT: '!';
+IMPLIES: '=>';
+BOOLEAN: 'true' | 'false';
 
 // Atom
 signedAtom
@@ -83,7 +99,12 @@ atom
     : scientific
     | variable
     | constant
+    | rational
     | LPAREN expression RPAREN
+    ;
+
+rational
+    : scientific FRAC scientific
     ;
 
 scientific
@@ -185,7 +206,7 @@ POINT
     ;
 
 POW
-    : '^'
+    : '**'
     ;
 
 PI
@@ -199,7 +220,9 @@ EULER
 I
     : 'i'
     ;
-
+FRAC
+    : '⁄'
+    ;
 VARIABLE
     : VALID_ID_START VALID_ID_CHAR*
     ;
