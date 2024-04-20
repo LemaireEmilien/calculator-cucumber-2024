@@ -31,50 +31,51 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            Parser<Rational> a = new Parser<>();
-            Expression<Rational> b = a.parse("4/2", Parser::stringToRational);
+            Parser<Integer> a = new Parser<>();
+            //Expression<Integer> b = a.parse("!true", Parser::stringToInteger);
+            Expression<Integer> b = new Not<Integer>(List.of(new MyNumber(1)));
             System.out.println(b);
 
-            Expression<Rational> e;
-            Calculator<Rational> c = new Calculator<>();
-            c.print(b);
-//            e = new MyNumber(8);
-//            c.print(e);
-//
-//            List<Expression<Integer>> params = new ArrayList<>();
-//            Collections.addAll(params, new MyNumber(3), new MyNumber(4), new MyNumber(5));
-//            e = new Plus<>(params);
-//            c.printExpressionDetails(e);
-//
-//            List<Expression<Integer>> params2 = new ArrayList<>();
-//            Collections.addAll(params2, new MyNumber(5), new MyNumber(3));
-//            e = new Minus<>(params2);
-//            c.print(e);
-//
-//            List<Expression<Integer>> params3 = new ArrayList<>();
-//            Collections.addAll(params3, new Plus<>(params), new Minus<>(params2));
-//            e = new Times<>(params3);
-//            c.printExpressionDetails(e);
-//
-//            List<Expression<Integer>> params4 = new ArrayList<>();
-//            Collections.addAll(params4, new Plus<>(params), new Minus<>(params2), new MyNumber(5));
-//            e = new Divides<>(params4);
-//            c.print(e, Notation.POSTFIX);
-//
-//            BigDecimal value1 = new BigDecimal("3.556454");
-//            BigDecimal value2 = new BigDecimal("4.556454");
-//            BigDecimal value3 = new BigDecimal("10e10");
-//            Expression<BigDecimal> e2;
-//            List<Expression<BigDecimal>> params5 = new ArrayList<>();
-//            Collections.addAll(params5, new MyBigNumber(value1), new MyBigNumber(value3));
-//            e2 = new Plus<>(params5);
-//            Calculator<BigDecimal> c2 = new Calculator<>();
-//            c2.print(e2);
-//
-//            List<Expression<BigDecimal>> params6 = new ArrayList<>();
-//            Collections.addAll(params6, new MyBigNumber(value1), new MyBigNumber(8));
-//            e2 = new Minus<>(params6);
-//            c2.print(e2);
+            Expression<Integer> e;
+            Calculator<Integer> c = new Calculator<>();
+            c.print(b);/*
+            e = new MyNumber(8);
+            c.print(e);
+
+            List<Expression<Integer>> params = new ArrayList<>();
+            Collections.addAll(params, new MyNumber(3), new MyNumber(4), new MyNumber(5));
+            e = new Plus<>(params);
+            c.printExpressionDetails(e);
+
+            List<Expression<Integer>> params2 = new ArrayList<>();
+            Collections.addAll(params2, new MyNumber(5), new MyNumber(3));
+            e = new Minus<>(params2);
+            c.print(e);
+
+            List<Expression<Integer>> params3 = new ArrayList<>();
+            Collections.addAll(params3, new Plus<>(params), new Minus<>(params2));
+            e = new Times<>(params3);
+            c.printExpressionDetails(e);
+
+            List<Expression<Integer>> params4 = new ArrayList<>();
+            Collections.addAll(params4, new Plus<>(params), new Minus<>(params2), new MyNumber(5));
+            e = new Divides<>(params4);
+            c.print(e, Notation.POSTFIX);
+
+            BigDecimal value1 = new BigDecimal("3.556454");
+            BigDecimal value2 = new BigDecimal("4.556454");
+            BigDecimal value3 = new BigDecimal("10e10");
+            Expression<BigDecimal> e2;
+            List<Expression<BigDecimal>> params5 = new ArrayList<>();
+            Collections.addAll(params5, new MyBigNumber(value1), new MyBigNumber(value3));
+            e2 = new Plus<>(params5);
+            Calculator<BigDecimal> c2 = new Calculator<>();
+            c2.print(e2);
+
+            List<Expression<BigDecimal>> params6 = new ArrayList<>();
+            Collections.addAll(params6, new MyBigNumber(value1), new MyBigNumber(8));
+            e2 = new Minus<>(params6);
+            c2.print(e2);
 
             Expression<BigDecimal> e3;
             List<Expression<BigDecimal>> params7 = new ArrayList<>();
@@ -87,9 +88,9 @@ public class Main {
             MyBigNumber five2 = new MyBigNumber(5.00001);
             System.out.println(five.val);
             System.out.println(five2.val);
-            System.out.println(five.equals(five2));
+            System.out.println(five.equals(five2));*/
 
-        } catch ( IllegalExpression exception) {
+        } catch (IllegalConstruction exception) {
             log.error("cannot create operations without parameters {}", exception);
         }
     }

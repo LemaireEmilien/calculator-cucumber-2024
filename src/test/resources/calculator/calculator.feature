@@ -38,21 +38,21 @@ Feature: Integer Arithmetic Expressions
 
   Scenario: Boolean And two integer numbers
     Given an integer operation '&'
-    When I provide a first number 1
-    And I provide a second number 0
-    Then the operation evaluates to 0
+    When I provide a first integer number 1
+    And I provide a second integer number 0
+    Then the operation evaluates to the integer 0
 
   Scenario: Boolean Or two integer numbers
     Given an integer operation '|'
-    When I provide a first number 1
-    And I provide a second number 0
-    Then the operation evaluates to 1
+    When I provide a first integer number 1
+    And I provide a second integer number 0
+    Then the operation evaluates to the integer 1
 
   Scenario: Boolean Xor two integer numbers
     Given an integer operation '^'
-    When I provide a first number 1
-    And I provide a second number 1
-    Then the operation evaluates to 0
+    When I provide a first integer number 1
+    And I provide a second integer number 1
+    Then the operation evaluates to the integer 0
 
   Scenario: Logarithm on one real numbers
     Given a real operation 'log'
@@ -165,7 +165,7 @@ Feature: Integer Arithmetic Expressions
 
   Scenario: Printing the NOT of an integer number
     Given the negation of a number 0
-    Then the operation evaluates to 1
+    Then the operation evaluates to the integer 1
 
   Scenario Outline: Evaluating boolean expressions
     Given I initialise a calculator

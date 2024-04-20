@@ -4,6 +4,7 @@ import calculator.Expression;
 import calculator.MyNaN;
 import calculator.Value;
 import calculator.operation.Operation;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
  * @see Expression
  * @see Operation
  */
+@Slf4j
 public class MyNumber extends Value<Integer> {
 
 
@@ -160,6 +162,7 @@ public class MyNumber extends Value<Integer> {
 
     @Override
     public Value<Integer> not() {
+        log.info("Not {} : {}", this.getVal(),this.getVal()==0);
         return new MyNumber(this.getVal() == 0 ? 1 : 0);
     }
 }

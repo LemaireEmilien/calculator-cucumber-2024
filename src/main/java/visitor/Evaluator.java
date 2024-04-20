@@ -55,9 +55,6 @@ public class Evaluator<T> extends Visitor<T> {
         if (max == 1) {
             temp = o.op(temp, null);
         }
-        if (o instanceof Not<T>) {
-            temp = o.op(temp, null);
-        };
         for (int counter = 1; counter < max; counter++) {
             temp = o.op(temp, evaluatedArgs.get(counter));
         }

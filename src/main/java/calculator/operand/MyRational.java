@@ -68,6 +68,51 @@ public class MyRational extends Value<Rational> {
     }
 
     @Override
+    public Value<Rational> logarithm() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> naturalLog() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> squareRoot() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> sin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> cos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> tan() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> asin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> acos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> atan() {
+        return new MyNaN<>();
+    }
+
+    @Override
     public Value<Rational> and(Value<Rational> other) {
         return new MyNaN<>();
     }

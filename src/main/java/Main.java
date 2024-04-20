@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Calculator<Integer> c = new Calculator<>();
         try {
-            Expression<Integer> e = c.read("true & false & true");
+            Expression<Integer> e = c.read("!true");
             c.print(e);
             c.eval(e);
         } catch (Exception e) {
