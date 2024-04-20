@@ -3,19 +3,27 @@ package gui;
 import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
+import calculator.memory.ExpressionFileHandler;
 import calculator.parser.Parser;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class Controller {
+
+
 
     private enum CalculatorType{
         INTEGER, RATIONAL, REAL
@@ -23,9 +31,13 @@ public class Controller {
     @FXML
     private ChoiceBox<CalculatorType> typeBox;
     @FXML
+    private Button expressionHistory;
+    @Getter
+    @Setter
+    @FXML
     private Label currentExpression;
     @FXML
-    private Label history;
+    private ListView<String> history;
     @FXML
     private Button operatorEquals;
     @FXML
@@ -43,11 +55,18 @@ public class Controller {
     @FXML
     private Button optionAnswer;
     @FXML
+    private Button undo;
+    @FXML
+    private Button redo;
+    @FXML
     private GridPane mainPane;
-
+    @Setter
+    private Stage stage;
+    @Setter
+    private HistoryController historyController;
 
     @FXML
-    private void initialize() {
+    private void initialize(){
         typeBox.getItems().setAll(CalculatorType.values());
         typeBox.setValue(CalculatorType.INTEGER);
         for (int i = 0; i < 9; i++) {
@@ -67,6 +86,66 @@ public class Controller {
         optionUndo.setOnAction(event -> removeCharacter());
         operatorEquals.setOnAction(event -> evaluate());
         optionAnswer.setOnAction(event -> addCharacter("ans"));
+        expressionHistory.setOnAction(event -> moveToHistory());
+
+        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        List<String> redoElements = new ArrayList<>();
+        history.setItems(FXCollections.observableArrayList(listRecentHistory));
+        history.scrollTo(history.getItems().size()-1);
+
+        undo.setOnAction(event -> {
+            if(!history.getItems().isEmpty()){
+                if(redo.isDisable()){
+                    redo.setDisable(false);
+                }
+                String expression = history.getItems().get(history.getItems().size()-2);
+                String result = history.getItems().getLast();
+                redoElements.add(expression);
+                redoElements.add(result);
+                historyController.getListRecentHistory().removeLast();
+                historyController.getListRecentHistory().removeLast();
+                historyController.update();
+                currentExpression.setText(expression);
+                listRecentHistory.remove(result);
+                listRecentHistory.remove(expression);
+                history.setItems(FXCollections.observableArrayList(listRecentHistory));
+            }
+            else if(!currentExpression.getText().isEmpty()){
+                currentExpression.setText("");
+                undo.setDisable(true);
+            }
+
+        });
+
+        redo.setOnAction(event -> {
+            if(listRecentHistory.isEmpty() && currentExpression.getText().isEmpty()){
+                currentExpression.setText(redoElements.get(redoElements.size()-2));
+            }
+            else {
+                if(undo.isDisable()){
+                    undo.setDisable(false);
+                }
+                String expression = redoElements.get(redoElements.size()-2);
+                String result = redoElements.getLast();
+                listRecentHistory.add(expression);
+                listRecentHistory.add(result);
+                historyController.getListRecentHistory().add(expression);
+                historyController.getListRecentHistory().add(result);
+                historyController.update();
+                redoElements.remove(expression);
+                redoElements.remove(result);
+                history.setItems(FXCollections.observableArrayList(listRecentHistory));
+                history.scrollTo(history.getItems().size() - 1);
+                if(!redoElements.isEmpty()) {
+                    currentExpression.setText(redoElements.get(redoElements.size() - 2));
+                }
+                else {
+                    redo.setDisable(true);
+                }
+            }
+
+        });
+
     }
 
     @FXML
@@ -112,8 +191,21 @@ public class Controller {
         }
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
-            history.setText(history.getText() + "\n" + c.eval(e).getVal().toString());
+            history.getItems().add(currentExpression.getText());
+            history.getItems().add(c.eval(e).getVal().toString());
+            historyController.getListRecentHistory().add(currentExpression.getText());
+            historyController.getListRecentHistory().add(c.eval(e).getVal().toString());
+            historyController.update();
             currentExpression.setText("");
+            history.scrollTo(history.getItems().size()-1);
         }
+    }
+
+    private void moveToHistory() {
+        stage.show();
+    }
+
+    public void setLabelCurrent(String expression){
+        currentExpression.setText(currentExpression.getText() + expression);
     }
 }
