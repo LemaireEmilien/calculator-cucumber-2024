@@ -96,7 +96,7 @@ public class Controller {
     private void evaluate(){
         switch (typeBox.getValue()){
             case INTEGER -> evaluateT(Parser::stringToInteger);
-            case RATIONAL -> {} //todo
+            case RATIONAL -> evaluateT(Parser::stringToRational);
             case REAL -> {} //todo
         }
     }
