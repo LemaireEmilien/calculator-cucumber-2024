@@ -104,9 +104,7 @@ public class HistoryController {
             ExpressionFileHandler.saveExpressions(saveExpressions,getStage());
         });
 
-        useButton.setOnAction(event -> {
-            controller.setLabelCurrent(listHistory.getSelectionModel().getSelectedItem());
-        });
+        useButton.setOnAction(event -> controller.setLabelCurrent(listHistory.getSelectionModel().getSelectedItem()));
 
         addButton.setOnAction(event -> {
             addButton.setVisible(false);

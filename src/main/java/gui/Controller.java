@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -62,7 +61,7 @@ public class Controller {
     private HistoryController historyController;
 
     @FXML
-    private void initialize() throws IOException {
+    private void initialize(){
         typeBox.getItems().setAll(CalculatorType.values());
         typeBox.setValue(CalculatorType.INTEGER);
         for (int i = 0; i < 9; i++) {
