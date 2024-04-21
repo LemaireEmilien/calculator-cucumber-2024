@@ -1,19 +1,21 @@
 package calculator.operand;
 
-import calculator.MyNaN;
 import calculator.Value;
 import ch.obermuhlner.math.big.BigDecimalMath;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.MathContext;
-import java.util.Objects;
 
 import java.math.RoundingMode;
 import java.math.BigDecimal;
+import java.util.Random;
 
 @Slf4j
 public class MyBigNumber extends Value<BigDecimal> {
 
+    @Getter @Setter
     private static int precision = 10;
 
     public MyBigNumber(BigDecimal value) {
@@ -80,6 +82,12 @@ public class MyBigNumber extends Value<BigDecimal> {
             return new MyNaN<>();
         }
         return new MyBigNumber(this.val.divide(other.getVal(), getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros());
+    }
+
+    @Override
+    public Value<BigDecimal> power(Value<BigDecimal> other) {
+        MathContext mc = new MathContext(precision);
+        return new MyBigNumber(BigDecimalMath.pow(this.val,other.getVal(), mc));
     }
 
     @Override
@@ -166,9 +174,14 @@ public class MyBigNumber extends Value<BigDecimal> {
         return new MyNaN<>();
     }
 
+
     @Override
     public Value<BigDecimal> modulo(Value<BigDecimal> other) {
         return new MyNaN<>();
+    }
+
+    public Value<BigDecimal> rand(Random random) {
+        return new MyBigNumber(random.nextDouble(this.getVal().doubleValue()));
     }
 
     public Value<BigDecimal> degToRad() {
@@ -178,13 +191,4 @@ public class MyBigNumber extends Value<BigDecimal> {
     public Value<BigDecimal> radToDeg() {
         return new MyBigNumber(this.val.multiply(new BigDecimal(180)).divide(BigDecimal.valueOf(Math.PI), RoundingMode.HALF_UP));
     }
-
-    public static void setPrecision(int precision) {
-        MyBigNumber.precision = precision;
-    }
-
-    public static int getPrecision() {
-        return MyBigNumber.precision;
-    }
-
 }

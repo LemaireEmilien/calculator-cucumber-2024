@@ -1,11 +1,7 @@
 package calculator;
 
-import calculator.parser.CalculatorLexer;
-import calculator.parser.CalculatorParser;
+import calculator.operand.MyNaN;
 import calculator.parser.Parser;
-import calculator.parser.VisitorParser;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import visitor.*;

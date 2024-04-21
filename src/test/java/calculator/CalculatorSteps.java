@@ -1,6 +1,7 @@
 package calculator;
 
 import calculator.operand.MyBigNumber;
+import calculator.operand.MyNaN;
 import calculator.operand.MyNumber;
 import calculator.operation.*;
 import io.cucumber.java.Before;
@@ -34,6 +35,7 @@ public class CalculatorSteps {
         op = null;
         op_dec = null;
         c_dec = null;
+        Rand.random.setSeed(0xCAFEBABEL);
     }
 
     @Given("I initialise a calculator")
@@ -56,6 +58,17 @@ public class CalculatorSteps {
 				case "|"	->	op = new Or<>(params);
 				case "^"	->	op = new Xor<>(params);
                 case "mod"  ->  op = new Modulo<>(params);
+                case "rand" ->  op = new Rand<>(params);
+                case "**"   ->  op = new Power<>(params);
+                case "log" -> op = new Logarithm<>(params);
+                case "ln" -> op = new NaturalLog<>(params);
+                case "sqrt" -> op = new SquareRoot<>(params);
+                case "cos" -> op = new Cos<>(params);
+                case "sin" -> op = new Sin<>(params);
+                case "tan" -> op = new Tan<>(params);
+                case "acos" -> op = new Acos<>(params);
+                case "asin" -> op = new Asin<>(params);
+                case "atan" -> op = new Atan<>(params);
 				default		->	fail();
 			}
 		} catch (IllegalConstruction e) {
@@ -82,6 +95,8 @@ public class CalculatorSteps {
                 case "acos" -> op_dec = new Acos<>(params_dec);
                 case "asin" -> op_dec = new Asin<>(params_dec);
                 case "atan" -> op_dec = new Atan<>(params_dec);
+                case "rand" -> op_dec = new Rand<>(params_dec);
+                case "**" -> op_dec = new Power<>(params_dec);
                 default -> fail();
             }
         } catch (IllegalConstruction e) {
@@ -178,6 +193,14 @@ public class CalculatorSteps {
         //add extra parameter to the operation
         params = new ArrayList<>();
         params.add(new MyNumber(val));
+        op.addMoreParams(params);
+    }
+
+    @When("^I provide a NaN$")
+    public void whenIProvideANaN() {
+        //add extra parameter to the operation
+        params = new ArrayList<>();
+        params.add(new MyNaN<>());
         op.addMoreParams(params);
     }
 

@@ -2,6 +2,8 @@ package calculator.operand;
 
 import calculator.Value;
 
+import java.util.Random;
+
 public interface Operand<T> {
     Value<T> plus(Value<T> other);
 
@@ -10,6 +12,8 @@ public interface Operand<T> {
     Value<T> times(Value<T> other);
 
     Value<T> div(Value<T> other);
+
+    Value<T> power(Value<T> other);
 
     Value<T> opposite();
 
@@ -42,4 +46,6 @@ public interface Operand<T> {
     Value<T> not();
 
     Value<T> modulo(Value<T> other);
+
+    Value<T> rand(Random random);
 }

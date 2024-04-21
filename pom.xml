@@ -198,7 +198,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>calculator/Main.class</exclude>
+                        <exclude>calculator/parser/Calculator*</exclude>
                         <exclude>Calculator*</exclude>
                     </excludes>
                 </configuration>

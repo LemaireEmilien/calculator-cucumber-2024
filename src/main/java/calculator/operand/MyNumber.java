@@ -1,12 +1,12 @@
 package calculator.operand;
 
 import calculator.Expression;
-import calculator.MyNaN;
 import calculator.Value;
 import calculator.operation.Operation;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * MyNumber is a concrete class that represents arithmetic numbers,
@@ -91,6 +91,11 @@ public class MyNumber extends Value<Integer> {
     }
 
     @Override
+    public Value<Integer> power(Value<Integer> other) {
+        return new MyNumber((int) Math.pow(this.getVal(),other.getVal()));
+    }
+
+    @Override
     public Value<Integer> opposite() {
         return new MyNumber(-this.getVal());
     }
@@ -162,12 +167,16 @@ public class MyNumber extends Value<Integer> {
 
     @Override
     public Value<Integer> not() {
-        log.info("Not {} : {}", this.getVal(),this.getVal()==0);
         return new MyNumber(this.getVal() == 0 ? 1 : 0);
     }
 
     @Override
     public Value<Integer> modulo(Value<Integer> other) {
         return new MyNumber(this.getVal() % other.getVal());
+    }
+
+    @Override
+    public Value<Integer> rand(Random random) {
+        return new MyNumber(random.nextInt(this.getVal()));
     }
 }

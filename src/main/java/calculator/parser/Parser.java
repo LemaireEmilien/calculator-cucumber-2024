@@ -7,6 +7,7 @@ import calculator.Value;
 import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
 import calculator.operand.MyRational;
+import ch.obermuhlner.math.big.BigDecimalMath;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.CharStreams;
@@ -14,6 +15,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 @NoArgsConstructor
 @Slf4j
@@ -60,7 +62,14 @@ public class Parser<T> {
         int n = Integer.parseInt(spliced[0]);
         return new MyRational(new Rational(n, d));
     }
+
     public static Value<BigDecimal> stringToBigDecimal(String s) {
+        MathContext mc = new MathContext(MyBigNumber.getPrecision());
+        if (s.equals("e"))
+            return new MyBigNumber(BigDecimalMath.e(mc));
+        if (s.equals("pi"))
+            return new MyBigNumber(BigDecimalMath.pi(mc));
+
         return new MyBigNumber(new BigDecimal(s));
     }
 }

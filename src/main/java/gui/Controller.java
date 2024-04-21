@@ -13,6 +13,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -31,6 +32,8 @@ public class Controller {
         INTEGER, RATIONAL, REAL
     }
 
+    @FXML
+    private VBox mainBox;
     @FXML
     private Button expressionHistory;
     @FXML
@@ -155,18 +158,46 @@ public class Controller {
                     redo.setDisable(true);
                 }
             }
+        });
+        GridPane p = new GridPane();
+        p.setHgap(20);
+        p.setVgap(10);
+        mainBox.getChildren().add(p);
+        updateTypeButton();
+        typeBox.valueProperty().addListener((t1) -> updateTypeButton());
 
-            for (int i = 0; i < 9; i++) {
-                final String s = String.valueOf(i + 1);
-                Button b = new Button(s);
-                b.setStyle("-fx-font: 32 system;");
-                b.getStyleClass().add("button-operator");
-                b.setOnAction(actionEvent -> addCharacter(s+));
-                mainPane.add(b, i % 3, i / 3 + 1);
+    }
+
+    private void updateTypeButton(){
+        List<String> operations = new ArrayList<>(List.of("(", ")"));
+        switch (typeBox.getValue()){
+            case INTEGER -> {
+                operations.addAll( List.of("mod", "rand", "!", "|","&", "^", "=>"));
+                precisionSlider.setVisible(false);
+                optionDegRad.setVisible(false);
+            }
+            case REAL -> {
+                operations.addAll( List.of("cos","sin","tan","acos","asin","atan","log","ln","sqrt","1/x","rand"));
+                precisionSlider.setVisible(true);
+                optionDegRad.setVisible(true);
+            }
+            case RATIONAL -> {
+                precisionSlider.setVisible(false);
+                optionDegRad.setVisible(false);
             }
 
-        });
-
+        }
+        log.info("size {}", operations.size());
+        GridPane gp = (GridPane) mainBox.getChildren().getLast();
+        gp.getChildren().clear();
+        for (int i = 0; i < operations.size(); i++) {
+            final String s = operations.get(i);
+            Button b = new Button(s);
+            b.setStyle("-fx-font: 15 system;");
+            b.getStyleClass().add("button-operator");
+            b.setOnAction(actionEvent -> addCharacter(s));
+            gp.add(b, i % 4, i / 4);
+        }
     }
 
     private void convertDegToRad() {

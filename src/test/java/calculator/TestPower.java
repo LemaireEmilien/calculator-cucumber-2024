@@ -1,29 +1,31 @@
 package calculator;
 
-import calculator.operand.MyBigNumber;
-import calculator.operation.Acos;
-import calculator.operation.Cos;
+//Import Junit5 libraries for unit testing:
+
+import calculator.operand.MyNumber;
+import calculator.operation.Power;
 import calculator.operation.Times;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestCos {
-    private final double value1 = 8;
-    private Cos<BigDecimal> op;
-    private List<Expression<BigDecimal>> params;
+class TestPower {
+
+    private final int value1 = 8;
+    private final int value2 = 6;
+    private Power<Integer> op;
+    private List<Expression<Integer>> params;
 
     @BeforeEach
     void setUp() {
-        params = List.of(new MyBigNumber(BigDecimal.valueOf(value1)));
+        params = new ArrayList<>(Arrays.asList(new MyNumber(value1), new MyNumber(value2)));
         try {
-            op = new Cos<>(params);
+            op = new Power<>(params);
         } catch (IllegalConstruction e) {
             fail();
         }
@@ -31,14 +33,14 @@ public class TestCos {
 
     @Test
     void testConstructor1() {
-        // It should not be possible to create an expression without null parameter list
-        assertThrows(IllegalConstruction.class, () -> op = new Cos<>(null));
+        // It should not be possible to create a Power expression without null parameter list
+        assertThrows(IllegalConstruction.class, () -> op = new Power<>(null));
     }
 
     @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
     void testConstructor2() {
-        // A Times expression should not be the same as a Acos expression
+        // A Times expression should not be the same as a Power expression
         try {
             assertNotSame(op, new Times<>(new ArrayList<>()));
         } catch (IllegalConstruction e) {
@@ -49,10 +51,12 @@ public class TestCos {
     @Test
     void testEquals() {
         // Two similar expressions, constructed separately (and using different constructors) should be equal
-        List<Expression<BigDecimal>> p = List.of(new MyBigNumber(BigDecimal.valueOf(value1)));
+        ArrayList<Expression<Integer>> p = new ArrayList<>(Arrays.asList(new MyNumber(value1), new MyNumber(value2)));
         try {
-            Cos<BigDecimal> d = new Cos<>(p);
-            assertEquals(op, d);
+            Power<Integer> e = new Power<>(p);
+            assertEquals(op, e);
+            assertEquals(e, e);
+            assertNotEquals(e, new Power<>(new ArrayList<>(Arrays.asList(new MyNumber(5), new MyNumber(4)))));
         } catch (IllegalConstruction e) {
             fail();
         }
@@ -67,9 +71,9 @@ public class TestCos {
     @Test
     void testHashCode() {
         // Two similar expressions, constructed separately (and using different constructors) should have the same hashcode
-        List<Expression<BigDecimal>> p = List.of(new MyBigNumber(BigDecimal.valueOf(value1)));
+        ArrayList<Expression<Integer>> p = new ArrayList<>(Arrays.asList(new MyNumber(value1), new MyNumber(value2)));
         try {
-            Cos<BigDecimal> e = new Cos<>(p);
+            Power<Integer> e = new Power<>(p);
             assertEquals(e.hashCode(), op.hashCode());
         } catch (IllegalConstruction e) {
             fail();
@@ -79,12 +83,7 @@ public class TestCos {
     @Test
     void testNullParamList() {
         params = null;
-        assertThrows(IllegalConstruction.class, () -> op = new Cos<>(params));
-    }
-
-    @Test
-    void testMoreOneParam() {
-        assertThrows(IllegalConstruction.class, () -> new Cos<>(List.of(new MyBigNumber(4), new MyBigNumber(5))));
+        assertThrows(IllegalConstruction.class, () -> op = new Power<>(params));
     }
 
 }

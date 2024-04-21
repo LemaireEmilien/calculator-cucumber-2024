@@ -1,5 +1,6 @@
 package calculator;
 
+import calculator.operand.MyNaN;
 import calculator.operand.MyNumber;
 import calculator.parser.Parser;
 import org.junit.jupiter.api.BeforeEach;

@@ -97,7 +97,6 @@ signedAtom
 
 atom
     : scientific
-    | variable
     | constant
     | rational
     | LPAREN expression RPAREN
@@ -114,11 +113,6 @@ scientific
 constant
     : PI
     | EULER
-    | I
-    ;
-
-variable
-    : VARIABLE
     ;
 
 func_
@@ -136,6 +130,7 @@ funcname
     | LN
     | SQRT
     | MOD
+    | RAND
     ;
 
 COS
@@ -176,6 +171,10 @@ SQRT
 
 MOD
     : 'mod'
+    ;
+
+RAND
+    : 'rand'
     ;
 
 LPAREN
@@ -222,25 +221,8 @@ EULER
     : E2
     ;
 
-I
-    : 'i'
-    ;
 FRAC
     : '⁄'
-    ;
-VARIABLE
-    : VALID_ID_START VALID_ID_CHAR*
-    ;
-
-fragment VALID_ID_START
-    : 'a' .. 'z'
-    | 'A' .. 'Z'
-    | '_'
-    ;
-
-fragment VALID_ID_CHAR
-    : VALID_ID_START
-    | '0' .. '9'
     ;
 
 SCIENTIFIC_NUMBER

@@ -54,32 +54,38 @@ Feature: Integer Arithmetic Expressions
     And I provide a second integer number 1
     Then the operation evaluates to the integer 0
 
+  Scenario: Power two integer numbers
+    Given an integer operation '**'
+    When I provide a first integer number 2
+    And I provide a second integer number 4
+    Then the operation evaluates to the integer 16
+
   Scenario: Logarithm on one real numbers
     Given a real operation 'log'
     When I provide a first decimal number 100.0
     Then the operation evaluates to the decimal 2
 
-  Scenario: Logarithm on one real numbers
+  Scenario: Natural log on one real numbers
     Given a real operation 'ln'
     When I provide a first decimal number 2.71828182845
     Then the operation evaluates to the decimal 1
 
-  Scenario: Logarithm on one real numbers
+  Scenario: Square root on one real numbers
     Given a real operation 'sqrt'
     When I provide a first decimal number 9.
     Then the operation evaluates to the decimal 3
 
-  Scenario: Logarithm on one real numbers
+  Scenario: Cos on one real numbers
     Given a real operation 'cos'
     When I provide a first decimal number 1.57079632679
     Then the operation evaluates to the decimal 0
 
-  Scenario: Logarithm on one real numbers
+  Scenario: Sin on one real numbers
     Given a real operation 'sin'
     When I provide a first decimal number 1.57079632679
     Then the operation evaluates to the decimal 1
 
-  Scenario: Logarithm on one real numbers
+  Scenario: Tan on one real numbers
     Given a real operation 'tan'
     When I provide a first decimal number 0.78539816339744
     Then the operation evaluates to the decimal 1
@@ -90,6 +96,21 @@ Feature: Integer Arithmetic Expressions
     And I provide a second integer number 5
     Then the operation evaluates to the integer 2
 
+  Scenario: Random integer numbers
+    Given an integer operation 'rand'
+    When I provide a first integer number 17
+    Then the operation evaluates to the integer 1
+
+  Scenario: Random real one real numbers
+    Given a real operation 'rand'
+    When I provide a first decimal number 1.0
+    Then the operation evaluates to the decimal 0.81149
+
+  Scenario: Power two real numbers
+    Given a real operation '**'
+    When I provide a first decimal number 2.0
+    And I provide a second decimal number 4.0
+    Then the operation evaluates to the decimal 16.0
     
   # This is an example of a scenario in which we provide a list of numbers as input.
   # (In fact, this is not entirely true, since what is given as input is a table of
@@ -194,3 +215,44 @@ Feature: Integer Arithmetic Expressions
       | !(true & false) ^ true => false | 1      |
       | (true & false) \| true => true  | 1      |
       | true & false \| true ^ true     | 0      |
+
+  Scenario Outline: Evaluating arithmetic operations with two integer parameters should return NaN
+    Given an integer operation <op>
+    When I provide a first integer number <n1>
+    Then the operation evaluates to NaN
+
+    Examples:
+      | op      | n1 |
+      | "log"   | 4  |
+      | "ln"    | 8  |
+      | "sqrt"  | 7  |
+      | "cos"   | 6  |
+      | "sin"   | 1  |
+      | "tan"   | 0  |
+      | "acos"  | 0  |
+      | "asin"  | 0  |
+      | "atan"  | 0  |
+
+  Scenario Outline: Evaluating arithmetic operations with two NaN should return NaN
+    Given an integer operation <op>
+    When I provide a NaN
+    Then the operation evaluates to NaN
+
+    Examples:
+      | op      |
+      | "log"   |
+      | "ln"    |
+      | "sqrt"  |
+      | "cos"   |
+      | "sin"   |
+      | "tan"   |
+      | "acos"  |
+      | "asin"  |
+      | "atan"  |
+      | "+"  |
+      | "-"  |
+      | "*"  |
+      | "/"  |
+      | "&"  |
+      | "\|" |
+      | "^"  |

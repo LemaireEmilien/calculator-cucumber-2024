@@ -1,8 +1,9 @@
 package calculator.operand;
 
-import calculator.MyNaN;
 import calculator.Rational;
 import calculator.Value;
+
+import java.util.Random;
 
 public class MyRational extends Value<Rational> {
     /**
@@ -60,6 +61,11 @@ public class MyRational extends Value<Rational> {
                 td * other.getVal().numerator());
         r = r.simplify();
         return new MyRational(r);
+    }
+
+    @Override
+    public Value<Rational> power(Value<Rational> other) {
+        return new MyNaN<>();
     }
 
     @Override
@@ -139,6 +145,11 @@ public class MyRational extends Value<Rational> {
 
     @Override
     public Value<Rational> modulo(Value<Rational> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Rational> rand(Random random) {
         return new MyNaN<>();
     }
 

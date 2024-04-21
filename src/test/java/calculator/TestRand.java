@@ -1,8 +1,8 @@
 package calculator;
 
 import calculator.operand.MyBigNumber;
-import calculator.operation.Acos;
-import calculator.operation.Cos;
+
+import calculator.operation.Rand;
 import calculator.operation.Times;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,16 +14,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestCos {
+public class TestRand {
     private final double value1 = 8;
-    private Cos<BigDecimal> op;
+    private Rand<BigDecimal> op;
     private List<Expression<BigDecimal>> params;
 
     @BeforeEach
     void setUp() {
         params = List.of(new MyBigNumber(BigDecimal.valueOf(value1)));
         try {
-            op = new Cos<>(params);
+            op = new Rand<>(params);
         } catch (IllegalConstruction e) {
             fail();
         }
@@ -32,13 +32,13 @@ public class TestCos {
     @Test
     void testConstructor1() {
         // It should not be possible to create an expression without null parameter list
-        assertThrows(IllegalConstruction.class, () -> op = new Cos<>(null));
+        assertThrows(IllegalConstruction.class, () -> op = new Rand<>(null));
     }
 
     @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
     void testConstructor2() {
-        // A Times expression should not be the same as a Acos expression
+        // A Times expression should not be the same as a ARand expression
         try {
             assertNotSame(op, new Times<>(new ArrayList<>()));
         } catch (IllegalConstruction e) {
@@ -51,7 +51,7 @@ public class TestCos {
         // Two similar expressions, constructed separately (and using different constructors) should be equal
         List<Expression<BigDecimal>> p = List.of(new MyBigNumber(BigDecimal.valueOf(value1)));
         try {
-            Cos<BigDecimal> d = new Cos<>(p);
+            Rand<BigDecimal> d = new Rand<>(p);
             assertEquals(op, d);
         } catch (IllegalConstruction e) {
             fail();
@@ -69,7 +69,7 @@ public class TestCos {
         // Two similar expressions, constructed separately (and using different constructors) should have the same hashcode
         List<Expression<BigDecimal>> p = List.of(new MyBigNumber(BigDecimal.valueOf(value1)));
         try {
-            Cos<BigDecimal> e = new Cos<>(p);
+            Rand<BigDecimal> e = new Rand<>(p);
             assertEquals(e.hashCode(), op.hashCode());
         } catch (IllegalConstruction e) {
             fail();
@@ -79,12 +79,12 @@ public class TestCos {
     @Test
     void testNullParamList() {
         params = null;
-        assertThrows(IllegalConstruction.class, () -> op = new Cos<>(params));
+        assertThrows(IllegalConstruction.class, () -> op = new Rand<>(params));
     }
 
     @Test
     void testMoreOneParam() {
-        assertThrows(IllegalConstruction.class, () -> new Cos<>(List.of(new MyBigNumber(4), new MyBigNumber(5))));
+        assertThrows(IllegalConstruction.class, () -> new Rand<>(List.of(new MyBigNumber(4), new MyBigNumber(5))));
     }
 
 }

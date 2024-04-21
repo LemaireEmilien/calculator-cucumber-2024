@@ -1,4 +1,8 @@
-package calculator;
+package calculator.operand;
+
+import calculator.Value;
+
+import java.util.Random;
 
 public class MyNaN<T> extends Value<T> {
     /**
@@ -44,6 +48,11 @@ public class MyNaN<T> extends Value<T> {
 
     @Override
     public Value<T> div(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> power(Value<T> other) {
         return new MyNaN<>();
     }
 
@@ -124,6 +133,11 @@ public class MyNaN<T> extends Value<T> {
 
     @Override
     public Value<T> modulo(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> rand(Random random) {
         return new MyNaN<>();
     }
 }
