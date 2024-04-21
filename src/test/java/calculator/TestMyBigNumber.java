@@ -56,7 +56,7 @@ class TestMyBigNumber {
 
         assertEquals("1000", new MyBigNumber(value1).toString());
         assertEquals("1E+12", new MyBigNumber(value2).toString());
-        //assertEquals("1E+15", new MyBigNumber(value3).toString()); // This test fails because the function toString of BigDecimal is wrong
+        assertEquals("1E+15", new MyBigNumber(value3).toString());
         assertEquals("1E-13", new MyBigNumber(value4).toString());
 
         MyBigNumber.setPrecision(5);
@@ -93,10 +93,10 @@ class TestMyBigNumber {
             assertEquals(new MyBigNumber(6), calculator.eval(expression));
 
             expression = parser.parse("10000000000000", Parser::stringToBigDecimal);
-            //assertEquals(new MyBigNumber(new BigDecimal("1E13")), calculator.eval(expression));  // This test fails because the function toString of BigDecimal is wrong
+            assertEquals(new MyBigNumber(new BigDecimal("1E13")).toString(), calculator.eval(expression).toString());
 
             expression = parser.parse("10000000000000 + 1e13", Parser::stringToBigDecimal);
-            //assertEquals(new MyBigNumber(new BigDecimal("2E13")), calculator.eval(expression));  // This test fails because the function toString of BigDecimal is wrong
+            assertEquals(new MyBigNumber(new BigDecimal("2E13")).toString(), calculator.eval(expression).toString());
 
             expression = parser.parse("1e13 + 1e13", Parser::stringToBigDecimal);
             assertEquals(new MyBigNumber(new BigDecimal("2E13")), calculator.eval(expression));

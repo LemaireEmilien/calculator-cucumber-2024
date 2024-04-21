@@ -23,7 +23,13 @@ public class MyBigNumber extends Value<BigDecimal> {
     @Override
     public String toString() {
         //If the number is too big or too small to be displayed, it will be displayed in scientific notation
-        if (val.abs().compareTo(new BigDecimal("1e10")) > 0 || val.abs().compareTo(new BigDecimal("1e-10")) < 0) {
+        if (val.abs().compareTo(new BigDecimal("1e10")) > 0) {
+            String plainValue = val.stripTrailingZeros().toPlainString();
+            int size = plainValue.length();
+            BigDecimal plainValueDivBySize = val.movePointLeft(size - 1).stripTrailingZeros();
+            return plainValueDivBySize.toString() + "E+" + (size - 1);
+        }
+        else if (val.abs().compareTo(new BigDecimal("1e-10")) < 0){
             return val.toString();
         }
         else {
