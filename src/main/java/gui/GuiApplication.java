@@ -1,7 +1,7 @@
 package gui;
 
-import calculator.memory.ExpressionFileHandler;
-import calculator.memory.ListSaver;
+import gui.memory.ExpressionFileHandler;
+import gui.memory.ListSaver;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,12 +21,12 @@ public class GuiApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/calculator-design.fxml"));
-        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/history.fxml"));
-        Parent root = loader.load();
-        Parent historyPage = loader2.load();
-        Controller controller = loader.getController();
-        HistoryController historyController = loader2.getController();
+        FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/calculator-design.fxml"));
+        FXMLLoader historyLoader = new FXMLLoader(getClass().getResource("/history.fxml"));
+        Parent root = mainLoader.load();
+        Parent historyPage = historyLoader.load();
+        Controller controller = mainLoader.getController();
+        HistoryController historyController = historyLoader.getController();
 
         controller.setHistoryController(historyController);
         historyController.setController(controller);
@@ -37,7 +37,7 @@ public class GuiApplication extends Application {
         stage.show();
         stage.setOnCloseRequest(windowEvent -> {
             try {
-                ExpressionFileHandler.saveExpressionsAuto(ListSaver.listToSave, "recentHistory.txt");
+                ExpressionFileHandler.saveExpressionsAuto(ListSaver.getListToSave(), Utils.getHistoryFile());
             } catch (URISyntaxException e) {
                 log.error("{}",e.getMessage());
             }

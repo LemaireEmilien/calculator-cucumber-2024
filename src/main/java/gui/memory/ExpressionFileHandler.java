@@ -1,4 +1,4 @@
-package calculator.memory;
+package gui.memory;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -6,11 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 public class ExpressionFileHandler {
@@ -21,6 +19,10 @@ public class ExpressionFileHandler {
         fileChooser.setTitle("Save Expressions File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         File file = fileChooser.showSaveDialog(stage);
+        if (file == null){
+            log.warn("Nor file selected");
+            return;
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String expression : expressions) {
                 writer.write(expression);
@@ -31,9 +33,7 @@ public class ExpressionFileHandler {
         }
     }
 
-    public static void saveExpressionsAuto(List<String> expressions,String nameFile) throws URISyntaxException {
-
-        File file = new File(Objects.requireNonNull(getSourcePath(nameFile)));
+    public static void saveExpressionsAuto(List<String> expressions, File file) throws URISyntaxException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String expression : expressions) {
                 writer.write(expression);
@@ -44,8 +44,7 @@ public class ExpressionFileHandler {
         }
     }
 
-    public static List<String> loadExpressionsAuto(String nameFile){
-        File file = new File(Objects.requireNonNull(getSourcePath(nameFile)));
+    public static List<String> loadExpressionsAuto(File file){
         return getStrings(file);
     }
 
@@ -70,17 +69,6 @@ public class ExpressionFileHandler {
             log.error("{}",e.getMessage());
             return Collections.emptyList();
         }
-    }
-
-    public static String getSourcePath(String namefile) {
-        String projectRoot;
-        try {
-            projectRoot = new File(".").getCanonicalPath();
-        } catch (IOException e) {
-            log.error("{}",e.getMessage());
-            return null;
-        }
-        return Paths.get(projectRoot, "src/main/java/calculator/memory/files/",namefile).toString();
     }
 
 }

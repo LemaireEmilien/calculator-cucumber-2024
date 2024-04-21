@@ -3,7 +3,7 @@ package gui;
 import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
-import calculator.memory.ExpressionFileHandler;
+import gui.memory.ExpressionFileHandler;
 import calculator.operand.MyBigNumber;
 import calculator.parser.Parser;
 import javafx.collections.FXCollections;
@@ -86,7 +86,7 @@ public class Controller {
         precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
         initButton();
 
-        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto( Utils.getHistoryFile());
         List<String> redoElements = new ArrayList<>();
         history.setItems(FXCollections.observableArrayList(listRecentHistory));
         history.scrollTo(history.getItems().size() - 1);
