@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestTan {
+class TestTan {
     private final double value1 = 8;
     private Tan<BigDecimal> op;
     private List<Expression<BigDecimal>> params;

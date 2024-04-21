@@ -33,7 +33,7 @@ class TestMyBigNumber {
         assertNotEquals(new MyBigNumber(otherValue), myBigNumber);
         assertEquals(myBigNumber, myBigNumber); // Identity check (for coverage, as this should always be true)
         assertNotEquals(myBigNumber, value); // myBigNumber is of type MyBigNumber, while value is of type BigDecimal, so not equal
-        assertNotEquals( myBigNumber,null);// NOSONAR
+        assertNotEquals(myBigNumber, null);// NOSONAR
         try {
             assertNotEquals(new Times<>(new ArrayList<>()), myBigNumber);
         } catch (IllegalConstruction e) {
@@ -68,7 +68,7 @@ class TestMyBigNumber {
     }
 
     @Test
-    void testParserEval(){
+    void testParserEval() {
         try {
             MyBigNumber.setPrecision(10);
             Parser<BigDecimal> parser = new Parser<>();
@@ -113,13 +113,13 @@ class TestMyBigNumber {
             expression = parser.parse("42 / 0", Parser::stringToBigDecimal);
             assertEquals(new MyNaN<>(), calculator.eval(expression));
 
-        }catch (IllegalExpression e){
+        } catch (IllegalExpression e) {
             fail();
         }
     }
 
     @Test
-    void testDegToRad(){
+    void testDegToRad() {
         MyBigNumber myBigNumber1 = new MyBigNumber(BigDecimal.valueOf(180));
         MyBigNumber myBigNumber2 = new MyBigNumber(BigDecimal.valueOf(Math.PI));
 

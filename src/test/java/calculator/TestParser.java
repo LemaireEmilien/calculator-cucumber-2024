@@ -124,7 +124,7 @@ class TestParser {
     }
 
     @Test
-    void testMoreArithmetic(){
+    void testMoreArithmetic() {
         try {
             Parser<BigDecimal> parser = new Parser<>();
             Expression<BigDecimal> e = parser.parse("sin(1)", Parser::stringToBigDecimal);
@@ -146,7 +146,7 @@ class TestParser {
             e = parser.parse("sqrt(1)", Parser::stringToBigDecimal);
             assertEquals(new SquareRoot<>(List.of(new MyBigNumber(1))), e);
             e = parser.parse("mod(1,2)", Parser::stringToBigDecimal);
-            assertEquals(new Modulo<>(List.of(new MyBigNumber(1),new MyBigNumber(2))), e);
+            assertEquals(new Modulo<>(List.of(new MyBigNumber(1), new MyBigNumber(2))), e);
             e = parser.parse("rand(1)", Parser::stringToBigDecimal);
             assertEquals(new Rand<>(List.of(new MyBigNumber(1))), e);
         } catch (IllegalConstruction | IllegalExpression e) {

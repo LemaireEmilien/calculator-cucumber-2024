@@ -92,7 +92,7 @@ public class MyNumber extends Value<Integer> {
 
     @Override
     public Value<Integer> power(Value<Integer> other) {
-        return new MyNumber((int) Math.pow(this.getVal(),other.getVal()));
+        return new MyNumber((int) Math.pow(this.getVal(), other.getVal()));
     }
 
     @Override

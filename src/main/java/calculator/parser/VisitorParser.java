@@ -2,15 +2,11 @@ package calculator.parser;
 
 import calculator.Expression;
 import calculator.IllegalConstruction;
-import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
 import calculator.operation.*;
-import ch.obermuhlner.math.big.BigDecimalMath;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,7 +187,9 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
 
     @Override
     public Expression<T> visitNotExpression(CalculatorParser.NotExpressionContext ctx) {
-        if (ctx.children.size() == 1) {return visit(ctx.batom());}
+        if (ctx.children.size() == 1) {
+            return visit(ctx.batom());
+        }
         try {
             return new Not<>(List.of(visit(ctx.batom())));
         } catch (IllegalConstruction e) {
@@ -202,7 +200,9 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
 
     @Override
     public Expression<T> visitAndExpression(CalculatorParser.AndExpressionContext ctx) {
-        if (ctx.children.size() == 1) {return super.visitAndExpression(ctx);}
+        if (ctx.children.size() == 1) {
+            return super.visitAndExpression(ctx);
+        }
         return visitOperation(And.class, ctx.notExpression());
     }
 
@@ -224,21 +224,17 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
         return visitOperation(Implication.class, ctx.orExpression());
     }
 
-    @Override
-    public Expression<T> visitBoolean_expression(CalculatorParser.Boolean_expressionContext ctx) {
-        return super.visitBoolean_expression(ctx);
-    }
-
-    private <O extends Operation<T>> Expression<T> visitOperation(Class<O> Operand, List<? extends ParserRuleContext> ctx) {
+    private <O extends Operation<T>> Expression<T> visitOperation(Class<O> operand, List<? extends ParserRuleContext> ctx) {
         try {
             List<Expression<T>> params = new ArrayList<>();
             for (var exp : ctx) {
                 params.add(visit(exp));
             }
-            return Operand.getDeclaredConstructor(List.class).newInstance(params);
+            return operand.getDeclaredConstructor(List.class).newInstance(params);
         } catch (Exception e) {
-            throw new RuntimeException("Could not create operation");
+            log.error("Could not create operation");
         }
+        return null;
     }
 
     @Override

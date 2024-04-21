@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestAsin {
+class TestAsin {
     private final double value1 = 8;
     private Asin<BigDecimal> op;
     private List<Expression<BigDecimal>> params;

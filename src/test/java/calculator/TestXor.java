@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestXor {
+class TestXor {
 
     private final MyNumber True = new MyNumber(1);
     private final MyNumber False = new MyNumber(0);

@@ -16,11 +16,11 @@ public class MyRational extends Value<Rational> {
     }
 
     public MyRational(int numerator, int denominator) {
-        super(new Rational(numerator,denominator));
+        super(new Rational(numerator, denominator));
     }
 
     public MyRational(int integer) {
-        super(new Rational(integer,1));
+        super(new Rational(integer, 1));
     }
 
     @Override
@@ -178,7 +178,7 @@ public class MyRational extends Value<Rational> {
         if (!(o instanceof MyRational)) {
             return false;
         }
-        return this.val.equals( ((MyRational) o).getVal());
+        return this.val.equals(((MyRational) o).getVal());
         // Used == since the contained value is a primitive value
         // If it had been a Java object, .equals() would be needed
     }

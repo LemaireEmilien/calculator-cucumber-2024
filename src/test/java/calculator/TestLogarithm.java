@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestLogarithm {
+class TestLogarithm {
     private final double value1 = 8;
     private Logarithm<BigDecimal> op;
     private List<Expression<BigDecimal>> params;

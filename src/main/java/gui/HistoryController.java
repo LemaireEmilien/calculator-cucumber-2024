@@ -1,7 +1,7 @@
 package gui;
 
-import calculator.memory.ExpressionFileHandler;
-import calculator.memory.ListSaver;
+import gui.memory.ExpressionFileHandler;
+import gui.memory.ListSaver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -74,7 +74,7 @@ public class HistoryController {
     @Setter
     private Controller controller;
 
-    private int number;
+    private int number = 0;
 
     @FXML
     private void initialize() {
@@ -101,7 +101,7 @@ public class HistoryController {
     }
 
     private void decrementNumber() {
-        if(listFavoriteExpressions.size()-1 < number){
+        if (listFavoriteExpressions.size() - 1 < number) {
             number--;
             updateNumberLabel();
         }
@@ -110,7 +110,7 @@ public class HistoryController {
     private void updateNumberLabel() {
         String change = Integer.toString(number);
         limitFav.setText("Size of favorite : " + number);
-        listFavoriteExpressions.set(0,change);
+        listFavoriteExpressions.set(0, change);
         saveFavorite(listFavoriteExpressions);
     }
 
@@ -118,13 +118,19 @@ public class HistoryController {
         listFavoriteExpressions = new ArrayList<>();
         listRecentHistory = new ArrayList<>();
 
-        listFavoriteExpressions= ExpressionFileHandler.loadExpressionsAuto("favoriteExpressions.txt");
-        listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        listFavoriteExpressions = ExpressionFileHandler.loadExpressionsAuto(Utils.getFavoriteFile());
+        listRecentHistory = ExpressionFileHandler.loadExpressionsAuto(Utils.getHistoryFile());
 
-        number = Integer.parseInt(listFavoriteExpressions.getFirst());
+        try {
+            if (listFavoriteExpressions.size() >= 2) {
+                number = Integer.parseInt(listFavoriteExpressions.getFirst());
+            }
+        } catch (NumberFormatException e) {
+            log.error("{}", e.getMessage());
+        }
 
         limitFav.setText("Size of favorite :" + number);
-        ListSaver.saveListToFile(listRecentHistory);
+        ListSaver.setListToSave(listRecentHistory);
         ObservableList<String> observableList = FXCollections.observableArrayList(Objects.requireNonNull(listRecentHistory));
         listHistory.setItems(observableList);
     }
@@ -132,7 +138,7 @@ public class HistoryController {
     private void wholeHistoryLoad() {
         wholeHistory.setDisable(true);
         wholeHistory.setOnAction(event -> {
-            showVisible(true,false);
+            showVisible(true, false);
 
             listHistory.setItems(FXCollections.observableArrayList(listRecentHistory));
             listHistory.scrollTo(listHistory.getItems().size() - 1);
@@ -151,8 +157,8 @@ public class HistoryController {
 
     private void expressionUsableLoad() {
         expressionUsable.setOnAction(event -> {
-            showVisible(false,true);
-            listHistory.setItems(FXCollections.observableArrayList(listFavoriteExpressions.subList(1,listFavoriteExpressions.size())));
+            showVisible(false, true);
+            listHistory.setItems(FXCollections.observableArrayList(listFavoriteExpressions.subList(1, listFavoriteExpressions.size())));
         });
     }
 
@@ -168,7 +174,7 @@ public class HistoryController {
     private void saveFileLoad() {
         saveFile.setOnAction(event -> {
             List<String> saveExpressions = FXCollections.observableArrayList(listHistory.getItems());
-            ExpressionFileHandler.saveExpressions(saveExpressions,getStage());
+            ExpressionFileHandler.saveExpressions(saveExpressions, getStage());
         });
     }
 
@@ -180,17 +186,16 @@ public class HistoryController {
         addButton.setOnAction(event -> {
 
             int index = listHistory.getSelectionModel().getSelectedIndex();
-            if(index % 2 == 0){
+            if (index % 2 == 0) {
                 listFavoriteExpressions.add(listHistory.getSelectionModel().getSelectedItem());
-                listFavoriteExpressions.add(listHistory.getItems().get(index+1));
-            }
-            else{
-                listFavoriteExpressions.add(listHistory.getItems().get(index-1));
+                listFavoriteExpressions.add(listHistory.getItems().get(index + 1));
+            } else {
+                listFavoriteExpressions.add(listHistory.getItems().get(index - 1));
                 listFavoriteExpressions.add(listHistory.getSelectionModel().getSelectedItem());
 
             }
-            showVisible(false,true);
-            updateFavoriteExpressions(listFavoriteExpressions.subList(1,listFavoriteExpressions.size()));
+            showVisible(false, true);
+            updateFavoriteExpressions(listFavoriteExpressions.subList(1, listFavoriteExpressions.size()));
             saveFavorite(listFavoriteExpressions);
         });
     }
@@ -198,13 +203,12 @@ public class HistoryController {
     private void removeButtonLoad() {
         removeButton.setOnAction(event -> {
             int index = listHistory.getSelectionModel().getSelectedIndex();
-            if(wholeHistory.isDisable()){
-                removeExpression(listRecentHistory,index);
+            if (wholeHistory.isDisable()) {
+                removeExpression(listRecentHistory, index);
                 updateFavoriteExpressions(listRecentHistory);
-            }
-            else {
-                removeExpression(listFavoriteExpressions,index);
-                updateFavoriteExpressions(listFavoriteExpressions.subList(1,listFavoriteExpressions.size()));
+            } else {
+                removeExpression(listFavoriteExpressions, index);
+                updateFavoriteExpressions(listFavoriteExpressions.subList(1, listFavoriteExpressions.size()));
                 saveFavorite(listFavoriteExpressions);
             }
         });
@@ -218,35 +222,34 @@ public class HistoryController {
 
     private static void saveFavorite(List<String> list) {
         try {
-            ExpressionFileHandler.saveExpressionsAuto(list,"favoriteExpressions.txt");
+            ExpressionFileHandler.saveExpressionsAuto(list, Utils.getFavoriteFile());
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            log.error("{}", e.getMessage());
         }
     }
 
-    private void removeExpression(List<String> expressions,int index) {
+    private void removeExpression(List<String> expressions, int index) {
         expressions.remove(listHistory.getSelectionModel().getSelectedItem());
-        if(index % 2 == 0){
-            expressions.remove(listHistory.getItems().get(index+1));
-        }
-        else{
-            expressions.remove(listHistory.getItems().get(index-1));
+        if (index % 2 == 0) {
+            expressions.remove(listHistory.getItems().get(index + 1));
+        } else {
+            expressions.remove(listHistory.getItems().get(index - 1));
         }
     }
 
     public Stage getStage() {
         if (stage == null) {
-        stage = (Stage) pane.getScene().getWindow();
+            stage = (Stage) pane.getScene().getWindow();
         }
         return stage;
     }
 
     public void update() {
-        if(wholeHistory.isDisable()) {
+        if (wholeHistory.isDisable()) {
             listHistory.setItems(FXCollections.observableArrayList(listRecentHistory));
-            listHistory.scrollTo(listHistory.getItems().size()-1);
+            listHistory.scrollTo(listHistory.getItems().size() - 1);
         }
-        ListSaver.saveListToFile(listRecentHistory);
+        ListSaver.setListToSave(listRecentHistory);
     }
 
 }

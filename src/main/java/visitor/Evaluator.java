@@ -2,9 +2,7 @@ package visitor;
 
 import calculator.Expression;
 import calculator.Value;
-import calculator.operation.Not;
 import calculator.operation.Operation;
-import calculator.operation.Opposite;
 
 import java.util.ArrayList;
 

@@ -5,13 +5,11 @@ import calculator.operation.And;
 import calculator.operation.Not;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestNot {
+class TestNot {
 
     private final MyNumber True = new MyNumber(1);
     private final MyNumber False = new MyNumber(0);

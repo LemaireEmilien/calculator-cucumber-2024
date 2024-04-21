@@ -3,9 +3,9 @@ package gui;
 import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
-import calculator.memory.ExpressionFileHandler;
 import calculator.operand.MyBigNumber;
 import calculator.parser.Parser;
+import gui.memory.ExpressionFileHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -55,6 +55,10 @@ public class Controller {
     private Button operatorDivide;
     @FXML
     private Button digitZero;
+    @FXML
+    private Button dot;
+    @FXML
+    private Button comma;
 
     @FXML
     private Button optionUndo;
@@ -82,7 +86,7 @@ public class Controller {
         precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
         initButton();
 
-        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto(Utils.getHistoryFile());
         List<String> redoElements = new ArrayList<>();
         history.setItems(FXCollections.observableArrayList(listRecentHistory));
         history.scrollTo(history.getItems().size() - 1);
@@ -119,6 +123,8 @@ public class Controller {
         expressionHistory.setOnAction(event -> moveToHistory());
         optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
+        dot.setOnAction(event -> addDot());
+        comma.setOnAction(event -> addCharacter(","));
     }
 
     private void updateTypeButton() {
@@ -220,7 +226,7 @@ public class Controller {
         log.trace("Key pressed: {}", event.getCode());
         if (event.getCode() == KeyCode.BACK_SPACE && !currentExpression.getText().isEmpty()) {
             removeCharacter();
-        } else if (event.getCode() == KeyCode.ENTER) {
+        } else if (event.getCode() == KeyCode.EQUALS || event.getCode() == KeyCode.ENTER) {
             evaluate();
         } else {
             addCharacter(event.getText());
@@ -237,6 +243,12 @@ public class Controller {
         if (!currentExpression.getText().isEmpty()) {
             String temp = currentExpression.getText().substring(0, currentExpression.getText().length() - 1);
             currentExpression.setText(temp);
+        }
+    }
+
+    private void addDot() {
+        if (typeBox.getValue() == CalculatorType.REAL) {
+            addCharacter(".");
         }
     }
 

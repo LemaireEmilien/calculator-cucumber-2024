@@ -26,7 +26,7 @@ public abstract class Operation<T> implements Expression<T> {
      * -- GETTER --
      * getter method to return the number of arguments of an arithmetic operation.
      */
-    public List<Expression<T>> args;
+    public final List<Expression<T>> args;
 
     /**
      * The character used to represent the arithmetic operation (e.g. "+", "*")

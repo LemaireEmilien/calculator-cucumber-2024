@@ -171,7 +171,6 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${exec-plugin.version}</version>
                 <configuration>
-                    <mainClass>calculator.Main</mainClass>
                 </configuration>
             </plugin>
 

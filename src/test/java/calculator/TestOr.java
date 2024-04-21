@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestOr {
+class TestOr {
 
     private final MyNumber True = new MyNumber(1);
     private final MyNumber False = new MyNumber(0);
@@ -38,6 +38,8 @@ public class TestOr {
             params = Arrays.asList(False, False, False, True);
             or = new Or<>(params);
             assertEquals(new MyNumber(1), calc.eval(or)); // 0 | 0 | 0 | 1 = 1
-        } catch (IllegalConstruction e) { fail(); }
+        } catch (IllegalConstruction e) {
+            fail();
+        }
     }
 }
