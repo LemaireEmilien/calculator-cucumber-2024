@@ -99,6 +99,7 @@ public class Controller {
         expressionHistory.setOnAction(event -> moveToHistory());
         optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
+        precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
 
         List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
         List<String> redoElements = new ArrayList<>();
