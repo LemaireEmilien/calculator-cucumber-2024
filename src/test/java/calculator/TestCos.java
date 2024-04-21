@@ -1,7 +1,6 @@
 package calculator;
 
 import calculator.operand.MyBigNumber;
-import calculator.operation.Acos;
 import calculator.operation.Cos;
 import calculator.operation.Times;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestCos {
+class TestCos {
     private final double value1 = 8;
     private Cos<BigDecimal> op;
     private List<Expression<BigDecimal>> params;

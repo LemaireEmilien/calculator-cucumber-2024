@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestAnd {
+class TestAnd {
 
     private final MyNumber True = new MyNumber(1);
     private final MyNumber False = new MyNumber(0);
@@ -38,6 +38,8 @@ public class TestAnd {
             params = Arrays.asList(True, True, True, False);
             and = new And<>(params);
             assertEquals(new MyNumber(0), calc.eval(and)); // 1 & 1 & 1 & 0 = 0
-        } catch (IllegalConstruction e) { fail(); }
+        } catch (IllegalConstruction e) {
+            fail();
+        }
     }
 }

@@ -1,7 +1,6 @@
 package calculator;
 
 import calculator.operand.MyBigNumber;
-
 import calculator.operation.Rand;
 import calculator.operation.Times;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestRand {
+class TestRand {
     private final double value1 = 8;
     private Rand<BigDecimal> op;
     private List<Expression<BigDecimal>> params;

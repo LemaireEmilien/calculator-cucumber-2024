@@ -4,7 +4,6 @@ import calculator.Expression;
 import calculator.Notation;
 import calculator.Value;
 import calculator.operation.Operation;
-import calculator.operation.Opposite;
 
 /**
  * Evaluation is a concrete visitor that serves to

@@ -283,6 +283,38 @@ Feature: Integer Arithmetic Expressions
       | "asin" | 0  |
       | "atan" | 0  |
 
+  Scenario Outline: Evaluating arithmetic operations with rational parameters should return NaN
+    Given a rational operation <op>
+    When I provide a rational number <n1> over <n2>
+    Then the rational operation evaluates to NaN
+
+    Examples:
+      | op     | n1 | n2 |
+      | "log"  | 4  | 1  |
+      | "ln"   | 8  | 1  |
+      | "sqrt" | 7  | 1  |
+      | "cos"  | 6  | 1  |
+      | "sin"  | 1  | 1  |
+      | "tan"  | 0  | 1  |
+      | "acos" | 0  | 1  |
+      | "asin" | 0  | 1  |
+      | "atan" | 0  | 1  |
+      | "!"    | 0  | 1  |
+
+  Scenario Outline: Evaluating arithmetic operations with rational parameters should return NaN
+    Given a rational operation <op>
+    When I provide two rational number <n1> over <n2>
+    Then the rational operation evaluates to NaN
+
+    Examples:
+      | op    | n1 | n2 |
+      | "**"  | 4  | 1  |
+      | "^"   | 8  | 1  |
+      | "&"   | 7  | 1  |
+      | "=>"  | 6  | 1  |
+      | "\|"  | 1  | 1  |
+      | "mod" | 0  | 1  |
+
   Scenario Outline: Evaluating arithmetic operations with two NaN should return NaN
     Given an integer operation <op>
     When I provide a NaN
@@ -309,13 +341,15 @@ Feature: Integer Arithmetic Expressions
     Then the operation evaluates to NaN
 
     Examples:
-      | op   | n2 |
-      | "+"  | 1  |
-      | "-"  | 2  |
-      | "*"  | 3  |
-      | "/"  | 4  |
-      | "&"  | 5  |
-      | "\|" | 6  |
-      | "**" | 7  |
-      | "=>" | 7  |
+      | op    | n2 |
+      | "+"   | 1  |
+      | "-"   | 2  |
+      | "*"   | 3  |
+      | "/"   | 4  |
+      | "&"   | 5  |
+      | "\|"  | 6  |
+      | "**"  | 7  |
+      | "=>"  | 7  |
       | "mod" | 7  |
+
+

@@ -1,6 +1,7 @@
 package gui;
 
 import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 public class Utils {
     private Utils() {
     }
+
     public static Path getConfigPath() {
         String os = System.getProperty("os.name");
         log.trace("OS is {}", os);
@@ -31,13 +33,13 @@ public class Utils {
         return path;
     }
 
-    private static File forceCreate(File f){
-        if (!f.exists()){
+    private static File forceCreate(File f) {
+        if (!f.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 f.createNewFile();
             } catch (IOException e) {
-                log.error("Could not create file {}",e.getMessage());
+                log.error("Could not create file {}", e.getMessage());
             }
         }
         return f;

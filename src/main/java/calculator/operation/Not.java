@@ -3,14 +3,15 @@ package calculator.operation;
 import calculator.Expression;
 import calculator.IllegalConstruction;
 import calculator.Value;
-import calculator.operand.MyNumber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-/** This class represents the boolean operation "NOT".
+/**
+ * This class represents the boolean operation "NOT".
  * The class extends an abstract superclass Operation.
  * Other subclasses of Operation represent other arithmetic operations.
+ *
  * @see Operation
  * @see And
  * @see Or

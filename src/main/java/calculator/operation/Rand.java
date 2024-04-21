@@ -7,7 +7,7 @@ import calculator.Value;
 import java.util.List;
 import java.util.Random;
 
-public class Rand<T> extends Operation<T>  {
+public class Rand<T> extends Operation<T> {
 
     public static final Random random = new Random(); //NOSONAR not used in secure contexts;
 

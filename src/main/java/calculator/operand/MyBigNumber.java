@@ -6,16 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.math.MathContext;
-
-import java.math.RoundingMode;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Random;
 
 @Slf4j
 public class MyBigNumber extends Value<BigDecimal> {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static int precision = 10;
 
     public MyBigNumber(BigDecimal value) {
@@ -38,11 +38,9 @@ public class MyBigNumber extends Value<BigDecimal> {
             int size = plainValue.length();
             BigDecimal plainValueDivBySize = val.movePointLeft(size - 1).setScale(getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros();
             return plainValueDivBySize + "E+" + (size - 1);
-        }
-        else if (val.abs().compareTo(new BigDecimal("1e-10")) < 0){
+        } else if (val.abs().compareTo(new BigDecimal("1e-10")) < 0) {
             return val.toString();
-        }
-        else {
+        } else {
             return val.setScale(getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
         }
 
@@ -58,7 +56,7 @@ public class MyBigNumber extends Value<BigDecimal> {
             return false;
         }
 
-        return Math.abs(this.val.doubleValue() - ((MyBigNumber) o).val.doubleValue()) < (Math.pow(10,-precision));
+        return Math.abs(this.val.doubleValue() - ((MyBigNumber) o).val.doubleValue()) < (Math.pow(10, -precision));
     }
 
     @Override
@@ -93,7 +91,7 @@ public class MyBigNumber extends Value<BigDecimal> {
     @Override
     public Value<BigDecimal> power(Value<BigDecimal> other) {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.pow(this.val,other.getVal(), mc));
+        return new MyBigNumber(BigDecimalMath.pow(this.val, other.getVal(), mc));
     }
 
     @Override
@@ -104,55 +102,55 @@ public class MyBigNumber extends Value<BigDecimal> {
     @Override
     public Value<BigDecimal> logarithm() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.log10(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.log10(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> naturalLog() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.log(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.log(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> squareRoot() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.sqrt(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.sqrt(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> sin() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.sin(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.sin(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> cos() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.cos(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.cos(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> tan() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.tan(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.tan(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> asin() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.asin(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.asin(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> acos() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.acos(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.acos(this.val, mc));
     }
 
     @Override
     public Value<BigDecimal> atan() {
         MathContext mc = new MathContext(precision);
-        return new MyBigNumber(BigDecimalMath.atan(this.val,mc));
+        return new MyBigNumber(BigDecimalMath.atan(this.val, mc));
     }
 
     @Override

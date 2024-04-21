@@ -16,8 +16,8 @@ public record Rational(int numerator, int denominator) {
 
     @Override
     public String toString() {
-        if (this.denominator == 1){
-            return this.numerator+"";
+        if (this.denominator == 1) {
+            return this.numerator + "";
         }
         return this.numerator() + "⁄" + this.denominator();
     }

@@ -3,6 +3,7 @@ package calculator;
 import calculator.operand.MyBigNumber;
 import calculator.operand.MyNaN;
 import calculator.operand.MyNumber;
+import calculator.operand.MyRational;
 import calculator.operation.*;
 import calculator.parser.Parser;
 import io.cucumber.java.Before;
@@ -29,6 +30,10 @@ public class CalculatorSteps {
     private ArrayList<Expression<BigDecimal>> params_dec;
     private Operation<BigDecimal> op_dec;
     private Calculator<BigDecimal> c_dec;
+
+    private ArrayList<Expression<Rational>> params_rat;
+    private Operation<Rational> op_rat;
+    private Calculator<Rational> c_rat;
     private Parser<Integer> parser;
 
     @Before
@@ -45,6 +50,7 @@ public class CalculatorSteps {
     public void givenIInitialiseACalculator() {
         c = new Calculator<>();
         c_dec = new Calculator<>();
+        c_rat = new Calculator<>();
     }
 
     @Given("an integer operation {string}")
@@ -74,6 +80,41 @@ public class CalculatorSteps {
                 case "acos" -> op = new Acos<>(params);
                 case "asin" -> op = new Asin<>(params);
                 case "atan" -> op = new Atan<>(params);
+                default -> fail();
+            }
+        } catch (IllegalConstruction e) {
+            fail();
+        }
+    }
+
+    @Given("a rational operation {string}")
+    public void givenARationalOperation(String s) {
+        // Write code here that turns the phrase above into concrete actions
+        params_rat = new ArrayList<>(); // create an empty set of parameters to be filled in
+        try {
+            switch (s) {
+                case "+" -> op_rat = new Plus<>(params_rat);
+                case "-" -> op_rat = new Minus<>(params_rat);
+                case "*" -> op_rat = new Times<>(params_rat);
+                case "/" -> op_rat = new Divides<>(params_rat);
+                case "log" -> op_rat = new Logarithm<>(params_rat);
+                case "ln" -> op_rat = new NaturalLog<>(params_rat);
+                case "sqrt" -> op_rat = new SquareRoot<>(params_rat);
+                case "cos" -> op_rat = new Cos<>(params_rat);
+                case "sin" -> op_rat = new Sin<>(params_rat);
+                case "tan" -> op_rat = new Tan<>(params_rat);
+                case "acos" -> op_rat = new Acos<>(params_rat);
+                case "asin" -> op_rat = new Asin<>(params_rat);
+                case "atan" -> op_rat = new Atan<>(params_rat);
+                case "rand" -> op_rat = new Rand<>(params_rat);
+                case "**" -> op_rat = new Power<>(params_rat);
+                case "&" -> op_rat = new And<>(params_rat);
+                case "|" -> op_rat = new Or<>(params_rat);
+                case "^" -> op_rat = new Xor<>(params_rat);
+                case "=>" -> op_rat = new Implication<>(params_rat);
+                case "!" -> op_rat = new Not<>(params_rat);
+                case "mod" -> op_rat = new Modulo<>(params_rat);
+
                 default -> fail();
             }
         } catch (IllegalConstruction e) {
@@ -223,6 +264,22 @@ public class CalculatorSteps {
         op_dec.addMoreParams(params_dec);
     }
 
+    @When("I provide a rational number {int} over {int}")
+    public void whenIProvideARationalNumber(int val, int v2) {
+        //add extra parameter to the operation
+        params_rat = new ArrayList<>();
+        params_rat.add(new MyRational(val, v2));
+        op_rat.addMoreParams(params_rat);
+    }
+
+    @When("I provide two rational number {int} over {int}")
+    public void iProvideTwoRationalNumberNOverN(int val, int v1) {
+        params_rat = new ArrayList<>();
+        params_rat.add(new MyRational(val, 1));
+        params_rat.add(new MyRational(v1, 1));
+        op_rat.addMoreParams(params_rat);
+    }
+
     @Then("^the (.*) is (\\d+)$")
     public void thenTheOperationIs(String s, int val) {
         try {
@@ -254,11 +311,16 @@ public class CalculatorSteps {
     public void thenTheOperationEvaluatesToNaN() {
         assertEquals(new MyNaN<>(), c.eval(op));
     }
+
     @Then("the decimal operation evaluates to NaN")
     public void thenTheDecimalOperationEvaluatesToNaN() {
         assertEquals(new MyNaN<>(), c_dec.eval(op_dec));
     }
 
+    @Then("the rational operation evaluates to NaN")
+    public void theRationalOperationEvaluatesToNaN() {
+        assertEquals(new MyNaN<>(), c_rat.eval(op_rat));
+    }
 
     @Then("the expression evaluates to {}")
     public void theExpressionEvaluatesTo(String result) {
@@ -309,4 +371,6 @@ public class CalculatorSteps {
             fail();
         }
     }
+
+
 }

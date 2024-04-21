@@ -48,24 +48,24 @@ class TestMyRational {
             Expression<Rational> expression = parser.parse("5*4 + 3 * 3", Parser::stringToRational);
             assertEquals(new MyRational(29), calculator.eval(expression));
             expression = parser.parse("+(-(+(9856 6450) /(981 89)) 654)", Parser::stringToRational);
-            assertEquals(new MyRational(1508459,89), calculator.eval(expression));
+            assertEquals(new MyRational(1508459, 89), calculator.eval(expression));
             expression = parser.parse("((4))(2+2)(8/2)(-1)", Parser::stringToRational);
             assertEquals(new MyRational(-64), calculator.eval(expression));
             expression = parser.parse("(3  5  4 6 )*", Parser::stringToRational);
             assertEquals(new MyRational(360), calculator.eval(expression));
 
             expression = parser.parse("1+1⁄2", Parser::stringToRational);
-            assertEquals(new MyRational(3,2), calculator.eval(expression));
+            assertEquals(new MyRational(3, 2), calculator.eval(expression));
             expression = parser.parse("1-1⁄2", Parser::stringToRational);
-            assertEquals(new MyRational(1,2), calculator.eval(expression));
+            assertEquals(new MyRational(1, 2), calculator.eval(expression));
             expression = parser.parse("8⁄9+3⁄4", Parser::stringToRational);
-            assertEquals(new MyRational(59,36), calculator.eval(expression));
+            assertEquals(new MyRational(59, 36), calculator.eval(expression));
             expression = parser.parse("8⁄9-3⁄4", Parser::stringToRational);
-            assertEquals(new MyRational(5,36), calculator.eval(expression));
+            assertEquals(new MyRational(5, 36), calculator.eval(expression));
             expression = parser.parse("8⁄9*3⁄4", Parser::stringToRational);
-            assertEquals(new MyRational(2,3), calculator.eval(expression));
+            assertEquals(new MyRational(2, 3), calculator.eval(expression));
             expression = parser.parse("8⁄9/3⁄4", Parser::stringToRational);
-            assertEquals(new MyRational(32,27), calculator.eval(expression));
+            assertEquals(new MyRational(32, 27), calculator.eval(expression));
         } catch (IllegalExpression e) {
             fail();
         }

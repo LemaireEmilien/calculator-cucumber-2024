@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestSquareRoot {
+class TestSquareRoot {
     private final double value1 = 8;
     private SquareRoot<BigDecimal> op;
     private List<Expression<BigDecimal>> params;

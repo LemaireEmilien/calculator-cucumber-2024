@@ -6,7 +6,7 @@ import calculator.Value;
 
 import java.util.List;
 
-public class Acos<T> extends Operation<T>  {
+public class Acos<T> extends Operation<T> {
 
     /**
      * To construct an operation with a list of expressions as arguments,

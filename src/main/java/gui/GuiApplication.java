@@ -39,13 +39,13 @@ public class GuiApplication extends Application {
             try {
                 ExpressionFileHandler.saveExpressionsAuto(ListSaver.getListToSave(), Utils.getHistoryFile());
             } catch (URISyntaxException e) {
-                log.error("{}",e.getMessage());
+                log.error("{}", e.getMessage());
             }
         });
 
         Stage stageHistory = new Stage();
         stageHistory.setTitle("History");
-        stageHistory.setScene(new Scene(historyPage,600,400));
+        stageHistory.setScene(new Scene(historyPage, 600, 400));
 
         controller.setStage(stageHistory);
     }

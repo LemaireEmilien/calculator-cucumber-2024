@@ -12,14 +12,15 @@ import java.util.List;
 
 @Slf4j
 public class ExpressionFileHandler {
-    private ExpressionFileHandler(){}
+    private ExpressionFileHandler() {
+    }
 
     public static void saveExpressions(List<String> expressions, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Expressions File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         File file = fileChooser.showSaveDialog(stage);
-        if (file == null){
+        if (file == null) {
             log.warn("Nor file selected");
             return;
         }
@@ -29,7 +30,7 @@ public class ExpressionFileHandler {
                 writer.newLine();
             }
         } catch (IOException e) {
-            log.error("{}",e.getMessage());
+            log.error("{}", e.getMessage());
         }
     }
 
@@ -40,11 +41,11 @@ public class ExpressionFileHandler {
                 writer.newLine();
             }
         } catch (IOException e) {
-            log.error("{}",e.getMessage());
+            log.error("{}", e.getMessage());
         }
     }
 
-    public static List<String> loadExpressionsAuto(File file){
+    public static List<String> loadExpressionsAuto(File file) {
         return getStrings(file);
     }
 
@@ -66,7 +67,7 @@ public class ExpressionFileHandler {
             }
             return expressions;
         } catch (IOException e) {
-            log.error("{}",e.getMessage());
+            log.error("{}", e.getMessage());
             return Collections.emptyList();
         }
     }

@@ -3,9 +3,9 @@ package gui;
 import calculator.Calculator;
 import calculator.Expression;
 import calculator.IllegalExpression;
-import gui.memory.ExpressionFileHandler;
 import calculator.operand.MyBigNumber;
 import calculator.parser.Parser;
+import gui.memory.ExpressionFileHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -86,7 +86,7 @@ public class Controller {
         precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
         initButton();
 
-        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto( Utils.getHistoryFile());
+        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto(Utils.getHistoryFile());
         List<String> redoElements = new ArrayList<>();
         history.setItems(FXCollections.observableArrayList(listRecentHistory));
         history.scrollTo(history.getItems().size() - 1);
@@ -246,7 +246,7 @@ public class Controller {
         }
     }
 
-    private void addDot(){
+    private void addDot() {
         if (typeBox.getValue() == CalculatorType.REAL) {
             addCharacter(".");
         }

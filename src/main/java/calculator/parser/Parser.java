@@ -5,6 +5,7 @@ import calculator.IllegalExpression;
 import calculator.Rational;
 import calculator.Value;
 import calculator.operand.MyBigNumber;
+import calculator.operand.MyNaN;
 import calculator.operand.MyNumber;
 import calculator.operand.MyRational;
 import ch.obermuhlner.math.big.BigDecimalMath;
@@ -27,7 +28,7 @@ public class Parser<T> {
         CalculatorParser parser = new CalculatorParser(tokens);
         ParseTree tree = parser.init();
         if (parser.getNumberOfSyntaxErrors() > 0) {
-            log.error("Illegal expression : {}", s);
+            log.error("Illegal expression: {}", s);
             throw new IllegalExpression();
         }
         VisitorParser<T> visitorParser = new VisitorParser<>(baseParser);
@@ -54,13 +55,17 @@ public class Parser<T> {
     }
 
     public static Value<Rational> stringToRational(String s) {
-        String[] spliced = s.split("⁄");
-        int d = 1;
-        if (spliced.length !=1){
-            d = Integer.parseInt(spliced[1]);
+        try {
+            String[] spliced = s.split("⁄");
+            int d = 1;
+            if (spliced.length != 1) {
+                d = Integer.parseInt(spliced[1]);
+            }
+            int n = Integer.parseInt(spliced[0]);
+            return new MyRational(new Rational(n, d));
+        } catch (NumberFormatException e) {
+            return new MyNaN<>();
         }
-        int n = Integer.parseInt(spliced[0]);
-        return new MyRational(new Rational(n, d));
     }
 
     public static Value<BigDecimal> stringToBigDecimal(String s) {

@@ -1,6 +1,8 @@
 package calculator.operation;
 
-import calculator.*;
+import calculator.Expression;
+import calculator.IllegalConstruction;
+import calculator.Value;
 
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  * This class represents the boolean operation "IMPLICATION".
  * The class extends an abstract superclass Operation.
  * Other subclasses of Operation represent other arithmetic operations.
+ *
  * @see Operation
  * @see Or
  * @see Not
@@ -18,7 +21,7 @@ public class Implication<T> extends Operation<T> {
      * Class constructor specifying a number of Expressions to IMPLICATION.
      *
      * @param elist The list of Expressions to IMPLICATION
-     * @throws IllegalConstruction    If an empty list of expressions is passed as parameter
+     * @throws IllegalConstruction If an empty list of expressions is passed as parameter
      */
     public Implication(List<Expression<T>> elist) throws IllegalConstruction {
         super(elist);

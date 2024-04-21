@@ -1,15 +1,7 @@
 package calculator;
 
-import calculator.operand.MyBigNumber;
-import calculator.operand.MyNumber;
-import calculator.operation.*;
 import calculator.parser.Parser;
 import lombok.extern.slf4j.Slf4j;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A very simple calculator in Java

@@ -6,7 +6,7 @@ import calculator.Value;
 
 import java.util.List;
 
-public class Logarithm<T> extends Operation<T>  {
+public class Logarithm<T> extends Operation<T> {
 
     /**
      * To construct an operation with a list of expressions as arguments,
