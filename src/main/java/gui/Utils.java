@@ -36,8 +36,9 @@ public class Utils {
     private static File forceCreate(File f) {
         if (!f.exists()) {
             try {
-                //noinspection ResultOfMethodCallIgnored
-                f.createNewFile();
+                if (!f.createNewFile()){
+                    log.error("Could not create file ");
+                }
             } catch (IOException e) {
                 log.error("Could not create file {}", e.getMessage());
             }

@@ -332,7 +332,7 @@ public class CalculatorSteps {
         try {
             e = parser.parse(s, Parser::stringToInteger);
         } catch (IllegalExpression e) {
-            throw new RuntimeException(e);
+            fail();
         }
     }
 
