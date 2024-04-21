@@ -26,7 +26,7 @@ public class MyBigNumber extends Value<BigDecimal> {
         if (val.abs().compareTo(new BigDecimal("1e10")) > 0) {
             String plainValue = val.stripTrailingZeros().toPlainString();
             int size = plainValue.length();
-            BigDecimal plainValueDivBySize = val.movePointLeft(size - 1).stripTrailingZeros();
+            BigDecimal plainValueDivBySize = val.movePointLeft(size - 1).setScale(getPrecision(), RoundingMode.HALF_UP).stripTrailingZeros();
             return plainValueDivBySize.toString() + "E+" + (size - 1);
         }
         else if (val.abs().compareTo(new BigDecimal("1e-10")) < 0){
