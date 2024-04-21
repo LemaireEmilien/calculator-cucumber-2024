@@ -200,6 +200,8 @@
                     <excludes>
                         <exclude>calculator/parser/Calculator*</exclude>
                         <exclude>Calculator*</exclude>
+                        <exclude>gui/*</exclude>
+                        <exclude>gui/*/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

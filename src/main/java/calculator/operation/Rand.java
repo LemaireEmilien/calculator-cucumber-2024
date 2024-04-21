@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Rand<T> extends Operation<T>  {
 
-    public static final Random random = new java.util.Random();
+    public static final Random random = new Random(); //NOSONAR not used in secure contexts;
 
     /**
      * To construct an operation with a list of expressions as arguments,

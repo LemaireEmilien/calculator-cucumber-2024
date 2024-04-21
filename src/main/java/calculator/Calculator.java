@@ -1,7 +1,6 @@
 package calculator;
 
 import calculator.operand.MyNaN;
-import calculator.parser.Parser;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import visitor.*;
@@ -15,18 +14,6 @@ import visitor.*;
 @Slf4j
 @NoArgsConstructor
 public class Calculator<T> {
-
-    /**
-     * The read method is implemented with ANTLR4 parser.
-     * We construct the AST with ANTLR4 and convert it into a valid expression
-     * that the calculator can use.
-     * @param s the string to parse
-     * @return a new Expression
-     */
-    public Expression<Integer> read(String s) throws IllegalExpression {
-        Parser<Integer> p = new Parser<>();
-        return p.parse(s, Parser::stringToInteger);
-    }
 
     /**
      * Prints an arithmetic expression provided as input parameter.

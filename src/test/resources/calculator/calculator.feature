@@ -90,6 +90,56 @@ Feature: Integer Arithmetic Expressions
     When I provide a first decimal number 0.78539816339744
     Then the operation evaluates to the decimal 1
 
+  Scenario: Acos on one real numbers
+    Given a real operation 'acos'
+    When I provide a first decimal number 0.
+    Then the operation evaluates to the decimal 1.57079632679
+
+  Scenario: Asin on one real numbers
+    Given a real operation 'asin'
+    When I provide a first decimal number 1.
+    Then the operation evaluates to the decimal 1.57079632679
+
+  Scenario: Atan on one real numbers
+    Given a real operation 'atan'
+    When I provide a first decimal number 1.
+    Then the operation evaluates to the decimal 0.78539816339744
+
+  Scenario: Not on one real numbers
+    Given a real operation '!'
+    When I provide a first decimal number 1.
+    Then the decimal operation evaluates to NaN
+
+  Scenario: And on one real numbers
+    Given a real operation '&'
+    When I provide a first decimal number 1.
+    And I provide a second decimal number 1.
+    Then the decimal operation evaluates to NaN
+
+  Scenario: Xor on one real numbers
+    Given a real operation '^'
+    When I provide a first decimal number 1.
+    And I provide a second decimal number 1.
+    Then the decimal operation evaluates to NaN
+
+  Scenario: Impl on one real numbers
+    Given a real operation '=>'
+    When I provide a first decimal number 1.
+    And I provide a second decimal number 1.
+    Then the decimal operation evaluates to NaN
+
+  Scenario: Or on one real numbers
+    Given a real operation '|'
+    When I provide a first decimal number 1.
+    And I provide a second decimal number 1.
+    Then the decimal operation evaluates to NaN
+
+  Scenario: Mod on one real numbers
+    Given a real operation 'mod'
+    When I provide a first decimal number 1.
+    And I provide a second decimal number 1.
+    Then the decimal operation evaluates to NaN
+
   Scenario: Adding two integer numbers
     Given an integer operation 'mod'
     When I provide a first integer number 17
@@ -222,16 +272,16 @@ Feature: Integer Arithmetic Expressions
     Then the operation evaluates to NaN
 
     Examples:
-      | op      | n1 |
-      | "log"   | 4  |
-      | "ln"    | 8  |
-      | "sqrt"  | 7  |
-      | "cos"   | 6  |
-      | "sin"   | 1  |
-      | "tan"   | 0  |
-      | "acos"  | 0  |
-      | "asin"  | 0  |
-      | "atan"  | 0  |
+      | op     | n1 |
+      | "log"  | 4  |
+      | "ln"   | 8  |
+      | "sqrt" | 7  |
+      | "cos"  | 6  |
+      | "sin"  | 1  |
+      | "tan"  | 0  |
+      | "acos" | 0  |
+      | "asin" | 0  |
+      | "atan" | 0  |
 
   Scenario Outline: Evaluating arithmetic operations with two NaN should return NaN
     Given an integer operation <op>
@@ -239,20 +289,33 @@ Feature: Integer Arithmetic Expressions
     Then the operation evaluates to NaN
 
     Examples:
-      | op      |
-      | "log"   |
-      | "ln"    |
-      | "sqrt"  |
-      | "cos"   |
-      | "sin"   |
-      | "tan"   |
-      | "acos"  |
-      | "asin"  |
-      | "atan"  |
-      | "+"  |
-      | "-"  |
-      | "*"  |
-      | "/"  |
-      | "&"  |
-      | "\|" |
-      | "^"  |
+      | op     |
+      | "log"  |
+      | "ln"   |
+      | "sqrt" |
+      | "cos"  |
+      | "sin"  |
+      | "tan"  |
+      | "acos" |
+      | "asin" |
+      | "atan" |
+      | "!"    |
+
+
+  Scenario Outline: Evaluating arithmetic operations with a NaN and an integer should return NaN
+    Given an integer operation <op>
+    When I provide a NaN
+    And I provide a second integer number <n2>
+    Then the operation evaluates to NaN
+
+    Examples:
+      | op   | n2 |
+      | "+"  | 1  |
+      | "-"  | 2  |
+      | "*"  | 3  |
+      | "/"  | 4  |
+      | "&"  | 5  |
+      | "\|" | 6  |
+      | "**" | 7  |
+      | "=>" | 7  |
+      | "mod" | 7  |

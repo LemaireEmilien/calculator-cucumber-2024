@@ -4,6 +4,7 @@ import calculator.operand.MyBigNumber;
 import calculator.operand.MyNaN;
 import calculator.operand.MyNumber;
 import calculator.operation.*;
+import calculator.parser.Parser;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -28,6 +29,7 @@ public class CalculatorSteps {
     private ArrayList<Expression<BigDecimal>> params_dec;
     private Operation<BigDecimal> op_dec;
     private Calculator<BigDecimal> c_dec;
+    private Parser<Integer> parser;
 
     @Before
     public void resetMemoryBeforeEachScenario() {
@@ -35,6 +37,7 @@ public class CalculatorSteps {
         op = null;
         op_dec = null;
         c_dec = null;
+        parser = new Parser<>();
         Rand.random.setSeed(0xCAFEBABEL);
     }
 
@@ -44,22 +47,24 @@ public class CalculatorSteps {
         c_dec = new Calculator<>();
     }
 
-	@Given("an integer operation {string}")
-	public void givenAnIntegerOperation(String s) {
-		// Write code here that turns the phrase above into concrete actions
-		params = new ArrayList<>(); // create an empty set of parameters to be filled in
-		try {
-			switch (s) {
-				case "+"	->	op = new Plus<>(params);
-				case "-"	->	op = new Minus<>(params);
-				case "*"	->	op = new Times<>(params);
-				case "/"	->	op = new Divides<>(params);
-				case "&"	->	op = new And<>(params);
-				case "|"	->	op = new Or<>(params);
-				case "^"	->	op = new Xor<>(params);
-                case "mod"  ->  op = new Modulo<>(params);
-                case "rand" ->  op = new Rand<>(params);
-                case "**"   ->  op = new Power<>(params);
+    @Given("an integer operation {string}")
+    public void givenAnIntegerOperation(String s) {
+        // Write code here that turns the phrase above into concrete actions
+        params = new ArrayList<>(); // create an empty set of parameters to be filled in
+        try {
+            switch (s) {
+                case "+" -> op = new Plus<>(params);
+                case "-" -> op = new Minus<>(params);
+                case "*" -> op = new Times<>(params);
+                case "/" -> op = new Divides<>(params);
+                case "&" -> op = new And<>(params);
+                case "|" -> op = new Or<>(params);
+                case "^" -> op = new Xor<>(params);
+                case "=>" -> op = new Implication<>(params);
+                case "!" -> op = new Not<>(params);
+                case "mod" -> op = new Modulo<>(params);
+                case "rand" -> op = new Rand<>(params);
+                case "**" -> op = new Power<>(params);
                 case "log" -> op = new Logarithm<>(params);
                 case "ln" -> op = new NaturalLog<>(params);
                 case "sqrt" -> op = new SquareRoot<>(params);
@@ -69,12 +74,12 @@ public class CalculatorSteps {
                 case "acos" -> op = new Acos<>(params);
                 case "asin" -> op = new Asin<>(params);
                 case "atan" -> op = new Atan<>(params);
-				default		->	fail();
-			}
-		} catch (IllegalConstruction e) {
-			fail();
-		}
-	}
+                default -> fail();
+            }
+        } catch (IllegalConstruction e) {
+            fail();
+        }
+    }
 
     @Given("a real operation {string}")
     public void givenARealOperation(String s) {
@@ -97,6 +102,12 @@ public class CalculatorSteps {
                 case "atan" -> op_dec = new Atan<>(params_dec);
                 case "rand" -> op_dec = new Rand<>(params_dec);
                 case "**" -> op_dec = new Power<>(params_dec);
+                case "&" -> op_dec = new And<>(params_dec);
+                case "|" -> op_dec = new Or<>(params_dec);
+                case "^" -> op_dec = new Xor<>(params_dec);
+                case "=>" -> op_dec = new Implication<>(params_dec);
+                case "!" -> op_dec = new Not<>(params_dec);
+                case "mod" -> op_dec = new Modulo<>(params_dec);
                 default -> fail();
             }
         } catch (IllegalConstruction e) {
@@ -243,17 +254,21 @@ public class CalculatorSteps {
     public void thenTheOperationEvaluatesToNaN() {
         assertEquals(new MyNaN<>(), c.eval(op));
     }
+    @Then("the decimal operation evaluates to NaN")
+    public void thenTheDecimalOperationEvaluatesToNaN() {
+        assertEquals(new MyNaN<>(), c_dec.eval(op_dec));
+    }
 
 
-	@Then("the expression evaluates to {}")
-	public void theExpressionEvaluatesTo(String result) {
-		assertEquals(new MyNumber(Integer.parseInt(result)), c.eval(e));
-	}
+    @Then("the expression evaluates to {}")
+    public void theExpressionEvaluatesTo(String result) {
+        assertEquals(new MyNumber(Integer.parseInt(result)), c.eval(e));
+    }
 
-	@When("I provide an expression {}")
-	public void iProvideAnExpression(String s) {
+    @When("I provide an expression {}")
+    public void iProvideAnExpression(String s) {
         try {
-            e = c.read(s);
+            e = parser.parse(s, Parser::stringToInteger);
         } catch (IllegalExpression e) {
             throw new RuntimeException(e);
         }
@@ -265,8 +280,10 @@ public class CalculatorSteps {
             params = new ArrayList<>();
             params.add(new MyNumber(n1));
             params.add(new MyNumber(n2));
-            op = new And<>(params);}
-        catch(IllegalConstruction e) { fail(); }
+            op = new And<>(params);
+        } catch (IllegalConstruction e) {
+            fail();
+        }
     }
 
     @Given("^the or of two numbers (\\d+) and (\\d+)$")
@@ -275,8 +292,10 @@ public class CalculatorSteps {
             params = new ArrayList<>();
             params.add(new MyNumber(n1));
             params.add(new MyNumber(n2));
-            op = new Or<>(params);}
-        catch(IllegalConstruction e) { fail(); }
+            op = new Or<>(params);
+        } catch (IllegalConstruction e) {
+            fail();
+        }
     }
 
     @Given("^the xor of two numbers (\\d+) and (\\d+)$")
@@ -285,7 +304,9 @@ public class CalculatorSteps {
             params = new ArrayList<>();
             params.add(new MyNumber(n1));
             params.add(new MyNumber(n2));
-            op = new Xor<>(params);}
-        catch(IllegalConstruction e) { fail(); }
+            op = new Xor<>(params);
+        } catch (IllegalConstruction e) {
+            fail();
+        }
     }
 }

@@ -2,15 +2,19 @@ package calculator.memory;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 public class ExpressionFileHandler {
+    private ExpressionFileHandler(){}
 
     public static void saveExpressions(List<String> expressions, Stage stage) {
         FileChooser fileChooser = new FileChooser();
@@ -23,7 +27,7 @@ public class ExpressionFileHandler {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("{}",e.getMessage());
         }
     }
 
@@ -36,7 +40,7 @@ public class ExpressionFileHandler {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("{}",e.getMessage());
         }
     }
 
@@ -61,11 +65,10 @@ public class ExpressionFileHandler {
             while ((line = reader.readLine()) != null) {
                 expressions.add(line);
             }
-            reader.close();
             return expressions;
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            log.error("{}",e.getMessage());
+            return Collections.emptyList();
         }
     }
 
@@ -74,7 +77,7 @@ public class ExpressionFileHandler {
         try {
             projectRoot = new File(".").getCanonicalPath();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("{}",e.getMessage());
             return null;
         }
         return Paths.get(projectRoot, "src/main/java/calculator/memory/files/",namefile).toString();

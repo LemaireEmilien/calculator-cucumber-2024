@@ -33,6 +33,7 @@ class TestMyBigNumber {
         assertNotEquals(new MyBigNumber(otherValue), myBigNumber);
         assertEquals(myBigNumber, myBigNumber); // Identity check (for coverage, as this should always be true)
         assertNotEquals(myBigNumber, value); // myBigNumber is of type MyBigNumber, while value is of type BigDecimal, so not equal
+        assertNotEquals( myBigNumber,null);// NOSONAR
         try {
             assertNotEquals(new Times<>(new ArrayList<>()), myBigNumber);
         } catch (IllegalConstruction e) {
@@ -49,7 +50,6 @@ class TestMyBigNumber {
     void testToString() {
         BigDecimal value1 = new BigDecimal("1e3");
         BigDecimal value2 = new BigDecimal("1e12");
-        BigDecimal value3 = new BigDecimal("1000000000000000");
         BigDecimal value4 = new BigDecimal("0.0000000000001");
 
         assertEquals(value.toString(), myBigNumber.toString());
@@ -93,10 +93,10 @@ class TestMyBigNumber {
             assertEquals(new MyBigNumber(6), calculator.eval(expression));
 
             expression = parser.parse("10000000000000", Parser::stringToBigDecimal);
-            //assertEquals(new MyBigNumber(new BigDecimal("1E13")), calculator.eval(expression));  // This test fails because the function toString of BigDecimal is wrong
+            assertEquals(new MyBigNumber(new BigDecimal("1E13")), calculator.eval(expression));
 
             expression = parser.parse("10000000000000 + 1e13", Parser::stringToBigDecimal);
-            //assertEquals(new MyBigNumber(new BigDecimal("2E13")), calculator.eval(expression));  // This test fails because the function toString of BigDecimal is wrong
+            assertEquals(new MyBigNumber(new BigDecimal("2E13")), calculator.eval(expression));
 
             expression = parser.parse("1e13 + 1e13", Parser::stringToBigDecimal);
             assertEquals(new MyBigNumber(new BigDecimal("2E13")), calculator.eval(expression));
