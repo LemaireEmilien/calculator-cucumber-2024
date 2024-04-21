@@ -219,7 +219,15 @@ public class Controller {
         }
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
-            String r =c.eval(e).getVal().toString();
+            String r;
+            if(typeBox.getValue() == CalculatorType.REAL){
+                MyBigNumber bigNumber = new MyBigNumber(new BigDecimal(currentExpression.getText()));
+                r = bigNumber.toString();
+            }
+            else{
+                r =c.eval(e).getVal().toString();
+            }
+
             history.getItems().add(currentExpression.getText());
             history.getItems().add(c.eval(e).getVal().toString());
             historyController.getListRecentHistory().add(currentExpression.getText());
