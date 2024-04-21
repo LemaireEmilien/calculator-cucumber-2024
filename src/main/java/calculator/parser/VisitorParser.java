@@ -2,11 +2,15 @@ package calculator.parser;
 
 import calculator.Expression;
 import calculator.IllegalConstruction;
+import calculator.operand.MyBigNumber;
 import calculator.operand.MyNumber;
 import calculator.operation.*;
+import ch.obermuhlner.math.big.BigDecimalMath;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.ParserRuleContext;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,18 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
                 case "/" -> new Divides<>(insideExpression);
                 case "+" -> new Plus<>(insideExpression);
                 case "-" -> new Minus<>(insideExpression);
+                case "**" -> new Power<>(insideExpression);
+                case "cos" -> new Cos<>(insideExpression);
+                case "sin" -> new Sin<>(insideExpression);
+                case "tan" -> new Tan<>(insideExpression);
+                case "acos" -> new Acos<>(insideExpression);
+                case "asin" -> new Asin<>(insideExpression);
+                case "atan" -> new Atan<>(insideExpression);
+                case "log" -> new Logarithm<>(insideExpression);
+                case "ln" -> new NaturalLog<>(insideExpression);
+                case "sqrt" -> new SquareRoot<>(insideExpression);
+                case "mod" -> new Modulo<>(insideExpression);
+                case "rand" -> new Rand<>(insideExpression);
                 default -> {
                     log.warn("Could not create Operation");
                     yield null;
@@ -96,9 +112,9 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
             return visit(ctx.signedAtom());
         } else if (ctx.children.size() == 3) {
             // signedAtom POW powExpression
-            // todo : add pow operation
-            log.error("Exponent not yet implemented");
-            return null;
+            List<Expression<T>> insideExpression = List.of(visit(ctx.signedAtom()), visit(ctx.powExpression()));
+
+            return createOperation("**", insideExpression);
         }
         log.error("Illegal powExpression");
         return null;
@@ -160,10 +176,9 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
                 }
             }
             return expr;
+        } else {
+            return visit(ctx.func_());
         }
-        // todo : add functions
-        log.error("function not yet implemented");
-        return null;
     }
 
     @Override
@@ -242,6 +257,25 @@ public class VisitorParser<T> extends CalculatorBaseVisitor<Expression<T>> {
         Expression<T> expr = baseParser.fromString(text);
         log.trace("base {}", expr);
         return expr;
+    }
+
+    @Override
+    public Expression<T> visitFunc_(CalculatorParser.Func_Context ctx) {
+        log.trace("Visit func : {}", ctx.getText());
+        String funcname = ctx.funcname().getText();
+
+        List<Expression<T>> insideExpression = new ArrayList<>();
+        for (var expr : ctx.expression()) {
+            insideExpression.add(visit(expr));
+        }
+
+        return createOperation(funcname, insideExpression);
+    }
+
+    @Override
+    public Expression<T> visitConstant(CalculatorParser.ConstantContext ctx) {
+        log.trace("Visit const : {}", ctx.getText());
+        return baseParser.fromString(ctx.getText());
     }
 }
 

@@ -1,4 +1,8 @@
-package calculator;
+package calculator.operand;
+
+import calculator.Value;
+
+import java.util.Random;
 
 public class MyNaN<T> extends Value<T> {
     /**
@@ -48,8 +52,58 @@ public class MyNaN<T> extends Value<T> {
     }
 
     @Override
+    public Value<T> power(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
     public Value<T> opposite() {
-        return null;
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> logarithm() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> naturalLog() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> squareRoot() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> sin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> cos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> tan() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> asin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> acos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> atan() {
+        return new MyNaN<>();
     }
 
     @Override
@@ -74,6 +128,16 @@ public class MyNaN<T> extends Value<T> {
 
     @Override
     public Value<T> not() {
-        return null;
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> modulo(Value<T> other) {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<T> rand(Random random) {
+        return new MyNaN<>();
     }
 }

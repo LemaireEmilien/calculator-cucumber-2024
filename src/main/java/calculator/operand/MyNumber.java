@@ -3,8 +3,10 @@ package calculator.operand;
 import calculator.Expression;
 import calculator.Value;
 import calculator.operation.Operation;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * MyNumber is a concrete class that represents arithmetic numbers,
@@ -13,6 +15,7 @@ import java.util.Objects;
  * @see Expression
  * @see Operation
  */
+@Slf4j
 public class MyNumber extends Value<Integer> {
 
 
@@ -88,8 +91,58 @@ public class MyNumber extends Value<Integer> {
     }
 
     @Override
+    public Value<Integer> power(Value<Integer> other) {
+        return new MyNumber((int) Math.pow(this.getVal(),other.getVal()));
+    }
+
+    @Override
     public Value<Integer> opposite() {
         return new MyNumber(-this.getVal());
+    }
+
+    @Override
+    public Value<Integer> logarithm() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> naturalLog() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> squareRoot() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> sin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> cos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> tan() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> asin() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> acos() {
+        return new MyNaN<>();
+    }
+
+    @Override
+    public Value<Integer> atan() {
+        return new MyNaN<>();
     }
 
     @Override
@@ -115,5 +168,15 @@ public class MyNumber extends Value<Integer> {
     @Override
     public Value<Integer> not() {
         return new MyNumber(this.getVal() == 0 ? 1 : 0);
+    }
+
+    @Override
+    public Value<Integer> modulo(Value<Integer> other) {
+        return new MyNumber(this.getVal() % other.getVal());
+    }
+
+    @Override
+    public Value<Integer> rand(Random random) {
+        return new MyNumber(random.nextInt(this.getVal()));
     }
 }

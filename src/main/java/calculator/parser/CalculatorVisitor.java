@@ -119,12 +119,6 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConstant(CalculatorParser.ConstantContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CalculatorParser#variable}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVariable(CalculatorParser.VariableContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link CalculatorParser#func_}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

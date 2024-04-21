@@ -9,21 +9,19 @@ import calculator.parser.Parser;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.io.IOException;
-import java.math.BigDecimal;
 
 @Slf4j
 public class Controller {
@@ -31,6 +29,8 @@ public class Controller {
         INTEGER, RATIONAL, REAL
     }
 
+    @FXML
+    private VBox mainBox;
     @FXML
     private Button expressionHistory;
     @FXML
@@ -75,10 +75,30 @@ public class Controller {
     private HistoryController historyController;
 
     @FXML
-    private void initialize()throws IOException {
+    private void initialize() {
         typeBox.getItems().setAll(CalculatorType.values());
         typeBox.setValue(CalculatorType.INTEGER);
         precisionSlider.setValue(MyBigNumber.getPrecision());
+        precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
+        initButton();
+
+        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
+        List<String> redoElements = new ArrayList<>();
+        history.setItems(FXCollections.observableArrayList(listRecentHistory));
+        history.scrollTo(history.getItems().size() - 1);
+        undo.setOnAction(event -> undo(listRecentHistory, redoElements));
+        redo.setOnAction(event -> redo(listRecentHistory, redoElements));
+
+        GridPane p = new GridPane();
+        p.setHgap(20);
+        p.setVgap(10);
+        mainBox.getChildren().add(p);
+        updateTypeButton();
+        typeBox.valueProperty().addListener(t1 -> updateTypeButton());
+
+    }
+
+    private void initButton() {
         for (int i = 0; i < 9; i++) {
             final String s = String.valueOf(i + 1);
             Button b = new Button(s);
@@ -99,66 +119,86 @@ public class Controller {
         expressionHistory.setOnAction(event -> moveToHistory());
         optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
-        precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
+    }
 
-        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
-        List<String> redoElements = new ArrayList<>();
-        history.setItems(FXCollections.observableArrayList(listRecentHistory));
-        history.scrollTo(history.getItems().size()-1);
-
-        undo.setOnAction(event -> {
-            if(!history.getItems().isEmpty()){
-                if(redo.isDisable()){
-                    redo.setDisable(false);
-                }
-                String expression = history.getItems().get(history.getItems().size()-2);
-                String result = history.getItems().getLast();
-                redoElements.add(expression);
-                redoElements.add(result);
-                historyController.getListRecentHistory().removeLast();
-                historyController.getListRecentHistory().removeLast();
-                historyController.update();
-                currentExpression.setText(expression);
-                listRecentHistory.remove(result);
-                listRecentHistory.remove(expression);
-                history.setItems(FXCollections.observableArrayList(listRecentHistory));
+    private void updateTypeButton() {
+        List<String> operations = new ArrayList<>(List.of("(", ")"));
+        switch (typeBox.getValue()) {
+            case INTEGER -> {
+                operations.addAll(List.of("mod", "rand", "!", "|", "&", "^", "=>"));
+                precisionSlider.setVisible(false);
+                optionDegRad.setVisible(false);
             }
-            else if(!currentExpression.getText().isEmpty()){
-                currentExpression.setText("");
-                undo.setDisable(true);
+            case REAL -> {
+                operations.addAll(List.of("cos", "sin", "tan", "acos", "asin", "atan", "log", "ln", "sqrt", "1/x", "rand"));
+                precisionSlider.setVisible(true);
+                optionDegRad.setVisible(true);
+            }
+            case RATIONAL -> {
+                precisionSlider.setVisible(false);
+                optionDegRad.setVisible(false);
             }
 
-        });
+        }
+        GridPane gp = (GridPane) mainBox.getChildren().getLast();
+        gp.getChildren().clear();
+        for (int i = 0; i < operations.size(); i++) {
+            final String s = operations.get(i);
+            Button b = new Button(s);
+            b.setStyle("-fx-font: 15 system;");
+            b.getStyleClass().add("button-operator");
+            b.setOnAction(actionEvent -> addCharacter(s));
+            gp.add(b, i % 4, i / 4);
+        }
+    }
 
-        redo.setOnAction(event -> {
-            if(listRecentHistory.isEmpty() && currentExpression.getText().isEmpty()){
-                currentExpression.setText(redoElements.get(redoElements.size()-2));
+    private void redo(List<String> listRecentHistory, List<String> redoElements) {
+
+        if (listRecentHistory.isEmpty() && currentExpression.getText().isEmpty()) {
+            currentExpression.setText(redoElements.get(redoElements.size() - 2));
+        } else {
+            if (undo.isDisable()) {
+                undo.setDisable(false);
             }
-            else {
-                if(undo.isDisable()){
-                    undo.setDisable(false);
-                }
-                String expression = redoElements.get(redoElements.size()-2);
-                String result = redoElements.getLast();
-                listRecentHistory.add(expression);
-                listRecentHistory.add(result);
-                historyController.getListRecentHistory().add(expression);
-                historyController.getListRecentHistory().add(result);
-                historyController.update();
-                redoElements.remove(expression);
-                redoElements.remove(result);
-                history.setItems(FXCollections.observableArrayList(listRecentHistory));
-                history.scrollTo(history.getItems().size() - 1);
-                if(!redoElements.isEmpty()) {
-                    currentExpression.setText(redoElements.get(redoElements.size() - 2));
-                }
-                else {
-                    redo.setDisable(true);
-                }
+            String expression = redoElements.get(redoElements.size() - 2);
+            String result = redoElements.getLast();
+            listRecentHistory.add(expression);
+            listRecentHistory.add(result);
+            historyController.getListRecentHistory().add(expression);
+            historyController.getListRecentHistory().add(result);
+            historyController.update();
+            redoElements.remove(expression);
+            redoElements.remove(result);
+            history.setItems(FXCollections.observableArrayList(listRecentHistory));
+            history.scrollTo(history.getItems().size() - 1);
+            if (!redoElements.isEmpty()) {
+                currentExpression.setText(redoElements.get(redoElements.size() - 2));
+            } else {
+                redo.setDisable(true);
             }
+        }
+    }
 
-        });
-
+    private void undo(List<String> listRecentHistory, List<String> redoElements) {
+        if (!history.getItems().isEmpty()) {
+            if (redo.isDisable()) {
+                redo.setDisable(false);
+            }
+            String expression = history.getItems().get(history.getItems().size() - 2);
+            String result = history.getItems().getLast();
+            redoElements.add(expression);
+            redoElements.add(result);
+            historyController.getListRecentHistory().removeLast();
+            historyController.getListRecentHistory().removeLast();
+            historyController.update();
+            currentExpression.setText(expression);
+            listRecentHistory.remove(result);
+            listRecentHistory.remove(expression);
+            history.setItems(FXCollections.observableArrayList(listRecentHistory));
+        } else if (!currentExpression.getText().isEmpty()) {
+            currentExpression.setText("");
+            undo.setDisable(true);
+        }
     }
 
     private void convertDegToRad() {
@@ -174,6 +214,7 @@ public class Controller {
             currentExpression.setText(rad.toString());
         }
     }
+
     @FXML
     private void handleKeyboard(KeyEvent event) {
         log.trace("Key pressed: {}", event.getCode());
@@ -219,22 +260,14 @@ public class Controller {
         }
         Calculator<T> c = new Calculator<>();
         if (!currentExpression.getText().isEmpty()) {
-            String r;
-            if(typeBox.getValue() == CalculatorType.REAL){
-                MyBigNumber bigNumber = new MyBigNumber(new BigDecimal(currentExpression.getText()));
-                r = bigNumber.toString();
-            }
-            else{
-                r =c.eval(e).getVal().toString();
-            }
-
+            String r = c.eval(e).toString();
             history.getItems().add(currentExpression.getText());
-            history.getItems().add(c.eval(e).getVal().toString());
+            history.getItems().add(r);
             historyController.getListRecentHistory().add(currentExpression.getText());
             historyController.getListRecentHistory().add(r);
             historyController.update();
             currentExpression.setText(r);
-            history.scrollTo(history.getItems().size()-1);
+            history.scrollTo(history.getItems().size() - 1);
         }
     }
 
@@ -242,7 +275,7 @@ public class Controller {
         stage.show();
     }
 
-    public void setLabelCurrent(String expression){
+    public void setLabelCurrent(String expression) {
         currentExpression.setText(currentExpression.getText() + expression);
     }
 }

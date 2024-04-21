@@ -106,6 +106,12 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>ch.obermuhlner</groupId>
+            <artifactId>big-math</artifactId>
+            <version>2.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -192,8 +198,10 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>calculator/Main.class</exclude>
+                        <exclude>calculator/parser/Calculator*</exclude>
                         <exclude>Calculator*</exclude>
+                        <exclude>gui/*</exclude>
+                        <exclude>gui/*/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -33,6 +33,8 @@ public abstract class Operation<T> implements Expression<T> {
      */
     protected String symbol;
 
+    protected boolean unary = false;
+
     /**
      * To construct an operation with a list of expressions as arguments,
      * as well as the Notation used to represent the operation.
@@ -137,5 +139,4 @@ public abstract class Operation<T> implements Expression<T> {
         result = prime * result + args.hashCode();
         return result;
     }
-
 }

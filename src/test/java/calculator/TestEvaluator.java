@@ -2,6 +2,7 @@ package calculator;
 
 //Import Junit5 libraries for unit testing:
 
+import calculator.operand.MyNaN;
 import calculator.operand.MyNumber;
 import calculator.operation.*;
 import org.junit.jupiter.api.BeforeEach;

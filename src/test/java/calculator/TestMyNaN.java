@@ -2,6 +2,7 @@ package calculator;
 
 //Import Junit5 libraries for unit testing:
 
+import calculator.operand.MyNaN;
 import calculator.operation.Times;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ class TestMyNaN {
         assertEquals(new MyNaN<>(), nan);
         assertEquals(nan, nan); // Identity check (for coverage, as this should always be true)
         assertNotEquals(8, nan); // number is of type MyNaN, while value is of type int, so not equal
+        assertNotEquals(nan, null); // NOSONAR
         try {
             assertNotEquals(new Times<>(new ArrayList<>()), nan);
         } catch (IllegalConstruction e) {
