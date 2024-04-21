@@ -14,8 +14,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyboard" prefHeight="800.0" prefWidth="400.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
-    <VBox fx:id="mainBox" alignment="TOP_RIGHT" layoutY="1.0" prefHeight="800.0" prefWidth="400.0" spacing="20.0">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyboard" prefHeight="1000.0" prefWidth="400.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+    <VBox fx:id="mainBox" alignment="TOP_RIGHT" layoutY="1.0" prefHeight="1000.0" prefWidth="400.0" spacing="20.0">
         <opaqueInsets>
             <Insets />
         </opaqueInsets>
@@ -32,13 +32,11 @@
             </Slider>
         </HBox>
 
-        <HBox prefHeight="100.0" prefWidth="336.0" />
-
         <ListView fx:id="history" layoutX="284.0" layoutY="58.0" maxHeight="Infinity" prefHeight="272.0" prefWidth="334.0" styleClass="label-like-list-view" stylesheets="@styling.css">
         </ListView>
         <HBox prefHeight="100.0" prefWidth="200.0">
             <Button fx:id="undo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="button-history" text="&lt;" />
-            <Button fx:id="redo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="button-history" text="&gt;" />
+            <Button fx:id="redo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" disable="true" mnemonicParsing="false" styleClass="button-history" text="&gt;" />
 
 
             <Button fx:id="expressionHistory" mnemonicParsing="false" prefHeight="1.0" styleClass="button-operator" text="History" />

@@ -7,10 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+@Slf4j
 public class GuiApplication extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -29,9 +31,7 @@ public class GuiApplication extends Application {
         controller.setHistoryController(historyController);
         historyController.setController(controller);
 
-
-
-        Scene scene = new Scene(root, 400, 800);
+        Scene scene = new Scene(root, 400, 1000);
         stage.setTitle("Calculator App");
         stage.setScene(scene);
         stage.show();
@@ -39,7 +39,7 @@ public class GuiApplication extends Application {
             try {
                 ExpressionFileHandler.saveExpressionsAuto(ListSaver.listToSave, "recentHistory.txt");
             } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
+                log.error("{}",e.getMessage());
             }
         });
 

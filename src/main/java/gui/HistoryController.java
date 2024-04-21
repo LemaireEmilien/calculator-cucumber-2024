@@ -121,7 +121,11 @@ public class HistoryController {
         listFavoriteExpressions= ExpressionFileHandler.loadExpressionsAuto("favoriteExpressions.txt");
         listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
 
-        number = Integer.parseInt(listFavoriteExpressions.getFirst());
+        try {
+            number = Integer.parseInt(listFavoriteExpressions.getFirst());
+        } catch (NumberFormatException e){
+            log.error("{}",e.getMessage());
+        }
 
         limitFav.setText("Size of favorite :" + number);
         ListSaver.saveListToFile(listRecentHistory);
@@ -220,7 +224,7 @@ public class HistoryController {
         try {
             ExpressionFileHandler.saveExpressionsAuto(list,"favoriteExpressions.txt");
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            log.error("{}",e.getMessage());
         }
     }
 

@@ -226,7 +226,7 @@ public class Controller {
         log.trace("Key pressed: {}", event.getCode());
         if (event.getCode() == KeyCode.BACK_SPACE && !currentExpression.getText().isEmpty()) {
             removeCharacter();
-        } else if (event.getCode() == KeyCode.ENTER) {
+        } else if (event.getCode() == KeyCode.EQUALS || event.getCode() == KeyCode.ENTER) {
             evaluate();
         } else {
             addCharacter(event.getText());
