@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyboard" prefHeight="800.0" prefWidth="400.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyboard" prefHeight="800.0" prefWidth="400.0" styleClass="pane" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
     <VBox fx:id="mainBox" alignment="TOP_RIGHT" layoutY="1.0" prefHeight="800.0" prefWidth="400.0" spacing="20.0">
         <opaqueInsets>
             <Insets />
@@ -104,7 +104,7 @@
                     <Font name="Arial" size="32.0" />
                 </font>
             </Button>
-            <Button maxHeight="20.0" maxWidth="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-max-height: 60; -fx-max-width: 60; -fx-pref-height: 60; -fx-pref-width: 60;" styleClass="button-number" text="." GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Button fx:id="dot" maxHeight="20.0" maxWidth="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-max-height: 60; -fx-max-width: 60; -fx-pref-height: 60; -fx-pref-width: 60;" styleClass="button-number" text="." GridPane.columnIndex="2" GridPane.rowIndex="4">
                 <font>
                     <Font name="Arial" size="32.0" />
                 </font>
@@ -114,6 +114,11 @@
                     <Font name="Arial" size="15.0" />
                 </font>
             </Button>
+         <Button fx:id="comma" layoutX="188.0" layoutY="340.0" maxHeight="20.0" maxWidth="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-max-height: 60; -fx-max-width: 60; -fx-pref-height: 60; -fx-pref-width: 60;" styleClass="button-number" text="," GridPane.rowIndex="4">
+            <font>
+               <Font name="Arial" size="32.0" />
+            </font>
+         </Button>
         </GridPane>
         <opaqueInsets>
             <Insets />
