@@ -79,6 +79,7 @@ public class Controller {
         typeBox.getItems().setAll(CalculatorType.values());
         typeBox.setValue(CalculatorType.INTEGER);
         precisionSlider.setValue(MyBigNumber.getPrecision());
+        precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
         initButton();
 
         List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto("recentHistory.txt");
