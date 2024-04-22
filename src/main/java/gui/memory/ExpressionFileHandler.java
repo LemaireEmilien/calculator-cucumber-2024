@@ -70,7 +70,6 @@ public class ExpressionFileHandler {
 
     /**
      * Method use to load a file which contain a list of expression
-     * @param stage
      * @return the list of expression to load in history component
      */
     public static List<String> loadExpressions(Stage stage) {
