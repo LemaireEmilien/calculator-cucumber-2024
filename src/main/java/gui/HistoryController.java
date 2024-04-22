@@ -139,7 +139,7 @@ public class HistoryController {
     /**
      * method used to load the list of recent history and favorite expressions
      */
-    private void loadFiles() {
+    public void loadFiles() {
         listFavoriteExpressions = new ArrayList<>();
         listRecentHistory = new ArrayList<>();
 
@@ -302,7 +302,7 @@ public class HistoryController {
     /**
      * method use to remove the expression and the result when we delete an expression or a result
      * @param expressions list of expressions
-     * @param index choosen expression or result
+     * @param index chosen expression or result
      */
     private void removeExpression(List<String> expressions, int index) {
         expressions.remove(listHistory.getSelectionModel().getSelectedItem());
