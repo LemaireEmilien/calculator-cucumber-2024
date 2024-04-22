@@ -25,6 +25,8 @@ import java.util.List;
 
 @Slf4j
 public class Controller {
+
+
     private enum CalculatorType {
         INTEGER, RATIONAL, REAL
     }
@@ -78,6 +80,9 @@ public class Controller {
     @Setter
     private HistoryController historyController;
 
+    private List<String> listRecentHistory;
+    private List<String> redoElements;
+
     @FXML
     private void initialize() {
         typeBox.getItems().setAll(CalculatorType.values());
@@ -86,8 +91,8 @@ public class Controller {
         precisionSlider.setOnMouseReleased(event -> MyBigNumber.setPrecision((int) precisionSlider.getValue()));
         initButton();
 
-        List<String> listRecentHistory = ExpressionFileHandler.loadExpressionsAuto(Utils.getHistoryFile());
-        List<String> redoElements = new ArrayList<>();
+        listRecentHistory = ExpressionFileHandler.loadExpressionsAuto(Utils.getHistoryFile());
+        redoElements = new ArrayList<>();
         history.setItems(FXCollections.observableArrayList(listRecentHistory));
         history.scrollTo(history.getItems().size() - 1);
         undo.setOnAction(event -> undo(listRecentHistory, redoElements));
@@ -136,7 +141,7 @@ public class Controller {
                 optionDegRad.setVisible(false);
             }
             case REAL -> {
-                operations.addAll(List.of("pi","e","cos", "sin", "tan", "acos", "asin", "atan", "log", "ln", "sqrt", "1/x", "rand"));
+                operations.addAll(List.of("pi", "e", "cos", "sin", "tan", "acos", "asin", "atan", "log", "ln", "sqrt", "1/x", "rand"));
                 precisionSlider.setVisible(true);
                 optionDegRad.setVisible(true);
             }
@@ -173,8 +178,8 @@ public class Controller {
             historyController.getListRecentHistory().add(expression);
             historyController.getListRecentHistory().add(result);
             historyController.update();
-            redoElements.remove(expression);
-            redoElements.remove(result);
+            redoElements.remove(redoElements.size() - 2);
+            redoElements.removeLast();
             history.setItems(FXCollections.observableArrayList(listRecentHistory));
             history.scrollTo(history.getItems().size() - 1);
             if (!redoElements.isEmpty()) {
@@ -289,5 +294,21 @@ public class Controller {
 
     public void setLabelCurrent(String expression) {
         currentExpression.setText(currentExpression.getText() + expression);
+    }
+
+    public void clear() {
+        history.getItems().clear();
+        for (int i = listRecentHistory.size() - 1; i >= 0; ) {
+            redoElements.add(listRecentHistory.get(i-1));
+            redoElements.add(listRecentHistory.get(i));
+            i = i - 2;
+        }
+        listRecentHistory.clear();
+        redo.setDisable(false);
+    }
+
+    public void setHistory(List<String> list){
+        listRecentHistory = list;
+        history.setItems(FXCollections.observableArrayList(listRecentHistory));
     }
 }

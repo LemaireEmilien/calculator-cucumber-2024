@@ -87,8 +87,11 @@ public class HistoryController {
         addButtonLoad();
         removeButtonLoad();
         incrementButtons();
+        clearButtonLoad();
 
     }
+
+
 
     private void incrementButtons() {
         increaseButton.setOnAction(event -> incrementNumber());
@@ -110,12 +113,9 @@ public class HistoryController {
     private void updateNumberLabel() {
         String change = Integer.toString(number);
         limitFav.setText("Size of favorite : " + number);
-        if(listFavoriteExpressions.isEmpty()) {
-         listFavoriteExpressions.add(change);
-        }
-        else {
-            listFavoriteExpressions.set(0, change);
-        }
+
+        listFavoriteExpressions.set(0, change);
+
         saveFavorite(listFavoriteExpressions);
     }
 
@@ -132,6 +132,7 @@ public class HistoryController {
             }
             else {
                 number = 15;
+                listFavoriteExpressions.add(Integer.toString(number));
             }
 
         } catch (NumberFormatException e) {
@@ -180,8 +181,10 @@ public class HistoryController {
     private void buttonLoadingFileLoad() {
         loadFile.setOnAction(event -> {
             List<String> loadExpressions = ExpressionFileHandler.loadExpressions(getStage());
-            listHistory.setItems(FXCollections.observableArrayList(Objects.requireNonNull(loadExpressions)));
-
+            listRecentHistory.addAll(loadExpressions);
+            listHistory.setItems(FXCollections.observableArrayList(Objects.requireNonNull(listRecentHistory)));
+            ListSaver.setListToSave(listRecentHistory);
+            controller.setHistory(listRecentHistory);
         });
     }
 
@@ -249,6 +252,22 @@ public class HistoryController {
         } else {
             expressions.remove(listHistory.getItems().get(index - 1));
         }
+    }
+
+    private void clearButtonLoad() {
+        clearButton.setOnAction(event -> {
+            if(wholeHistory.isDisable()){
+                listRecentHistory.clear();
+                controller.clear();
+            }
+            else {
+                listFavoriteExpressions.clear();
+                listRecentHistory.add(Integer.toString(number));
+                saveFavorite(listFavoriteExpressions);
+            }
+            listHistory.getItems().clear();
+        });
+
     }
 
     public Stage getStage() {
