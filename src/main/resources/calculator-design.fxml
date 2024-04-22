@@ -72,7 +72,7 @@
                     <Font name="Arial" size="32.0"/>
                 </font>
             </Button>
-            <Button fx:id="optionAnswer" mnemonicParsing="false" styleClass="button-option" text="A"
+            <Button fx:id="optionAnswer" mnemonicParsing="false" styleClass="button-option" text="C"
                     GridPane.columnIndex="1">
                 <font>
                     <Font name="Arial" size="32.0"/>
