@@ -31,7 +31,7 @@ public class GuiApplication extends Application {
         controller.setHistoryController(historyController);
         historyController.setController(controller);
 
-        Scene scene = new Scene(root, 400, 1000);
+        Scene scene = new Scene(root, 400, 800);
         stage.setTitle("Calculator App");
         stage.setScene(scene);
         stage.show();
