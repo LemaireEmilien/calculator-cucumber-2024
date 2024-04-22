@@ -74,7 +74,7 @@ public class HistoryController {
     @Setter
     private Controller controller;
 
-    private int number = 0;
+    private int number;
 
     @FXML
     private void initialize() {
@@ -110,7 +110,12 @@ public class HistoryController {
     private void updateNumberLabel() {
         String change = Integer.toString(number);
         limitFav.setText("Size of favorite : " + number);
-        listFavoriteExpressions.set(0, change);
+        if(listFavoriteExpressions.isEmpty()) {
+         listFavoriteExpressions.add(change);
+        }
+        else {
+            listFavoriteExpressions.set(0, change);
+        }
         saveFavorite(listFavoriteExpressions);
     }
 
@@ -122,9 +127,13 @@ public class HistoryController {
         listRecentHistory = ExpressionFileHandler.loadExpressionsAuto(Utils.getHistoryFile());
 
         try {
-            if (listFavoriteExpressions.size() >= 2) {
+            if (!listFavoriteExpressions.isEmpty()) {
                 number = Integer.parseInt(listFavoriteExpressions.getFirst());
             }
+            else {
+                number = 15;
+            }
+
         } catch (NumberFormatException e) {
             log.error("{}", e.getMessage());
         }
@@ -158,7 +167,12 @@ public class HistoryController {
     private void expressionUsableLoad() {
         expressionUsable.setOnAction(event -> {
             showVisible(false, true);
-            listHistory.setItems(FXCollections.observableArrayList(listFavoriteExpressions.subList(1, listFavoriteExpressions.size())));
+            if(!listFavoriteExpressions.isEmpty()) {
+                listHistory.setItems(FXCollections.observableArrayList(listFavoriteExpressions.subList(1, listFavoriteExpressions.size())));
+            }
+            else{
+                listHistory.getItems().clear();
+            }
         });
     }
 
