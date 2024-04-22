@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * class use to save the recent history list when closing the app
+ */
 public class ListSaver {
     private ListSaver() {
     }

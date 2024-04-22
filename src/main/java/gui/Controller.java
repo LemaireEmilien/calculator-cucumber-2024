@@ -23,6 +23,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main class of calculator view
+ */
 @Slf4j
 public class Controller {
 
@@ -83,6 +86,9 @@ public class Controller {
     private List<String> listRecentHistory;
     private List<String> redoElements;
 
+    /**
+     * method to initialize the different component necessary to use the calculator
+     */
     @FXML
     private void initialize() {
         typeBox.getItems().setAll(CalculatorType.values());
@@ -107,6 +113,9 @@ public class Controller {
 
     }
 
+    /**
+     * init the button from 1 to 9 for the calculator and add an action to each one
+     */
     private void initButton() {
         for (int i = 0; i < 9; i++) {
             final String s = String.valueOf(i + 1);
@@ -163,6 +172,11 @@ public class Controller {
         }
     }
 
+    /**
+     * method use to get redo the history
+     * @param listRecentHistory list to update when we get redo the history
+     * @param redoElements elements to restore
+     */
     private void redo(List<String> listRecentHistory, List<String> redoElements) {
 
         if (listRecentHistory.isEmpty() && currentExpression.getText().isEmpty()) {
@@ -190,6 +204,11 @@ public class Controller {
         }
     }
 
+    /**
+     * method use to get back in history
+     * @param listRecentHistory list to update when we get back into the history
+     * @param redoElements list of elements we remove from current listRecentHistory
+     */
     private void undo(List<String> listRecentHistory, List<String> redoElements) {
         if (!history.getItems().isEmpty()) {
             if (redo.isDisable()) {
@@ -238,11 +257,18 @@ public class Controller {
         }
     }
 
+    /**
+     * add a character to the currentExpression
+     * @param character character to add
+     */
     private void addCharacter(String character) {
         currentExpression.setTextFill(Color.WHITE);
         currentExpression.setText(currentExpression.getText() + character);
     }
 
+    /**
+     * Remove a character in the current expression
+     */
     private void removeCharacter() {
         currentExpression.setTextFill(Color.WHITE);
         if (!currentExpression.getText().isEmpty()) {
@@ -265,6 +291,9 @@ public class Controller {
         }
     }
 
+    /**
+     * method to evaluate an expression
+     */
     private <T> void evaluateT(Parser.From<T> parser) {
         Parser<T> p = new Parser<>();
         Expression<T> e;
@@ -293,14 +322,24 @@ public class Controller {
         }
     }
 
+    /**
+     * Method to show the stage where the history is managed
+     */
     private void moveToHistory() {
         stage.show();
     }
 
+    /**
+     * set the current label with an expression
+     * @param expression expression to add in the label
+     */
     public void setLabelCurrent(String expression) {
         currentExpression.setText(currentExpression.getText() + expression);
     }
 
+    /**
+     * method use when we clear the history
+     */
     public void clear() {
         for (int i = listRecentHistory.size() - 1; i > 0; ) {
             redoElements.add(listRecentHistory.get(i-1));
@@ -312,6 +351,10 @@ public class Controller {
         history.getItems().clear();
     }
 
+    /**
+     * method use when we load a new file
+     * @param list new list of recent history to load in the current listview
+     */
     public void setHistory(List<String> list){
         listRecentHistory.clear();
         listRecentHistory.addAll(list);

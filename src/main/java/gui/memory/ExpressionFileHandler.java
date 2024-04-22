@@ -10,11 +10,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class use to save and load files
+ */
+
 @Slf4j
 public class ExpressionFileHandler {
     private ExpressionFileHandler() {
     }
 
+    /**
+     * Method to save expression in a choosed file
+     * @param expressions list of expressions we want to save
+     * @param stage stage where we use the file chooser
+     */
     public static void saveExpressions(List<String> expressions, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Expressions File");
@@ -34,6 +43,11 @@ public class ExpressionFileHandler {
         }
     }
 
+    /**
+     * Method to save automatically the list in a file defined
+     * @param expressions list of expressions to save
+     * @param file file where we save the list
+     */
     public static void saveExpressionsAuto(List<String> expressions, File file) throws URISyntaxException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String expression : expressions) {
@@ -45,10 +59,20 @@ public class ExpressionFileHandler {
         }
     }
 
+    /**
+     * Method to load directly the expressions in recent history and favorite expressions
+     * @param file file which contains the expressions we want to load
+     * @return the list of expression to load in history component
+     */
     public static List<String> loadExpressionsAuto(File file) {
         return getStrings(file);
     }
 
+    /**
+     * Method use to load a file which contain a list of expression
+     * @param stage
+     * @return the list of expression to load in history component
+     */
     public static List<String> loadExpressions(Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open File");
@@ -57,6 +81,11 @@ public class ExpressionFileHandler {
         return getStrings(selectedFile);
     }
 
+    /**
+     * Method use to read the file
+     * @param file file to read
+     * @return the list of expressions read
+     */
     private static List<String> getStrings(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             // Count lines to initialize the array

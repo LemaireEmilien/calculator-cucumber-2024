@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class use to manage the history component
+ */
 @Getter
 @Slf4j
 public class HistoryController {
@@ -76,6 +79,9 @@ public class HistoryController {
 
     private int number;
 
+    /**
+     * Method initialize to load the different components inside the history stage
+     */
     @FXML
     private void initialize() {
         loadFiles();
@@ -92,17 +98,25 @@ public class HistoryController {
     }
 
 
-
+    /**
+     * method to set up the increase and decrease button to manage the size of favorite expressions
+     */
     private void incrementButtons() {
         increaseButton.setOnAction(event -> incrementNumber());
         decreaseButton.setOnAction(event -> decrementNumber());
     }
 
+    /**
+     * method to increment the number and update the label for the size of favorite expressions
+     */
     private void incrementNumber() {
         number++;
         updateNumberLabel();
     }
 
+    /**
+     * method to decrement the number and update the label for the size of favorite expressions
+     */
     private void decrementNumber() {
         if (listFavoriteExpressions.size() - 1 < number) {
             number--;
@@ -110,6 +124,9 @@ public class HistoryController {
         }
     }
 
+    /**
+     * method to update the label for the size of favorite expression
+     */
     private void updateNumberLabel() {
         String change = Integer.toString(number);
         limitFav.setText("Size of favorite : " + number);
@@ -119,6 +136,9 @@ public class HistoryController {
         saveFavorite(listFavoriteExpressions);
     }
 
+    /**
+     * method used to load the list of recent history and favorite expressions
+     */
     private void loadFiles() {
         listFavoriteExpressions = new ArrayList<>();
         listRecentHistory = new ArrayList<>();
@@ -145,6 +165,10 @@ public class HistoryController {
         listHistory.setItems(observableList);
     }
 
+
+    /**
+     * method used to manage the action of history button
+     */
     private void wholeHistoryLoad() {
         wholeHistory.setDisable(true);
         wholeHistory.setOnAction(event -> {
@@ -156,6 +180,11 @@ public class HistoryController {
         });
     }
 
+    /**
+     * method to show which button must be visible or disable
+     * @param first true/false value
+     * @param second true/false value
+     */
     private void showVisible(boolean first, boolean second) {
         wholeHistory.setDisable(first);
         addButton.setVisible(first);
@@ -165,6 +194,9 @@ public class HistoryController {
         limitFav.setVisible(second);
     }
 
+    /**
+     * method used to manage the action of favorite expression button
+     */
     private void expressionUsableLoad() {
         expressionUsable.setOnAction(event -> {
             showVisible(false, true);
@@ -177,7 +209,9 @@ public class HistoryController {
         });
     }
 
-
+    /**
+     * this method is used to manage the action of loading a file when we click on the button
+     */
     private void buttonLoadingFileLoad() {
         loadFile.setOnAction(event -> {
             List<String> loadExpressions = ExpressionFileHandler.loadExpressions(getStage());
@@ -188,6 +222,9 @@ public class HistoryController {
         });
     }
 
+    /**
+     * this method is used to manage the action of saving a file when we click on the button
+     */
     private void saveFileLoad() {
         saveFile.setOnAction(event -> {
             List<String> saveExpressions = FXCollections.observableArrayList(listHistory.getItems());
@@ -195,10 +232,16 @@ public class HistoryController {
         });
     }
 
+    /**
+     * method to reuse an expression or a result in the calculator
+     */
     private void useButtonLoad() {
         useButton.setOnAction(event -> controller.setLabelCurrent(listHistory.getSelectionModel().getSelectedItem()));
     }
 
+    /**
+     * method to add an expression or a result to the favorite expressions
+     */
     private void addButtonLoad() {
         addButton.setOnAction(event -> {
 
@@ -217,6 +260,9 @@ public class HistoryController {
         });
     }
 
+    /**
+     * method to delete an expression or a result in the history or favorite expressions list
+     */
     private void removeButtonLoad() {
         removeButton.setOnAction(event -> {
             int index = listHistory.getSelectionModel().getSelectedIndex();
@@ -231,12 +277,20 @@ public class HistoryController {
         });
     }
 
+    /**
+     * update the list of favorite expressions when we add a favorite expression
+     * @param list new list of favorite expressions
+     */
     private void updateFavoriteExpressions(List<String> list) {
         listHistory.setItems(FXCollections.observableArrayList(list));
         listHistory.scrollTo(listHistory.getItems().size() - 1);
 
     }
 
+    /**
+     * save the list of favorite expressions
+     * @param list current list of favorite expressions
+     */
     private static void saveFavorite(List<String> list) {
         try {
             ExpressionFileHandler.saveExpressionsAuto(list, Utils.getFavoriteFile());
@@ -245,6 +299,11 @@ public class HistoryController {
         }
     }
 
+    /**
+     * method use to remove the expression and the result when we delete an expression or a result
+     * @param expressions list of expressions
+     * @param index choosen expression or result
+     */
     private void removeExpression(List<String> expressions, int index) {
         expressions.remove(listHistory.getSelectionModel().getSelectedItem());
         if (index % 2 == 0) {
@@ -254,6 +313,9 @@ public class HistoryController {
         }
     }
 
+    /**
+     * this method allows us to remove the whole history or the whole favorite expressions list
+     */
     private void clearButtonLoad() {
         clearButton.setOnAction(event -> {
             if(wholeHistory.isDisable()){
@@ -270,6 +332,10 @@ public class HistoryController {
 
     }
 
+    /**
+     * method to get the current stage
+     * @return current stage
+     */
     public Stage getStage() {
         if (stage == null) {
             stage = (Stage) pane.getScene().getWindow();
@@ -277,6 +343,9 @@ public class HistoryController {
         return stage;
     }
 
+    /**
+     * method to update the current list of recent history
+     */
     public void update() {
         if (wholeHistory.isDisable()) {
             listHistory.setItems(FXCollections.observableArrayList(listRecentHistory));
