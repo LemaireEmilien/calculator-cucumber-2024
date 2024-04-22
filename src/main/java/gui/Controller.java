@@ -119,7 +119,7 @@ public class Controller {
         operatorDivide.setOnAction(event -> addCharacter("/"));
         optionUndo.setOnAction(event -> removeCharacter());
         operatorEquals.setOnAction(event -> evaluate());
-        optionAnswer.setOnAction(event -> addCharacter("ans"));
+        optionAnswer.setOnAction(event -> currentExpression.setText(""));
         expressionHistory.setOnAction(event -> moveToHistory());
         optionDegRad.setOnAction(event -> convertDegToRad());
         expressionHistory.setOnAction(event -> moveToHistory());
@@ -136,7 +136,7 @@ public class Controller {
                 optionDegRad.setVisible(false);
             }
             case REAL -> {
-                operations.addAll(List.of("cos", "sin", "tan", "acos", "asin", "atan", "log", "ln", "sqrt", "1/x", "rand"));
+                operations.addAll(List.of("pi","e","cos", "sin", "tan", "acos", "asin", "atan", "log", "ln", "sqrt", "1/x", "rand"));
                 precisionSlider.setVisible(true);
                 optionDegRad.setVisible(true);
             }
