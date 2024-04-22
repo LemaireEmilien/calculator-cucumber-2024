@@ -262,7 +262,7 @@ public class HistoryController {
             }
             else {
                 listFavoriteExpressions.clear();
-                listRecentHistory.add(Integer.toString(number));
+                listFavoriteExpressions.add(Integer.toString(number));
                 saveFavorite(listFavoriteExpressions);
             }
             listHistory.getItems().clear();
