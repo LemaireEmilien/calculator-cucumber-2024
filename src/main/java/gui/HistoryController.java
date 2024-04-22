@@ -257,8 +257,8 @@ public class HistoryController {
     private void clearButtonLoad() {
         clearButton.setOnAction(event -> {
             if(wholeHistory.isDisable()){
-                listRecentHistory.clear();
                 controller.clear();
+                listRecentHistory.clear();
             }
             else {
                 listFavoriteExpressions.clear();

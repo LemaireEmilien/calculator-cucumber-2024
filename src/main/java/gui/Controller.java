@@ -195,16 +195,16 @@ public class Controller {
             if (redo.isDisable()) {
                 redo.setDisable(false);
             }
-            String expression = history.getItems().get(history.getItems().size() - 2);
-            String result = history.getItems().getLast();
+            String expression = listRecentHistory.get(history.getItems().size() - 2);
+            String result = listRecentHistory.getLast();
             redoElements.add(expression);
             redoElements.add(result);
             historyController.getListRecentHistory().removeLast();
             historyController.getListRecentHistory().removeLast();
             historyController.update();
             currentExpression.setText(expression);
-            listRecentHistory.remove(result);
-            listRecentHistory.remove(expression);
+            listRecentHistory.remove(listRecentHistory.size() - 2);
+            listRecentHistory.removeLast();
             history.setItems(FXCollections.observableArrayList(listRecentHistory));
         } else if (!currentExpression.getText().isEmpty()) {
             currentExpression.setText("");
@@ -282,6 +282,11 @@ public class Controller {
             history.getItems().add(r);
             historyController.getListRecentHistory().add(currentExpression.getText());
             historyController.getListRecentHistory().add(r);
+            listRecentHistory.add(currentExpression.getText());
+            listRecentHistory.add(r);
+            if(undo.isDisable()){
+                undo.setDisable(false);
+            }
             historyController.update();
             currentExpression.setText(r);
             history.scrollTo(history.getItems().size() - 1);
@@ -297,18 +302,19 @@ public class Controller {
     }
 
     public void clear() {
-        history.getItems().clear();
-        for (int i = listRecentHistory.size() - 1; i >= 0; ) {
+        for (int i = listRecentHistory.size() - 1; i > 0; ) {
             redoElements.add(listRecentHistory.get(i-1));
             redoElements.add(listRecentHistory.get(i));
             i = i - 2;
         }
         listRecentHistory.clear();
         redo.setDisable(false);
+        history.getItems().clear();
     }
 
     public void setHistory(List<String> list){
-        listRecentHistory = list;
+        listRecentHistory.clear();
+        listRecentHistory.addAll(list);
         history.setItems(FXCollections.observableArrayList(listRecentHistory));
     }
 }
